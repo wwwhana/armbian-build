@@ -48,7 +48,7 @@ config/boards/bigtreetech-cb1.conf		@JohnTheCoolingFan
 config/boards/bigtreetech-cb2.conf		@JohnTheCoolingFan
 config/boards/cainiao-cniot-core.csc		@retro98boy
 config/boards/cherryba-m1.csc		@IsMrX
-config/boards/clearfogpro.csc		@Heisath
+config/boards/clearfogpro.conf		@Heisath
 config/boards/cm3588-nas.csc		@ColorfulRhino
 config/boards/coolpi-cm5.csc		@andyshrk
 config/boards/coolpi-genbook.csc		@andyshrk
@@ -143,7 +143,7 @@ config/boards/qemu-uboot-arm64.csc		@rpardini
 config/boards/qemu-uboot-x86.csc		@rpardini
 config/boards/radxa-dragon-q6a.conf		@HeyMeco
 config/boards/radxa-e20c.csc		@mattx433
-config/boards/radxa-e25.csc		@krachlatte
+config/boards/radxa-e25.conf		@krachlatte
 config/boards/radxa-e52c.conf		@amazingfate @schwar3kat
 config/boards/radxa-e54c.csc		@kamilsaigol
 config/boards/radxa-nio-12l.conf		@HeyMeco
