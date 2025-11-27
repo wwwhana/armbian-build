@@ -8,6 +8,7 @@
 
 /dts-v1/;
 
+#include <dt-bindings/clock/rk3528-cru.h>
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/input/rk-input.h>
 #include <dt-bindings/pinctrl/rockchip.h>
@@ -94,6 +95,8 @@
 		uart_rts_gpios = <&gpio3 RK_PA2 GPIO_ACTIVE_LOW>; /* GPIO3_A2 (GPIO 98) - UART2 RTS */
 		BT,reset_gpio = <&gpio3 RK_PD2 GPIO_ACTIVE_HIGH>; /* GPIO3_D2 (GPIO 114) - Android verified */
 		BT,wake_host_irq = <&gpio3 RK_PD1 GPIO_ACTIVE_HIGH>; /* GPIO3_D1 (GPIO 113) - Android verified */
+		/* UART interface for Bluetooth */
+		uart_port_id = <2>; /* Use UART2 */
 		status = "okay";
 	};
 
@@ -104,6 +107,9 @@
 		wifi_chip_type = "rtl8822cs";
 		pinctrl-names = "default";
 		pinctrl-0 = <&wifi_pins>;
+		/* Clock references - WiFi driver expects ref_wifi_clk */
+		clocks = <&cru CCLK_SRC_SDIO1>, <&cru HCLK_SDIO1>;
+		clock-names = "ref_wifi_clk", "iface_clk";
 		WIFI,host_wake_irq = <&gpio3 RK_PB3 GPIO_ACTIVE_HIGH>; /* GPIO3_PB3 */
 		WIFI,poweren_gpio = <&gpio3 10 GPIO_ACTIVE_HIGH>; /* GPIO3 pin 10 - WiFi power enable - Android verified */
 		status = "okay";
@@ -224,9 +230,7 @@
 	/* IR Receiver */
 	ir-receiver {
 		compatible = "gpio-ir-receiver";
-		gpios = <&gpio3 RK_PC3 GPIO_ACTIVE_LOW>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&pwm3_pin>;
+		gpios = <&gpio4 RK_PB4 GPIO_ACTIVE_LOW>;
 		linux,rc-map-name = "rc-beelink-gs1";
 	};
 
@@ -240,11 +244,9 @@
 	status = "okay";
 };
 
-/* PWM3 for IR receiver */
+/* PWM3 - not used for IR receiver anymore */
 &pwm3 {
-	status = "okay";
-	pinctrl-names = "active";
-	pinctrl-0 = <&pwm3_pin>;
+	status = "disabled";
 };
 
 &cpu0 {
@@ -439,8 +441,9 @@
 	cap-sd-highspeed;
 	disable-wp;
 	max-frequency = <150000000>;
-	pinctrl-names = "default";
+	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&sdmmc_clk &sdmmc_cmd &sdmmc_bus4>;
+	pinctrl-1 = <&sdmmc_clk &sdmmc_cmd &sdmmc_bus4>;
 	supports-sd;
 	card-detect-delay = <500>;
 	vmmc-supply = <&vcc_3v3_s3>;
@@ -456,8 +459,9 @@
 	mmc-hs400-1_8v;
 	mmc-hs400-enhanced-strobe;
 	max-frequency = <200000000>;
-	pinctrl-names = "default";
+	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&emmc_bus8 &emmc_clk &emmc_cmd &emmc_strb>;
+	pinctrl-1 = <&emmc_bus8 &emmc_clk &emmc_cmd &emmc_strb>;
 	vmmc-supply = <&vcc_3v3_s3>;
 	vqmmc-supply = <&vdd_1v8_s3>;
 	status = "okay";
@@ -475,7 +479,8 @@
 	cap-sdio-irq;
 	disable-wp;
 	keep-power-in-suspend;
-	max-frequency = <150000000>;
+	/* Reduced from 150MHz to 100MHz for stable initialization */
+	max-frequency = <100000000>;
 	mmc-pwrseq = <&sdio_pwrseq>;
 	no-sd;
 	no-mmc;
@@ -484,10 +489,15 @@
 	sd-uhs-sdr12;
 	sd-uhs-sdr25;
 	sd-uhs-sdr50;
-	sd-uhs-ddr50;
-	sd-uhs-sdr104;
-	pinctrl-names = "default";
+	/* Disable UHS modes that may cause tuning issues - use basic HS only */
+	/*sd-uhs-ddr50;
+	sd-uhs-sdr104;*/
+	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&sdio1_bus4 &sdio1_cmd &sdio1_clk>;
+	pinctrl-1 = <&sdio1_bus4 &sdio1_cmd &sdio1_clk>;
+	/* Clock configuration for SDIO1 WiFi interface - required for WiFi chip initialization */
+	clocks = <&cru HCLK_SDIO1>, <&cru CCLK_SRC_SDIO1>, <&grf_cru SCLK_SDIO1_DRV>, <&grf_cru SCLK_SDIO1_SAMPLE>;
+	clock-names = "biu", "ciu", "ciu-drive", "ciu-sample";
 	post-power-on-delay-ms = <100>;
 	status = "okay";
 };
@@ -544,6 +554,8 @@
 	clock_in_out = "input";
 	tx_delay = <0x2e>;
 	rx_delay = <0x11>;
+	/* Ethernet PHY power supply */
+	phy-supply = <&vcc_3v3_s3>;
 };
 
 &gmac1 {
@@ -671,12 +683,6 @@
 			rockchip,pins =
 				/* sdio1_cmd */
 				<3 RK_PA5 1 &pcfg_pull_up_drv_level_2>;
-		};
-	};
-
-	ir {
-		pwm3_pin: pwm3-pin {
-			rockchip,pins = <3 RK_PC3 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
 	};
 

@@ -100,19 +100,27 @@
 	status = "disabled";
 };
 
-/* Ensure SD card and eMMC are enabled */
+/* Ensure eMMC (sdhci) is first (mmcblk0) */
+&sdhci {
+	u-boot,dm-pre-reloc;
+	bus-width = <8>;
+	mmc-hs200-1_8v;
+	non-removable;
+	supports-emmc;
+	mmc-hs400-1_8v;
+	mmc-hs400-enhanced-strobe;
+	cap-mmc-highspeed;
+	fixed-emmc-driver-type = <0x04>;
+	status = "okay";
+};
+
+/* Ensure SD card (sdmmc) is second (mmcblk1) */
 &sdmmc {
+	u-boot,dm-pre-reloc;
 	bus-width = <4>;
 	cap-mmc-highspeed;
 	cap-sd-highspeed;
 	disable-wp;
 	vmmc-supply = <&vcc_3v3_s3>;
-	status = "okay";
-};
-
-&sdhci {
-	bus-width = <8>;
-	mmc-hs200-1_8v;
-	non-removable;
 	status = "okay";
 };
