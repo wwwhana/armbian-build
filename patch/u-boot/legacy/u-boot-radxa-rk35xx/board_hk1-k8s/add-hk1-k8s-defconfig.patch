@@ -129,8 +129,8 @@ Signed-off-by: Armbian Builder <build@armbian.com>
 +CONFIG_MMC_SDHCI=y
 +CONFIG_MMC_SDHCI_SDMA=y
 +CONFIG_MMC_SDHCI_ROCKCHIP=y
-+CONFIG_MTD=y
-+CONFIG_MTD_BLK=y
++# CONFIG_MTD is not set
++# CONFIG_MTD_BLK is not set
 +# CONFIG_MTD_DEVICE is not set
 +# CONFIG_MTD_SPI_NAND is not set
 +# CONFIG_SPI_FLASH is not set
