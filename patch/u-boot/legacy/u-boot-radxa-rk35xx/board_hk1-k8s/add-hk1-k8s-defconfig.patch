@@ -55,7 +55,7 @@ Signed-off-by: Armbian Builder <build@armbian.com>
 +CONFIG_SPL_SEPARATE_BSS=y
 +CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_USE_PARTITION=y
 +CONFIG_SPL_CRYPTO_SUPPORT=y
-+CONFIG_SPL_MTD_SUPPORT=y
++# CONFIG_SPL_MTD_SUPPORT is not set
 +CONFIG_SPL_ATF=y
 +CONFIG_SPL_ATF_NO_PLATFORM_PARAM=y
 +# CONFIG_SPL_AB is not set
@@ -129,8 +129,8 @@ Signed-off-by: Armbian Builder <build@armbian.com>
 +CONFIG_MMC_SDHCI=y
 +CONFIG_MMC_SDHCI_SDMA=y
 +CONFIG_MMC_SDHCI_ROCKCHIP=y
-+# CONFIG_MTD is not set
-+# CONFIG_MTD_BLK is not set
++CONFIG_MTD=y
++CONFIG_MTD_BLK=y
 +# CONFIG_MTD_DEVICE is not set
 +# CONFIG_MTD_SPI_NAND is not set
 +# CONFIG_SPI_FLASH is not set
