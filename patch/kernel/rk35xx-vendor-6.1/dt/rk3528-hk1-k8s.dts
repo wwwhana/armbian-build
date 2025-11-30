@@ -112,6 +112,8 @@
 		clock-names = "ref_wifi_clk", "iface_clk";
 		WIFI,host_wake_irq = <&gpio3 RK_PB3 GPIO_ACTIVE_HIGH>; /* GPIO3_PB3 */
 		WIFI,poweren_gpio = <&gpio3 10 GPIO_ACTIVE_HIGH>; /* GPIO3 pin 10 - WiFi power enable - Android verified */
+		/* Regulatory domain - suppress CAUTION messages */
+		ieee80211-freq-limit = <2412 2472>; /* 2.4GHz band only */
 		status = "okay";
 	};
 
@@ -273,8 +275,8 @@
 
 &gpu_bus {
 	bus-supply = <&vdd_logic>;
-	/* OPP table requires pvtm regulator which is not available - remove to avoid warnings */
-	status = "okay";
+	/* OPP table requires pvtm regulator which is not available - disable it */
+	status = "disabled";
 };
 
 &display_subsystem {
@@ -447,6 +449,7 @@
 	supports-sd;
 	card-detect-delay = <500>;
 	vmmc-supply = <&vcc_3v3_s3>;
+	vqmmc-supply = <&vdd_1v8_s3>;
 	status = "okay";
 };
 
@@ -499,6 +502,8 @@
 	clocks = <&cru HCLK_SDIO1>, <&cru CCLK_SRC_SDIO1>, <&grf_cru SCLK_SDIO1_DRV>, <&grf_cru SCLK_SDIO1_SAMPLE>;
 	clock-names = "biu", "ciu", "ciu-drive", "ciu-sample";
 	post-power-on-delay-ms = <100>;
+	vmmc-supply = <&vcc_3v3_s3>;
+	vqmmc-supply = <&vdd_1v8_s3>;
 	status = "okay";
 };
 
@@ -508,6 +513,7 @@
 };
 
 &u2phy_otg {
+	phy-supply = <&vcc_3v3_s3>;
 	vbus-supply = <&vcc5v0_otg>;
 	status = "okay";
 };
@@ -545,6 +551,8 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart2m0_xfer &uart2m0_ctsn &uart2m0_rtsn>;
 	dma-names = "!tx", "!rx";
+	clocks = <&cru SCLK_UART2>, <&cru PCLK_UART2>;
+	clock-names = "baudclk", "apb_pclk";
 };
 
 /* Integrated 100Mbps Ethernet - uses built-in MACPHY from rk3528.dtsi */
@@ -556,6 +564,11 @@
 	rx_delay = <0x11>;
 	/* Ethernet PHY power supply */
 	phy-supply = <&vcc_3v3_s3>;
+	/* Interrupt names for low-power interface (optional but quiets warnings) */
+	interrupt-names = "macirq", "eth_wake_irq";
+	/* MDIO reset GPIO - required for proper PHY reset handling via devm */
+	reset-gpios = <&gpio0 RK_PA0 GPIO_ACTIVE_HIGH>;
+	reset-delay-us = <20000>;
 };
 
 &gmac1 {
@@ -581,15 +594,15 @@
 				<0 RK_PA5 1 &pcfg_pull_none>;
 		};
 
-		/* HDMI idle state - DDC and CEC pins */
+		/* HDMI idle state - DDC and CEC pins (keep same as default for DDC I2C) */
 		hdmi_pins_idle: hdmi-pins-idle {
 			rockchip,pins =
-				/* hdmi_tx_cec */
+				/* hdmi_tx_cec - keep functional */
 				<0 RK_PA3 1 &pcfg_pull_none>,
-				/* hdmi_tx_scl */
-				<0 RK_PA4 0 &pcfg_output_low_pull_down>,
-				/* hdmi_tx_sda */
-				<0 RK_PA5 0 &pcfg_output_low_pull_down>;
+				/* hdmi_tx_scl - keep as I2C open-drain (not GPIO output) */
+				<0 RK_PA4 1 &pcfg_pull_up>,
+				/* hdmi_tx_sda - keep as I2C open-drain (not GPIO output) */
+				<0 RK_PA5 1 &pcfg_pull_up>;
 		};
 	};
 
