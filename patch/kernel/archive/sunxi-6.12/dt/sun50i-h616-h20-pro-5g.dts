@@ -23,33 +23,36 @@
 	};
 };
 
-&mmc2 {
-	bus-width = <8>;
-	cap-mmc-highspeed;
-	cap-cmd23;
-	mmc-cache-ctrl;
-	non-removable;
-	max-frequency = <200000000>;
-	cap-erase;
-	mmc-high-capacity-erase-size;
+&mmc0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&sdc0_pins>;
+	bus-width = <4>;
+	cd-gpios = <&pio 8 16 GPIO_ACTIVE_HIGH>;
+	cd-inverted;
+	no-mmc;
 	no-sdio;
-	no-sd;
 	status = "okay";
 };
 
-&mmc0 {
-	bus-width = <4>;
-	cap-sd-highspeed;
-	cap-wait-while-busy;
+&mmc2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&sdc2_pins>;
+	bus-width = <8>;
+	cap-mmc-highspeed;
+	cap-cmd23;
+	cap-erase;
+	mmc-cache-ctrl;
+	mmc-ddr-1_8v;
+	mmc-hs200-1_8v;
+	no-sd;
 	no-sdio;
-	no-mmc;
-	sd-uhs-sdr50;
-	sd-uhs-ddr50;
-	sd-uhs-sdr104;
+	non-removable;
 	status = "okay";
 };
 
 &uart0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart0_pins>;
 	status = "okay";
 };
 

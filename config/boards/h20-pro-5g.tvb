@@ -7,6 +7,8 @@ BOOT_LOGO="desktop"
 KERNEL_TARGET="current,edge"
 KERNEL_TEST_TARGET="current"
 FORCE_BOOTSCRIPT_UPDATE="yes"
+BOOTFS_TYPE="fat"
+BOOT_FDT_FILE="sun50i-h616-h20-pro-5g.dtb"
 OVERLAY_PREFIX="sun50i-h616"
 
 enable_extension "radxa-aic8800"

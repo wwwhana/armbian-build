@@ -33,7 +33,7 @@ function wsl2_pester_user_for_terminal() {
 	if [[ "${PESTER_TERMINAL}" != "no" ]]; then # Or, send a PR with detection code for your favorite Windows UTF-8 capable terminal.
 		display_alert "Please use a terminal that supports UTF-8. For example:" "Windows Terminal" "warn"
 		display_alert "Get it at the Microsoft Store" "https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701" "warn"
-		exit_if_countdown_not_aborted 10 "WSL2 Terminal does not support UTF-8" # This pauses & exits if error if ENTER is not pressed in 10 seconds
+		#exit_if_countdown_not_aborted 10 "WSL2 Terminal does not support UTF-8" # This pauses & exits if error if ENTER is not pressed in 10 seconds
 	fi
 
 	return 0
