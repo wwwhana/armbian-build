@@ -1,0 +1,84 @@
+--- a/arch/arm/dts/Makefile
++++ b/arch/arm/dts/Makefile
+@@ -839,3 +839,4 @@
+ 	sun50i-h616-orangepi-zero2.dtb \
+ 	sun50i-h618-orangepi-zero3.dtb \
+-	sun50i-h616-x96-mate.dtb
++	sun50i-h616-x96-mate.dtb \
++	sun50i-h616-h20-pro-5g.dtb
+ dtb-$(CONFIG_MACH_SUN50I) += \
+--- /dev/null
++++ b/arch/arm/dts/sun50i-h616-h20-pro-5g.dts
+@@ -0,0 +1,25 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Copyright (C) 2024 Armbian
++ */
++
++/dts-v1/;
++
++#include "sun50i-h616.dtsi"
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/interrupt-controller/arm-gic.h>
++
++/ {
++	model = "H20 Pro 5G";
++	compatible = "hechuang,h20-pro-5g\0allwinner,sun50i-h616";
++
++	aliases {
++		serial0 = &uart0;
++		ethernet0 = &emac1;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++};
++
++&mmc2 {
++	pinctrl-0 = <&sdc2_pins>;
++	pinctrl-1 = <&sdc2_sleep_pins>;
++	pinctrl-names = "default"\0"sleep";
++	bus-width = <8>;
++	cap-mmc-highspeed;
++	cap-cmd23;
++	mmc-cache-ctrl;
++	non-removable;
++	max-frequency = <200000000>;
++	cap-erase;
++	mmc-high-capacity-erase-size;
++	no-sdio;
++	no-sd;
++	status = "okay";
++};
++
++&mmc0 {
++	pinctrl-0 = <&sdc0_pins>;
++	pinctrl-1 = <&sdc0_sleep_pins>;
++	pinctrl-names = "default"\0"sleep";
++	bus-width = <4>;
++	cap-sd-highspeed;
++	cap-wait-while-busy;
++	no-sdio;
++	no-mmc;
++	sd-uhs-sdr50;
++	sd-uhs-ddr50;
++	sd-uhs-sdr104;
++	status = "okay";
++};
++
++&uart0 {
++	pinctrl-names = "default"\0"sleep";
++	pinctrl-0 = <&uart0_pins>;
++	pinctrl-1 = <&uart0_sleep_pins>;
++	status = "okay";
++};
++
++&emac1 {
++	pinctrl-0 = <&emac1_pins>;
++	pinctrl-1 = <&emac1_sleep_pins>;
++	pinctrl-names = "default"\0"sleep";
++	phy-mode = "rmii";
++	status = "okay";
++};
++
