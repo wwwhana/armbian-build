@@ -27,6 +27,12 @@
 		mmc2 = &sdio1;  /* SDIO WiFi - RTL8822CS at ffc20000 */
 	};
 
+	ext_clock: ext-clock {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <32768>;
+	};
+
 	vcc5v0_sys: vcc5v0-sys {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc5v0_sys";
@@ -89,13 +95,14 @@
 	/* RTL8822CS Bluetooth */
 	wireless_bluetooth: wireless-bluetooth {
 		compatible = "bluetooth-platdata";
-		pinctrl-names = "default";
-		pinctrl-0 = <&bt_pins>; /* GPIO pins for reset/wake */
-		/* NOTE: uart_rts_gpios removed - UART2 driver manages RTS pin exclusively
-		   Bluetooth driver does NOT need to control RTS state transitions */
-		BT,reset_gpio = <&gpio3 RK_PD2 GPIO_ACTIVE_HIGH>; /* GPIO3_D2 (GPIO 114) - Android verified */
-		BT,wake_host_irq = <&gpio3 RK_PD1 GPIO_ACTIVE_HIGH>; /* GPIO3_D1 (GPIO 113) - Android verified */
-		/* UART interface for Bluetooth */
+		uart_rts_gpios = <&gpio3 RK_PA2 GPIO_ACTIVE_HIGH>;
+		pinctrl-names = "default", "rts_gpio";
+		pinctrl-0 = <&uart2m0_rtsn &bt_reset &bt_wake_host>;
+		pinctrl-1 = <&uart2m0_gpios &bt_reset &bt_wake_host>;
+		clocks = <&ext_clock>;
+		clock-names = "ext_clock";
+		BT,reset_gpio = <&gpio3 RK_PD2 GPIO_ACTIVE_HIGH>;
+		BT,wake_host_irq = <&gpio3 RK_PD1 GPIO_ACTIVE_HIGH>;
 		uart_port_id = <2>; /* Use UART2 */
 		status = "okay";
 	};
@@ -549,7 +556,7 @@
 &uart2 {
 	status = "okay";
 	pinctrl-names = "default";
-	pinctrl-0 = <&uart2m0_xfer &uart2m0_ctsn &uart2m0_rtsn>;
+	pinctrl-0 = <&uart2m0_xfer &uart2m0_ctsn>;
 	dma-names = "!tx", "!rx";
 	clocks = <&cru SCLK_UART2>, <&cru PCLK_UART2>;
 	clock-names = "baudclk", "apb_pclk";
@@ -611,11 +618,9 @@
 	};
 
 	bluetooth {
-		/* Bluetooth GPIO configuration - reset and wake_host only */
-		bt_pins: bt-pins {
-			rockchip,pins =
-				<3 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>,  /* BT reset (GPIO3_D2) */
-				<3 RK_PD1 RK_FUNC_GPIO &pcfg_pull_down>;  /* BT wake_host (GPIO3_D1) */
+		/* Bluetooth GPIO configuration */
+		uart2m0_gpios: uart2m0-gpios {
+			rockchip,pins = <3 RK_PA2 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
 
 		/* Legacy nodes for compatibility */
@@ -625,10 +630,6 @@
 
 		bt_wake_host: bt-wake-host {
 			rockchip,pins = <3 RK_PD1 RK_FUNC_GPIO &pcfg_pull_down>;
-		};
-
-		uart2m0_gpios: uart2m0-gpios {
-			rockchip,pins = <3 RK_PA2 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
 	};
 

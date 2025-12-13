@@ -15,3 +15,15 @@ BOOTFS_TYPE="ext4"
 # HK1 K8S uses AIC8800 for WiFi/BT via SDIO
 # Verified with Android ADB logs showing aicbsp and aicbt_patch_table_load
 # AIC8800 DKMS modules are installed via radxa-aic8800 extension
+AIC8800_TYPE="sdio"
+ENABLE_EXTENSIONS="radxa-aic8800 bluetooth-hciattach"
+EXTENSIONS="${ENABLE_EXTENSIONS}"
+BLUETOOTH_HCIATTACH_RKFILL_NUM=0
+BLUETOOTH_HCIATTACH_PARAMS="-s 115200 /dev/ttyS2 any 1500000 flow nosleep"
+
+function post_family_tweaks__hk1_k8s_use_ttyS1_console() {
+	if [[ -f "${SDCARD}/boot/boot.cmd" ]]; then
+		sed -i 's/console=ttyS2,1500000/console=ttyS1,1500000/g' "${SDCARD}/boot/boot.cmd"
+		mkimage -C none -A arm -T script -d "${SDCARD}/boot/boot.cmd" "${SDCARD}/boot/boot.scr" >/dev/null 2>&1
+	fi
+}
