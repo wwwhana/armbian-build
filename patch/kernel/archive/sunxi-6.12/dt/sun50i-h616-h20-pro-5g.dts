@@ -1,0 +1,106 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright (C) 2024 Armbian
+ */
+
+/dts-v1/;
+
+#include "sun50i-h616.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+
+/ {
+	model = "H20 Pro 5G";
+	compatible = "hechuang,h20-pro-5g\0allwinner,sun50i-h616";
+
+	aliases {
+		serial0 = &uart0;
+		ethernet0 = &emac1;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+};
+
+&mmc2 {
+	bus-width = <8>;
+	cap-mmc-highspeed;
+	cap-cmd23;
+	mmc-cache-ctrl;
+	non-removable;
+	max-frequency = <200000000>;
+	cap-erase;
+	mmc-high-capacity-erase-size;
+	no-sdio;
+	no-sd;
+	status = "okay";
+};
+
+&mmc0 {
+	bus-width = <4>;
+	cap-sd-highspeed;
+	cap-wait-while-busy;
+	no-sdio;
+	no-mmc;
+	sd-uhs-sdr50;
+	sd-uhs-ddr50;
+	sd-uhs-sdr104;
+	status = "okay";
+};
+
+&uart0 {
+	status = "okay";
+};
+
+&emac1 {
+	phy-mode = "rmii";
+	status = "okay";
+};
+
+&r_i2c {
+	status = "okay";
+
+	axp1530: pmic@36 {
+		compatible = "x-powers,axp1530";
+		reg = <0x36>;
+		wakeup-source;
+
+		regulators {
+			reg_dcdc1: dcdc1 {
+				regulator-always-on;
+				regulator-min-microvolt = <1160000>;
+				regulator-max-microvolt = <1160000>;
+				regulator-name = "vdd-cpu";
+			};
+
+			reg_dcdc2: dcdc2 {
+				regulator-always-on;
+				regulator-min-microvolt = <1160000>;
+				regulator-max-microvolt = <1160000>;
+				regulator-name = "vdd-gpu-sys";
+			};
+
+			reg_dcdc3: dcdc3 {
+				regulator-always-on;
+				regulator-min-microvolt = <1200000>;
+				regulator-max-microvolt = <1200000>;
+				regulator-name = "vdd-dram";
+			};
+
+			reg_aldo1: ldo1 {
+				regulator-always-on;
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <1800000>;
+				regulator-name = "vcc-sys";
+			};
+
+			reg_dldo2: ldo2 {
+				regulator-always-on;
+				regulator-min-microvolt = <3300000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-name = "vcc3v3-ext";
+			};
+		};
+	};
+};
