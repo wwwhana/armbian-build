@@ -21,38 +21,29 @@
 	chosen {
 		stdout-path = "serial0:115200n8";
 	};
+
+	reg_dldo2: regulator-dldo2 {
+		compatible = "regulator-fixed";
+		regulator-name = "vcc3v3-ext";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-always-on;
+	};
 };
 
 &mmc0 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&sdc0_pins>;
-	bus-width = <4>;
-	cd-gpios = <&pio 8 16 GPIO_ACTIVE_HIGH>;
-	cd-inverted;
-	no-mmc;
-	no-sdio;
+	vmmc-supply = <&reg_dldo2>;
+	vqmmc-supply = <&reg_dldo2>;
 	status = "okay";
 };
 
 &mmc2 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&sdc2_pins>;
-	bus-width = <8>;
-	cap-mmc-highspeed;
-	cap-cmd23;
-	cap-erase;
-	mmc-cache-ctrl;
-	mmc-ddr-1_8v;
-	mmc-hs200-1_8v;
-	no-sd;
-	no-sdio;
-	non-removable;
+	vmmc-supply = <&reg_dldo2>;
+	vqmmc-supply = <&reg_dldo2>;
 	status = "okay";
 };
 
 &uart0 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&uart0_pins>;
 	status = "okay";
 };
 
@@ -65,45 +56,8 @@
 	status = "okay";
 
 	axp1530: pmic@36 {
-		compatible = "x-powers,axp1530";
+		compatible = "x-powers,axp1530", "x-powers,axp152";
 		reg = <0x36>;
 		wakeup-source;
-
-		regulators {
-			reg_dcdc1: dcdc1 {
-				regulator-always-on;
-				regulator-min-microvolt = <1160000>;
-				regulator-max-microvolt = <1160000>;
-				regulator-name = "vdd-cpu";
-			};
-
-			reg_dcdc2: dcdc2 {
-				regulator-always-on;
-				regulator-min-microvolt = <1160000>;
-				regulator-max-microvolt = <1160000>;
-				regulator-name = "vdd-gpu-sys";
-			};
-
-			reg_dcdc3: dcdc3 {
-				regulator-always-on;
-				regulator-min-microvolt = <1200000>;
-				regulator-max-microvolt = <1200000>;
-				regulator-name = "vdd-dram";
-			};
-
-			reg_aldo1: ldo1 {
-				regulator-always-on;
-				regulator-min-microvolt = <1800000>;
-				regulator-max-microvolt = <1800000>;
-				regulator-name = "vcc-sys";
-			};
-
-			reg_dldo2: ldo2 {
-				regulator-always-on;
-				regulator-min-microvolt = <3300000>;
-				regulator-max-microvolt = <3300000>;
-				regulator-name = "vcc3v3-ext";
-			};
-		};
 	};
 };
