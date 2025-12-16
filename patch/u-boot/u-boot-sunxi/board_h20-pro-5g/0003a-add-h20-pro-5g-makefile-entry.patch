@@ -1,0 +1,22 @@
+From: Armbian <build@armbian.com>
+Date: Mon, 16 Dec 2024 12:00:00 +0900
+Subject: [PATCH] arm: dts: sun50i-h616: Add H20 Pro 5G to device tree Makefile
+
+Add sun50i-h616-h20-pro-5g.dtb to the H616 device tree build list.
+
+---
+ arch/arm/dts/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+index 7b1f17b89f..d0e7c67691 100644
+--- a/arch/arm/dts/Makefile
++++ b/arch/arm/dts/Makefile
+@@ -836,6 +836,7 @@ dtb-$(CONFIG_MACH_SUN50I_H616) += \
+ dtb-$(CONFIG_MACH_SUN50I_H616) += \
+ 	sun50i-h616-orangepi-zero2.dtb \
+ 	sun50i-h618-orangepi-zero3.dtb \
++	sun50i-h616-h20-pro-5g.dtb \
+ 	sun50i-h616-x96-mate.dtb
+ dtb-$(CONFIG_MACH_SUN50I) += \
+ 	sun50i-a64-amarula-relic.dtb \
