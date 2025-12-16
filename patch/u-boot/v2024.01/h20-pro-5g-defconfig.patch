@@ -5,8 +5,8 @@ Subject: [PATCH] Add h20_pro_5g_defconfig
 
 Signed-off-by: Armbian <build@armbian.com>
 ---
- configs/h20_pro_5g_defconfig | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ configs/h20_pro_5g_defconfig | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
  create mode 100644 configs/h20_pro_5g_defconfig
 
 diff --git a/configs/h20_pro_5g_defconfig b/configs/h20_pro_5g_defconfig
@@ -14,7 +14,7 @@ new file mode 100644
 index 0000000000..d30e3671fc
 --- /dev/null
 +++ b/configs/h20_pro_5g_defconfig
-@@ -0,0 +1,29 @@
+@@ -0,0 +1,32 @@
 +CONFIG_ARM=y
 +CONFIG_ARCH_SUNXI=y
 +CONFIG_DEFAULT_DEVICE_TREE="sun50i-h616-h20-pro-5g"
@@ -44,5 +44,8 @@ index 0000000000..d30e3671fc
 +CONFIG_SUPPORT_EMMC_BOOT=y
 +CONFIG_USB_EHCI_HCD=y
 +CONFIG_USB_OHCI_HCD=y
++CONFIG_VIDEO=y
++CONFIG_SYS_WHITE_ON_BLACK=y
++CONFIG_SUNXI_HDMI=y
 -- 
 2.34.1

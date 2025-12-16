@@ -8,8 +8,8 @@ H616 dtb 목록에 H20 Pro 5G를 추가하고 최소 DTS를 생성합니다.
 Signed-off-by: Armbian <build@armbian.com>
 ---
  arch/arm/dts/Makefile                   |  1 +
- arch/arm/dts/sun50i-h616-h20-pro-5g.dts | 72 +++++++++++++++++++++++++++++
- 2 files changed, 73 insertions(+)
+ arch/arm/dts/sun50i-h616-h20-pro-5g.dts | 78 +++++++++++++++++++++++++++++
+ 2 files changed, 79 insertions(+)
  create mode 100644 arch/arm/dts/sun50i-h616-h20-pro-5g.dts
 
 diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
@@ -101,6 +101,14 @@ index 0000000000..33edb1f6af
 +
 +&emac0 {
 +	phy-mode = "rmii";
++	status = "okay";
++};
++
++&hdmi {
++	status = "okay";
++};
++
++&de {
 +	status = "okay";
 +};
 --

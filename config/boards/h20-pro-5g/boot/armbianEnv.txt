@@ -1,0 +1,11 @@
+# H20-Pro-5G boot environment variables
+# Console output configuration
+verbosity=1
+console=ttyS0,115200 tty0
+
+# HDMI display console support
+extraargs=console=tty0
+
+# Boot source (auto-detected)
+# Available options: mmc0, mmc2, nand, usb
+bootloader_location=mmc
