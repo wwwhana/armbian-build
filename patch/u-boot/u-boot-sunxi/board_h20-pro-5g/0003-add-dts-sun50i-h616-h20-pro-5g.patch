@@ -1,0 +1,107 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Armbian <build@armbian.com>
+Date: Sat, 14 Dec 2024 22:40:00 +0900
+Subject: [PATCH] arm: dts: sun50i-h616: add H20 Pro 5G
+
+H616 dtb 목록에 H20 Pro 5G를 추가하고 최소 DTS를 생성합니다.
+
+Signed-off-by: Armbian <build@armbian.com>
+---
+ arch/arm/dts/Makefile                   |  1 +
+ arch/arm/dts/sun50i-h616-h20-pro-5g.dts | 72 +++++++++++++++++++++++++++++
+ 2 files changed, 73 insertions(+)
+ create mode 100644 arch/arm/dts/sun50i-h616-h20-pro-5g.dts
+
+diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+index 7b1f17b89f..d0e7c67691 100644
+--- a/arch/arm/dts/Makefile
++++ b/arch/arm/dts/Makefile
+@@ -836,6 +836,7 @@ dtb-$(CONFIG_MACH_SUN50I_H616) += \
+ dtb-$(CONFIG_MACH_SUN50I_H616) += \
+ 	sun50i-h616-orangepi-zero2.dtb \
+ 	sun50i-h618-orangepi-zero3.dtb \
++	sun50i-h616-h20-pro-5g.dtb \
+ 	sun50i-h616-x96-mate.dtb
+ dtb-$(CONFIG_MACH_SUN50I) += \
+ 	sun50i-a64-amarula-relic.dtb \
+
+diff --git a/arch/arm/dts/sun50i-h616-h20-pro-5g.dts b/arch/arm/dts/sun50i-h616-h20-pro-5g.dts
+new file mode 100644
+index 0000000000..33edb1f6af
+--- /dev/null
++++ b/arch/arm/dts/sun50i-h616-h20-pro-5g.dts
+@@ -0,0 +1,72 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Copyright (C) 2024 Armbian
++ */
++
++/dts-v1/;
++
++#include "sun50i-h616.dtsi"
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/interrupt-controller/arm-gic.h>
++
++/ {
++	model = "H20 Pro 5G";
++	compatible = "hechuang,h20-pro-5g", "allwinner,sun50i-h616";
++
++	aliases {
++		serial0 = &uart0;
++		ethernet0 = &emac0;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++
++	reg_vcc3v3: regulator-vcc3v3 {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc3v3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		regulator-always-on;
++	};
++};
++
++&i2c0 {
++	status = "disabled";
++};
++
++&mmc0 {
++	broken-cd;
++	bus-width = <4>;
++	vmmc-supply = <&reg_vcc3v3>;
++	vqmmc-supply = <&reg_vcc3v3>;
++	pinctrl-names = "default";
++	pinctrl-0 = <&mmc0_pins>;
++	status = "okay";
++};
++
++&mmc2 {
++	bus-width = <8>;
++	non-removable;
++	cap-mmc-hw-reset;
++	vmmc-supply = <&reg_vcc3v3>;
++	vqmmc-supply = <&reg_vcc3v3>;
++	pinctrl-names = "default";
++	pinctrl-0 = <&mmc2_pins>;
++	status = "okay";
++};
++
++&pio {
++	vcc-pc-supply = <&reg_vcc3v3>;
++	vcc-pf-supply = <&reg_vcc3v3>;
++	vcc-pg-supply = <&reg_vcc3v3>;
++};
++
++&uart0 {
++	status = "okay";
++};
++
++&emac0 {
++	phy-mode = "rmii";
++	status = "okay";
++};
+--
+2.34.1

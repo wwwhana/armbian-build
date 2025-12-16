@@ -1,0 +1,26 @@
+--- a/Documentation/devicetree/bindings/mfd/x-powers,axp152.yaml
++++ b/Documentation/devicetree/bindings/mfd/x-powers,axp152.yaml
+@@ -71,6 +71,7 @@ allOf:
+               - x-powers,axp15060
+               - x-powers,axp305
+               - x-powers,axp313a
++              - x-powers,axp1530
+               - x-powers,axp323
+
+     then:
+@@ -84,6 +85,7 @@ allOf:
+             enum:
+               - x-powers,axp313a
+               - x-powers,axp323
++              - x-powers,axp1530
+               - x-powers,axp15060
+               - x-powers,axp717
+
+@@ -103,6 +105,7 @@ properties:
+           - x-powers,axp223
+           - x-powers,axp313a
+           - x-powers,axp323
++          - x-powers,axp1530
+           - x-powers,axp717
+           - x-powers,axp803
+           - x-powers,axp806

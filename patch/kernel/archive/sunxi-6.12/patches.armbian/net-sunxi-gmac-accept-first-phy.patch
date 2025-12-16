@@ -1,0 +1,27 @@
+--- a/drivers/net/ethernet/allwinner/sunxi-gmac.c
++++ b/drivers/net/ethernet/allwinner/sunxi-gmac.c
+@@ -626,3 +626,4 @@ static int geth_phy_init(struct net_device *ndev)
+     struct phy_device *phydev = ndev->phydev;
+     u32 supported = 0, advertising = 0;
++    struct phy_device *fallback_phydev = NULL;
+     /* Fixup the phy interface type */
+@@ -677,6 +678,10 @@ static int geth_phy_init(struct net_device *ndev)
+                 phydev_tmp->phy_id == 0x00 || phydev_tmp->phy_id == AC300_ID)
+                 continue;
+
++            if (!fallback_phydev) {
++                fallback_phydev = phydev_tmp;
++                g_phy_addr = addr;
++            }
+             if (phydev_tmp->phy_id == EPHY_ID || phydev_tmp->phy_id == IP101G_ID) {
+                 phydev = phydev_tmp;
+                 g_phy_addr = addr;
+@@ -684,6 +689,8 @@ static int geth_phy_init(struct net_device *ndev)
+                 break;
+             }
+         }
++        if (!phydev && fallback_phydev)
++            phydev = fallback_phydev;
+     }
+
+     if (!phydev) {

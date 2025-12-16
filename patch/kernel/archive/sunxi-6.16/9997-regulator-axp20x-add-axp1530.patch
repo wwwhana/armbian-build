@@ -1,0 +1,57 @@
+--- a/drivers/regulator/axp20x-regulator.c
++++ b/drivers/regulator/axp20x-regulator.c
+@@ -785,6 +785,44 @@ static const struct regulator_desc axp313a_regulators[] = {
+ 	AXP_DESC_FIXED(AXP313A, RTC_LDO, "rtc-ldo", "vin1", 1800),
+ };
+
++static const struct linear_range axp1530_dcdc1_ranges[] = {
++	REGULATOR_LINEAR_RANGE(500000,   0,  70,  10000),
++	REGULATOR_LINEAR_RANGE(1220000, 71,  87,  20000),
++	REGULATOR_LINEAR_RANGE(1600000, 88, 106, 100000),
++};
++
++static const struct linear_range axp1530_dcdc2_ranges[] = {
++	REGULATOR_LINEAR_RANGE(500000,   0, 70, 10000),
++	REGULATOR_LINEAR_RANGE(1220000, 71, 87, 20000),
++};
++
++static const struct linear_range axp1530_dcdc3_ranges[] = {
++	REGULATOR_LINEAR_RANGE(500000,   0,  70, 10000),
++	REGULATOR_LINEAR_RANGE(1220000, 71, 102, 20000),
++};
++
++static const struct regulator_desc axp1530_regulators[] = {
++	AXP_DESC_RANGES(AXP1530, DCDC1, "dcdc1", "vin1",
++			axp1530_dcdc1_ranges, AXP313A_DCDC1_NUM_VOLTAGES,
++			AXP1530_DCDC1_CONTROL, AXP313A_DCDC_V_OUT_MASK,
++			AXP1530_OUTPUT_CONTROL, BIT(0)),
++	AXP_DESC_RANGES(AXP1530, DCDC2, "dcdc2", "vin2",
++			axp1530_dcdc2_ranges, AXP313A_DCDC23_NUM_VOLTAGES,
++			AXP1530_DCDC2_CONTROL, AXP313A_DCDC_V_OUT_MASK,
++			AXP1530_OUTPUT_CONTROL, BIT(1)),
++	AXP_DESC_RANGES(AXP1530, DCDC3, "dcdc3", "vin3",
++			axp1530_dcdc3_ranges, AXP313A_DCDC23_NUM_VOLTAGES,
++			AXP1530_DCDC3_CONTROL, AXP313A_DCDC_V_OUT_MASK,
++			AXP1530_OUTPUT_CONTROL, BIT(2)),
++	AXP_DESC(AXP1530, ALDO1, "aldo1", "vin1", 500, 3500, 100,
++		 AXP1530_ALDO1_CONTROL, AXP313A_LDO_V_OUT_MASK,
++		 AXP1530_OUTPUT_CONTROL, BIT(3)),
++	AXP_DESC(AXP1530, DLDO1, "dldo1", "vin1", 500, 3500, 100,
++		 AXP1530_DLDO1_CONTROL, AXP313A_LDO_V_OUT_MASK,
++		 AXP1530_OUTPUT_CONTROL, BIT(4)),
++};
++
+ static const struct linear_range axp323_dcdc1_ranges[] = {
+ 	REGULATOR_LINEAR_RANGE(500000,   0,  70,  10000),
+ 	REGULATOR_LINEAR_RANGE(1220000, 71,  87,  20000),
+@@ -1508,6 +1546,10 @@ static int axp20x_regulator_probe(struct platform_device *pdev)
+ 		drivevbus = of_property_read_bool(pdev->dev.parent->of_node,
+ 						  "x-powers,drive-vbus-en");
+ 		break;
++	case AXP1530_ID:
++		regulators = axp1530_regulators;
++		nregulators = AXP1530_REG_ID_MAX;
++		break;
+ 	case AXP323_ID:
+ 		regulators = axp323_regulators;
+ 		nregulators = AXP323_REG_ID_MAX;

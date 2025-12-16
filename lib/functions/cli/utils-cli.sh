@@ -258,7 +258,7 @@ function cli_standard_relaunch_docker_or_sudo() {
 					: # congrats, don't have it, didn't wanna it.
 				else
 					display_alert "Docker is installed, but not usable" "can't use Docker; check your Docker config / groups / etc" "warn"
-					exit_if_countdown_not_aborted 10 "Docker installed but not usable"
+					# exit_if_countdown_not_aborted 10 "Docker installed but not usable"
 				fi
 			fi
 		fi

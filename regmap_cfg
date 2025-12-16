@@ -1,0 +1,45 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Armbian Builder <info@armbian.com>
+Date: Sat, 14 Dec 2024 00:00:00 +0000
+Subject: [PATCH] mfd: axp20x: add support for AXP1530 PMIC
+
+The AXP1530 is a PMIC chip produced by X-Powers, it can be connected
+via an I2C bus. The AXP1530 is typically used on boards with Allwinner
+H616/H313/H618 SoC. It provides 3 DCDC converters and 2 LDOs.
+
+Add support for the AXP1530 to the AXP20x MFD driver.
+
+Signed-off-by: Armbian Builder <info@armbian.com>
+---
+ drivers/mfd/axp20x.c       | 18 ++++++++++++++++++
+ include/linux/mfd/axp20x.h | 21 +++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
+
+diff --git a/drivers/mfd/axp20x.c b/drivers/mfd/axp20x.c
+index 111111111111..222222222222 100644
+--- a/drivers/mfd/axp20x.c
++++ b/drivers/mfd/axp20x.c
+@@ -42,6 +42,7 @@ static const char * const axp20x_model_names[] = {
+"AXP223",
+"AXP288",
+"AXP313a",
++"AXP1530",
+"AXP717",
+"AXP803",
+"AXP806",
+@@ -1038,6 +1039,11 @@ static struct mfd_cell axp313a_cells[] = {
+MFD_CELL_RES("axp313a-pek", axp313a_pek_resources),
+};
+
++static struct mfd_cell axp1530_cells[] = {
++MFD_CELL_BASIC("axp20x-regulator", NULL, NULL, 0, 1),
++MFD_CELL_RES("axp313a-pek", axp313a_pek_resources),
++};
++
+ static struct mfd_cell axp717_cells[] = {
+MFD_CELL_NAME("axp20x-regulator"),
+MFD_CELL_RES("axp20x-pek", axp717_pek_resources),
+@@ -1291,6 +1297,12 @@ int axp20x_match_device(struct axp20x_dev *axp20x)
+CONTRIBUTING.md
+axp20x-
+=

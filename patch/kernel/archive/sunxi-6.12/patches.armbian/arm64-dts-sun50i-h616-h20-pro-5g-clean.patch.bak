@@ -1,0 +1,380 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Armbian CI <noreply@armbian.com>
+Date: Sat, 14 Dec 2024 20:50:00 +0900
+Subject: [PATCH] arm64: dts: sun50i-h616: add H20 Pro 5G (clean, x96-mate
+ style)
+
+Minimal H20 Pro 5G board DTS aligned to mainline style (similar to
+sun50i-h616-x96-mate). Removes BSP bulk nodes and keeps only board
+specific regulators, storage, WiFi/BT, Ethernet RMII, HDMI, USB and PMIC.
+
+Signed-off-by: Armbian <build@armbian.com>
+---
+ arch/arm64/boot/dts/allwinner/sun50i-h616-h20-pro-5g.dts | 356 ++++++++++++++++++++
+ 1 file changed, 356 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h616-h20-pro-5g.dts b/arch/arm64/boot/dts/allwinner/sun50i-h616-h20-pro-5g.dts
+new file mode 100644
+index 0000000000..1111111111
+--- /dev/null
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h616-h20-pro-5g.dts
+@@ -0,0 +1,356 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Copyright (C) 2024 Armbian
++ */
++
++/dts-v1/;
++
++#include "sun50i-h616.dtsi"
++#include "sun50i-h616-cpu-opp.dtsi"
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/interrupt-controller/arm-gic.h>
++
++/ {
++	model = "H20 Pro 5G";
++	compatible = "hechuang,h20-pro-5g", "allwinner,sun50i-h616";
++
++	aliases {
++		ethernet0 = &emac0;
++		serial0 = &uart0;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++
++	reg_vcc5v: regulator-vcc5v {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc-5v";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		regulator-always-on;
++	};
++
++	reg_dldo2: regulator-dldo2 {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc-3v3-ext";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		regulator-always-on;
++	};
++
++	reg_vcc1v8: regulator-vcc1v8 {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc-1v8-fixed";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++		regulator-always-on;
++	};
++
++	x32clk_fanout: x32clk-fanout {
++		compatible = "fixed-clock";
++		#clock-cells = <0>;
++		clock-frequency = <32768>;
++		clock-output-names = "x32clk_fanout";
++	};
++
++	wifi_pwrseq: wifi-pwrseq {
++		compatible = "mmc-pwrseq-simple";
++		clocks = <&x32clk_fanout>;
++		clock-names = "ext_clock";
++		pinctrl-names = "default";
++		pinctrl-0 = <&wifi_32k_clk_pin>;
++		post-power-on-delay-ms = <100>;
++		power-off-delay-us = <500000>;
++		reset-gpios = <&pio 6 12 GPIO_ACTIVE_HIGH>; /* PG12 */
++	};
++
++	bt_control {
++		compatible = "realtek,rtl8822cs-bt";
++		uart-port = <2>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&bt_control_pins &bt_wake_host_pins>;
++		reset-gpios = <&pio 6 2 GPIO_ACTIVE_HIGH>;   /* PG2 */
++		rts-gpios = <&pio 7 5 GPIO_ACTIVE_HIGH>;     /* PH5 */
++		wake-host-gpios = <&pio 6 1 GPIO_ACTIVE_HIGH>; /* PG1 */
++		status = "okay";
++	};
++
++	hdmi-connector {
++		compatible = "hdmi-connector";
++		type = "a";
++
++		port {
++			hdmi_con_in: endpoint {
++				remote-endpoint = <&hdmi_out_ep>;
++			};
++		};
++	};
++};
++
++&mmc0 {
++	bus-width = <4>;
++	broken-cd;
++	pinctrl-names = "default";
++	pinctrl-0 = <&mmc0_pins>;
++	cap-sd-highspeed;
++	vmmc-supply = <&reg_dldo2>;
++	vqmmc-supply = <&reg_dldo2>;
++	status = "okay";
++};
++
++&mmc1 {
++	bus-width = <4>;
++	pinctrl-names = "default";
++	pinctrl-0 = <&mmc1_pins>;
++	keep-power-in-suspend;
++	no-mmc;
++	no-sd;
++	non-removable;
++	mmc-pwrseq = <&wifi_pwrseq>;
++	cap-sdio-irq;
++	cap-sd-highspeed;
++	sd-uhs-sdr50;
++	sd-uhs-ddr50;
++	sd-uhs-sdr104;
++	sunxi-dis-signal-vol-sw;
++	sdio-used-1v8;
++	ignore-pm-notify;
++	vmmc-supply = <&reg_dldo2>;
++	vqmmc-supply = <&reg_vcc1v8>;
++	status = "okay";
++
++	#address-cells = <1>;
++	#size-cells = <0>;
++	wifi: wifi@1 { reg = <1>; compatible = "aic,aic8800"; };
++};
++
++&mmc2 {
++	bus-width = <8>;
++	pinctrl-names = "default", "sleep";
++	pinctrl-0 = <&mmc2_pins_default &mmc2_pins_pc0>;
++	pinctrl-1 = <&mmc2_pins_sleep>;
++	non-removable;
++	no-sd;
++	no-sdio;
++	cap-mmc-highspeed;
++	cap-cmd23;
++	cap-erase;
++	mmc-cache-ctrl;
++	mmc-ddr-1_8v;
++	mmc-hs200-1_8v;
++	vmmc-supply = <&reg_dldo2>;
++	vqmmc-supply = <&reg_vcc1v8>;
++	status = "okay";
++};
++
++&uart0 { status = "okay"; };
++
++&uart2 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&uart2_pins>;
++	status = "okay";
++};
++
++&emac0 {
++	pinctrl-names = "default", "sleep";
++	pinctrl-0 = <&rmii_pins>;
++	pinctrl-1 = <&rmii_pins_sleep>;
++	phy-mode = "rmii";
++	phy-handle = <&rmii_phy>;
++	allwinner,tx-delay-ps = <700>;
++	allwinner,rx-delay-ps = <3100>;
++	status = "okay";
++};
++
++&mdio0 {
++	rmii_phy: ethernet-phy@0 {
++		compatible = "ethernet-phy-ieee802.3-c22";
++		reg = <0>;
++	};
++};
++
++&r_i2c {
++	status = "okay";
++	clock-frequency = <50000>;
++
++	axp1530: pmic@36 {
++		compatible = "x-powers,axp1530";
++		reg = <0x36>;
++		wakeup-source;
++
++		standby_param {
++			vcc-dram = <4>;
++		};
++
++		regulators {
++			dcdc1 {
++				regulator-name = "axp1530-dcdc1";
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++				regulator-step-delay-us = <25>;
++				regulator-final-delay-us = <50>;
++				regulator-always-on;
++				dcdc1-supply = <&reg_vcc5v>;
++			};
++
++			dcdc2 {
++				regulator-name = "axp1530-dcdc2";
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <1550000>;
++				regulator-step-delay-us = <25>;
++				regulator-final-delay-us = <50>;
++				regulator-ramp-delay = <200>;
++				regulator-always-on;
++				dcdc2-supply = <&reg_vcc5v>;
++			};
++
++			dcdc3 {
++				regulator-name = "axp1530-dcdc3";
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <1850000>;
++				regulator-step-delay-us = <25>;
++				regulator-final-delay-us = <50>;
++				regulator-always-on;
++				dcdc3-supply = <&reg_vcc5v>;
++			};
++
++			reg_aldo1: aldo1 {
++				regulator-name = "axp1530-aldo1";
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-step-delay-us = <25>;
++				regulator-final-delay-us = <50>;
++				regulator-always-on;
++				aldo1-supply = <&reg_vcc5v>;
++			};
++
++			reg_dldo1: dldo1 {
++				regulator-name = "axp1530-dldo1";
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-step-delay-us = <25>;
++				regulator-final-delay-us = <50>;
++				regulator-always-on;
++				dldo1-supply = <&reg_vcc5v>;
++			};
++		};
++	};
++};
++
++&ehci0 { status = "okay"; };
++&ohci0 { status = "okay"; };
++&ehci2 { status = "okay"; };
++&ohci2 { status = "okay"; };
++
++&usbotg {
++	dr_mode = "host";
++	status = "okay";
++};
++
++&usbphy {
++	usb0_vbus-supply = <&reg_vcc5v>;
++	usb1_vbus-supply = <&reg_vcc5v>;
++	usb2_vbus-supply = <&reg_vcc5v>;
++	usb3_vbus-supply = <&reg_vcc5v>;
++	status = "okay";
++};
++
++&de { status = "okay"; };
++
++&hdmi {
++	hvcc-supply = <&reg_aldo1>;
++	ddc-i2c-bus = <&i2c3>;
++	status = "okay";
++};
++
++&hdmi_out {
++	hdmi_out_ep: endpoint {
++		remote-endpoint = <&hdmi_con_in>;
++	};
++};
++
++&hdmi_phy { status = "okay"; };
++&ir { status = "okay"; };
++
++&pio {
++	vcc-pa-supply = <&reg_dldo2>;
++	vcc-pc-supply = <&reg_dldo2>;
++	vcc-pf-supply = <&reg_dldo2>;
++	vcc-pg-supply = <&reg_dldo2>;
++	vcc-ph-supply = <&reg_dldo2>;
++	vcc-pi-supply = <&reg_dldo2>;
++
++	wifi_32k_clk_pin: wifi-32k-clk {
++		pins = "PG10";
++		function = "x32kfout";
++		drive-strength = <2>;
++		pull = <1>;
++	};
++
++	uart2_pins: uart2-pins {
++		pins = "PH5", "PH6", "PH7", "PH8";
++		function = "uart2";
++		drive-strength = <1>;
++		pull = <1>;
++	};
++
++	wifi_reset_pin: wifi-reset {
++		pins = "PG12";
++		function = "gpio_out";
++		drive-strength = <2>;
++	};
++
++	bt_control_pins: bt-control {
++		pins = "PG2", "PH5";
++		function = "gpio_out";
++		drive-strength = <2>;
++	};
++
++	bt_wake_host_pins: bt-wake-host {
++		pins = "PG1";
++		function = "gpio_in";
++		drive-strength = <2>;
++		pull = <1>;
++	};
++
++	mmc2_pins_default: mmc2-default {
++		pins = "PC1", "PC5", "PC6", "PC8", "PC9",
++		       "PC10", "PC11", "PC13", "PC14", "PC15", "PC16";
++		function = "mmc";
++		drive-strength = <2>;
++		pull = <1>;
++	};
++
++	mmc2_pins_pc0: mmc2-pc0 {
++		pins = "PC0";
++		function = "mmc";
++		drive-strength = <2>;
++		pull = <2>;
++	};
++
++	mmc2_pins_sleep: mmc2-sleep {
++		pins = "PC0", "PC1", "PC5", "PC6", "PC8",
++		       "PC9", "PC10", "PC11", "PC13", "PC14", "PC15", "PC16";
++		function = "gpio_in";
++		drive-strength = <1>;
++		pull = <1>;
++	};
++
++	rmii_pins: rmii-pins {
++		pins = "PA0", "PA1", "PA2", "PA3", "PA4",
++		       "PA5", "PA6", "PA7", "PA8", "PA9";
++		function = "emac";
++		drive-strength = <2>;
++		pull = <1>;
++	};
++
++	rmii_pins_sleep: rmii-pins-sleep {
++		pins = "PA0", "PA1", "PA2", "PA3", "PA4",
++		       "PA5", "PA6", "PA7", "PA8", "PA9";
++		function = "gpio_in";
++		drive-strength = <1>;
++		pull = <1>;
++	};
++};
+ 
+ &i2c0 {
+ 	status = "disabled";
+ };
