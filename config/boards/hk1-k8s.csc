@@ -30,3 +30,17 @@ function post_family_tweaks__hk1_k8s_use_ttyS1_console() {
 		mkimage -C none -A arm -T script -d "${SDCARD}/boot/boot.cmd" "${SDCARD}/boot/boot.scr" >/dev/null 2>&1
 	fi
 }
+
+function post_family_tweaks__hk1_k8s_enable_ir() {
+	display_alert "Installing IR remote support" "ir-keytable" "info"
+
+	# Install IR keytable package for remote control support
+	chroot_sdcard_apt_get_install ir-keytable
+
+	# Ensure IR modules are loaded at boot
+	cat <<-EOF >> "${SDCARD}/etc/modules-load.d/ir-remote.conf"
+	# IR receiver modules for HK1-K8S
+	gpio_ir_recv
+	rc_core
+	EOF
+}
