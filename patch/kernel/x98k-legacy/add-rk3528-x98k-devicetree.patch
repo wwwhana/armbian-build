@@ -1,0 +1,12 @@
+diff --git a/arch/arm64/boot/dts/rockchip/Makefile b/arch/arm64/boot/dts/rockchip/Makefile
+index 000000000000..111111111111 100644
+--- a/arch/arm64/boot/dts/rockchip/Makefile
++++ b/arch/arm64/boot/dts/rockchip/Makefile
+@@ -100,6 +100,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3528-demo4-lp4-v10.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3528-evb1-ddr4-v10.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3528-evb1-ddr4-v10-linux.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3528-evb4-ddr4-v10.dtb
++dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3528-x98k.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3562-dictpen-test2-v20.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3562-evb1-lp4x-v10.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3562-evb1-lp4x-v10-linux.dtb
