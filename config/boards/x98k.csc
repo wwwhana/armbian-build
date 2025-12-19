@@ -5,11 +5,19 @@ BOOTCONFIG="tvbox_rk3528_defconfig"
 KERNEL_TARGET="legacy"
 FULL_DESKTOP="yes"
 BOOT_LOGO="desktop"
-BOOT_FDT_FILE="rockchip/rk3528-evb1-ddr4-v10.dtb"
+BOOT_FDT_FILE="rockchip/rk3528-x98k.dtb"
 BOOT_SCENARIO="spl-blobs"
 WIREGUARD="no"
 BOOT_SUPPORT_SPI="yes"
 BOOT_SPI_RKSPI_LOADER="yes"
 IMAGE_PARTITION_TABLE="gpt"
 BOOTFS_TYPE="ext4"
+
+# X98K uses AIC8800 for WiFi/BT via SDIO
+# AIC8800 DKMS modules are installed via radxa-aic8800 extension
+AIC8800_TYPE="sdio"
+ENABLE_EXTENSIONS="radxa-aic8800 bluetooth-hciattach"
+EXTENSIONS="${ENABLE_EXTENSIONS}"
+BLUETOOTH_HCIATTACH_RKFILL_NUM=0
+BLUETOOTH_HCIATTACH_PARAMS="-s 115200 /dev/ttyS2 any 1500000 flow nosleep"
 
