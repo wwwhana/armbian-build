@@ -3,13 +3,15 @@
  * Copyright (c) 2025 Armbian
  * Device Tree for X98K RK3528A TV Box
  *
- * Confirmed Hardware:
- * - SoC: Rockchip RK3528A (quad core, 4GB DDR4)
- * - Ethernet: Motorcomm YT8531 (PHY ID 0x00441400)
- * - WiFi: AIC8800 SDIO (USB dongle recommended)
+ * Hardware:
+ * - SoC: Rockchip RK3528A (quad-core Cortex-A53, 4GB DDR4)
+ * - Ethernet: Motorcomm YT8531 PHY (RMII mode, 100Mbps)
+ * - WiFi/BT: AIC8800 SDIO (requires out-of-tree driver)
  * - Storage: 32GB eMMC + SD card slot
- * - USB: 2.0 x2 + 3.0 x1
- * - UART: UART2 (ttyFIQ0) at 1500000 baud
+ * - USB: USB 2.0 x2 + USB 3.0 x1 (2.0 speed only)
+ * - Audio: HDMI, S/PDIF optical output
+ * - Display: HDMI up to 1080p
+ * - IR: PWM3-based receiver (disabled, GPIO conflict)
  */
 
 /dts-v1/;
@@ -124,6 +126,14 @@
 		vin-supply = <&vcc_3v3>;
 	};
 
+	/* FD628 LED Display Controller (7-segment display) */
+	fd628_dev: fd628-dev {
+		compatible = "amlogic,fd628_dev";
+		fd628_gpio_clk = <&gpio4 RK_PA3 GPIO_ACTIVE_HIGH>;
+		fd628_gpio_dat = <&gpio4 RK_PA2 GPIO_ACTIVE_HIGH>;
+		status = "okay";
+	};
+
 	vdd_logic: vdd-logic {
 		compatible = "pwm-regulator";
 		pwms = <&pwm2 0 5000 1>;
@@ -234,14 +244,14 @@
 		};
 	};
 
-	/* IR Receiver - PWM-based (GPIO4_PB6) from Android */
+	/* IR Receiver - PWM3-based (GPIO4_PB6) from Android */
 	ir-receiver {
 		compatible = "gpio-ir-receiver";
 		gpios = <&gpio4 RK_PB6 GPIO_ACTIVE_LOW>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&ir_recv_pin>;
 		linux,rc-map-name = "rc-beelink-gs1";
-		status = "okay";
+		status = "disabled"; /* Disabled: GPIO conflicts with PWM3, needs rockchip,remotectl-pwm */
 	};
 
 	/* S/PDIF Optical Audio */
@@ -252,7 +262,7 @@
 		status = "okay";
 
 		simple-audio-card,cpu {
-			sound-dai = <&spdif>;
+			sound-dai = <&spdif_8ch>;
 		};
 
 		simple-audio-card,codec {
@@ -394,6 +404,8 @@
 	status = "okay";
 	avdd-0v9-supply = <&vdd_0v9_s3>;
 	avdd-1v8-supply = <&vcc_1v8>;
+	/* Force safe resolution to avoid clock issues with non-standard modes */
+	rockchip,defaultmode = <16>; /* 1280x720@60Hz */
 };
 
 &hdmiphy {
@@ -507,9 +519,9 @@
 	status = "okay";
 };
 
-/* PWM for IR and Power LED */
+/* PWM3 - Used for IR receiver in Android, disabled for now */
 &pwm3 {
-	status = "okay";
+	status = "disabled";
 	pinctrl-names = "default";
 	pinctrl-0 = <&pwm3_pins>;
 };
@@ -536,7 +548,7 @@
 };
 
 /* S/PDIF for Optical Audio */
-&spdif {
+&spdif_8ch {
 	status = "okay";
 	pinctrl-0 = <&spdifm0_pins>;
 	#sound-dai-cells = <0>;
@@ -559,32 +571,6 @@
 	wifi {
 		wifi_enable_h: wifi-enable-h {
 			rockchip,pins = <1 RK_PA7 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-		wifi_32k_clk: wifi-32k-clk {
-			rockchip,pins = <1 RK_PB3 1 &pcfg_pull_none>;
-		};
-
-		wifi_host_wake: wifi-host-wake {
-			rockchip,pins = <1 RK_PA6 RK_FUNC_GPIO &pcfg_pull_up>;
-		};
-	};
-
-	bluetooth {
-		uart2_gpios: uart2-gpios {
-			rockchip,pins = <1 RK_PB2 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-		bt_reset: bt-reset {
-			rockchip,pins = <1 RK_PC1 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-		bt_wake: bt-wake {
-			rockchip,pins = <1 RK_PB4 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-		bt_host_wake: bt-host-wake {
-			rockchip,pins = <1 RK_PC2 RK_FUNC_GPIO &pcfg_pull_up>;
 		};
 	};
 
