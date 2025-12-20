@@ -509,9 +509,24 @@ function enable_extension() {
 	# get a new list of functions after sourcing the extension
 	after_function_list="$(compgen -A function)"
 
+	# ensure the temporary directory exists
+	mkdir -p "${EXTENSION_MANAGER_TMP_DIR:-/tmp}"
+
+	# create temporary files for comm input
+	local tmp_before_file tmp_after_file
+	tmp_before_file="$(mktemp "${EXTENSION_MANAGER_TMP_DIR:-/tmp}/comm_before_XXXXXX")"
+	tmp_after_file="$(mktemp "${EXTENSION_MANAGER_TMP_DIR:-/tmp}/comm_after_XXXXXX")"
+
+	# ensure temporary files are removed on exit
+	trap "rm -f \"${tmp_before_file}\" \"${tmp_after_file}\"" RETURN
+
+	# populate temporary files with sorted lists
+	echo "$before_function_list" | LC_ALL=C sort > "${tmp_before_file}"
+	echo "$after_function_list" | LC_ALL=C sort > "${tmp_after_file}"
+
 	# compare before and after, thus getting the functions defined by the extension.
 	# comm is oldskool. we like it. go "man comm" to understand -13 below
-	new_function_list="$(comm -13 <(echo "$before_function_list" | sort) <(echo "$after_function_list" | sort))"
+	new_function_list="$(comm -13 "${tmp_before_file}" "${tmp_after_file}")"
 
 	# iterate over defined functions, store them in global associative array extension_function_info
 	for newly_defined_function in ${new_function_list}; do
