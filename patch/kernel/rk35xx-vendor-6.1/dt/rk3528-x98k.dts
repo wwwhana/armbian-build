@@ -31,7 +31,7 @@
 		ethernet0 = &gmac0;
 		mmc0 = &sdmmc;    /* SD card - like working f7cb62724 */
 		mmc1 = &sdhci;    /* eMMC */
-		/* sdio0 (WiFi) will be auto-assigned to mmc2 */
+		sdio0 = &sdio0;   /* WiFi */
 	};
 
 	chosen: chosen {
@@ -192,9 +192,9 @@ wireless_bluetooth: wireless-bluetooth {
 	pinctrl-1 = <&uart2m1_gpios>;
 	clocks = <&ext_clock>;
 	clock-names = "ext_clock";
-	BT,reset_gpio = <&gpio3 RK_PC1 GPIO_ACTIVE_LOW>;      /* GPIO3_PC1 */
-	BT,wake_gpio = <&gpio3 RK_PB4 GPIO_ACTIVE_HIGH>;      /* GPIO3_PB4 */
-	BT,wake_host_irq = <&gpio3 RK_PC2 GPIO_ACTIVE_HIGH>;  /* GPIO3_PC2 */
+	BT,reset_gpio = <&gpio1 RK_PC1 GPIO_ACTIVE_LOW>;      /* GPIO3_PC1 */
+	BT,wake_gpio = <&gpio1 RK_PB4 GPIO_ACTIVE_HIGH>;      /* GPIO3_PB4 */
+	BT,wake_host_irq = <&gpio1 RK_PC2 GPIO_ACTIVE_HIGH>;  /* GPIO3_PC2 */
 	status = "okay";
 };
 
@@ -225,16 +225,16 @@ wireless_bluetooth: wireless-bluetooth {
 		};
 	};
 
-	/* AIC8800 WiFi/BT power sequence - SDIO ID: C8A1:0082/0182 */
+	/* AIC8800 WiFi/BT power sequence */
 	sdio_pwrseq: sdio-pwrseq {
 		compatible = "mmc-pwrseq-simple";
 		pinctrl-names = "default";
-		pinctrl-0 = <&wifi_enable_h>;
+		pinctrl-0 = <&wifi_enable_h &wifi_32k>;
 		clocks = <&ext_clock>;
 		clock-names = "ext_clock";
-		post-power-on-delay-ms = <200>;  /* Back to working f7cb62724 value */
+		post-power-on-delay-ms = <200>;
 		power-off-delay-us = <500000>;
-		reset-gpios = <&gpio3 RK_PA7 GPIO_ACTIVE_LOW>;  /* Back to working f7cb62724 */
+		reset-gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_LOW>;  /* GPIO1_PA7 */
 	};
 
 	/* ADC Keys */
@@ -615,8 +615,6 @@ wireless_bluetooth: wireless-bluetooth {
 	non-removable;
 	sd-uhs-sdr12;
 	sd-uhs-sdr25;
-	vmmc-supply = <&vcc_3v3>;
-	vqmmc-supply = <&vcc_1v8>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&sdio0_bus4 &sdio0_cmd &sdio0_clk>;
 	status = "okay";
@@ -649,14 +647,8 @@ wireless_bluetooth: wireless-bluetooth {
 		};
 	};
 
-	bluetooth {
-		uart2m1_gpios: uart2m1-gpios {
-			rockchip,pins = <1 RK_PB2 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-	};
-
 	wireless-wlan {
-		wifi_host_wake: wifi-host-wake {
+		wifi_host_wake: wifi-host-wake-irq {
 			rockchip,pins = <1 RK_PA6 RK_FUNC_GPIO &pcfg_pull_down>;
 		};
 	};
@@ -676,13 +668,13 @@ wireless_bluetooth: wireless-bluetooth {
 		};
 	};
 
-	wifi {
+	sdio-pwrseq {
 		wifi_enable_h: wifi-enable-h {
-			rockchip,pins = <1 RK_PA7 RK_FUNC_GPIO &pcfg_pull_none>;
+			rockchip,pins = <1 RK_PA7 RK_FUNC_GPIO &pcfg_output_low_pull_none>;
 		};
 
 		wifi_32k: wifi-32k {
-			rockchip,pins = <1 RK_PC3 1 &pcfg_pull_none>;  /* CLK32K_OUT */
+			rockchip,pins = <1 RK_PC3 1 &pcfg_pull_none>;
 		};
 	};
 
@@ -715,17 +707,8 @@ wireless_bluetooth: wireless-bluetooth {
 	};
 
 	bluetooth {
-		/* Bluetooth GPIO configuration */
-		uart2m0_gpios: uart2m0-gpios {
-			rockchip,pins = <3 RK_PA2 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-		bt_reset: bt-reset {
-			rockchip,pins = <3 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-		bt_wake_host: bt-wake-host {
-			rockchip,pins = <3 RK_PD1 RK_FUNC_GPIO &pcfg_pull_down>;
+		uart2m1_gpios: uart2m1-gpios {
+			rockchip,pins = <1 RK_PB2 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
 	};
 };

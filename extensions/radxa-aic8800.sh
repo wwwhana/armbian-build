@@ -60,4 +60,8 @@ function post_install_kernel_debs__install_aic8800_dkms_package() {
 		[Link]
 		NamePolicy=kernel
 	EOF'
+
+	# Fix firmware name mismatch for aic8800 (driver looks for _h_ variant)
+	use_clean_environment="yes" chroot_sdcard "mkdir -p /lib/firmware/aic8800/SDIO/aic8800D80/"
+	use_clean_environment="yes" chroot_sdcard "ln -sf fmacfw_8800d80_u02.bin /lib/firmware/aic8800/SDIO/aic8800D80/fmacfw_8800d80_h_u02.bin || true"
 }
