@@ -2,16 +2,6 @@
 /*
  * Copyright (c) 2025 Armbian
  * Device Tree for X98K RK3528A TV Box
- *
- * Hardware:
- * - SoC: Rockchip RK3528A (quad-core Cortex-A53, 4GB DDR4)
- * - Ethernet: Motorcomm YT8531 PHY (RMII mode, 100Mbps)
- * - WiFi/BT: AIC8800 SDIO (requires out-of-tree driver)
- * - Storage: 32GB eMMC + SD card slot
- * - USB: USB 2.0 x2 + USB 3.0 x1 (2.0 speed only)
- * - Audio: HDMI, S/PDIF optical output
- * - Display: HDMI up to 1080p
- * - IR: PWM3-based receiver (disabled, GPIO conflict)
  */
 
 /dts-v1/;
@@ -34,7 +24,7 @@
 	};
 
 	chosen: chosen {
-		bootargs = ""; /* Clear any inherited hardcoded bootargs */
+		bootargs = "";
 	};
 
 	ext_clock: ext-clock {
@@ -82,7 +72,6 @@
 		vin-supply = <&vcc5v0_sys>;
 	};
 
-	/* SD Card dedicated power supply - prevents kernel from disabling SD power */
 	vcc_sd: vcc-sd {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc_sd";
@@ -97,7 +86,6 @@
 		vin-supply = <&vcc_3v3>;
 	};
 
-	/* SD Card I/O voltage - fixed 3.3V for non-UHS mode */
 	vccio_sd: vccio-sd {
 		compatible = "regulator-fixed";
 		regulator-name = "vccio_sd";
@@ -132,7 +120,6 @@
 		vin-supply = <&vcc_3v3>;
 	};
 
-	/* FD628 LED Display Controller (7-segment display) */
 	fd628_dev: fd628-dev {
 		compatible = "amlogic,fd628_dev";
 		fd628_gpio_clk = <&gpio4 RK_PA3 GPIO_ACTIVE_HIGH>;
@@ -182,61 +169,43 @@
 		status = "okay";
 	};
 
-/* Bluetooth - AIC8800 (use UART2 MUX1 to avoid GPIO conflicts) */
-wireless_bluetooth: wireless-bluetooth {
-	compatible = "bluetooth-platdata";
-	uart_rts_gpios = <&gpio1 RK_PB2 GPIO_ACTIVE_HIGH>;  /* GPIO1_PB2 for UART2M1 RTS */
-	pinctrl-names = "default", "rts_gpio";
-	pinctrl-0 = <&uart2m1_rtsn>;
-	pinctrl-1 = <&uart2m1_gpios>;
-	clocks = <&ext_clock>;
-	clock-names = "ext_clock";
-	BT,reset_gpio = <&gpio3 RK_PC1 GPIO_ACTIVE_LOW>;      /* GPIO3_PC1 */
-	BT,wake_gpio = <&gpio3 RK_PB4 GPIO_ACTIVE_HIGH>;      /* GPIO3_PB4 */
-	BT,wake_host_irq = <&gpio3 RK_PC2 GPIO_ACTIVE_HIGH>;  /* GPIO3_PC2 */
-	status = "okay";
-};
+	wireless_bluetooth: wireless-bluetooth {
+		compatible = "bluetooth-platdata";
+		uart_rts_gpios = <&gpio1 RK_PB2 GPIO_ACTIVE_HIGH>;
+		pinctrl-names = "default", "rts_gpio";
+		pinctrl-0 = <&uart2m1_rtsn &bt_reset &bt_wake_host>;
+		pinctrl-1 = <&uart2m1_gpios &bt_reset &bt_wake_host>;
+		clocks = <&xin24m>;
+		clock-names = "ext_clock";
+		BT,reset_gpio = <&gpio1 RK_PC1 GPIO_ACTIVE_HIGH>;
+		BT,wake_gpio = <&gpio1 RK_PB4 GPIO_ACTIVE_HIGH>;
+		BT,wake_host_irq = <&gpio1 RK_PC2 GPIO_ACTIVE_HIGH>;
+		status = "okay";
+	};
 
-	/* PWM Power LED - confirmed from Android */
 	pwmleds {
 		compatible = "pwm-leds";
 		status = "okay";
-
-		power_led: led-power {
+		
+		power_led: power {
 			label = "led:breath:power";
-			pwms = <&pwm7 0 1000000 0>;
+			pwms = <&pwm1 0 50000 0>;
 			max-brightness = <255>;
-			default-state = "on";
 			linux,default-trigger = "default-on";
 		};
 	};
 
-	/* GPIO Status LED - confirmed from Android (GPIO4_PB3) */
-	gpio-leds {
-		compatible = "gpio-leds";
-		status = "okay";
-
-		red_led: led-red {
-			label = "red";
-			gpios = <&gpio4 RK_PB3 GPIO_ACTIVE_HIGH>;
-			default-state = "off";
-			linux,default-trigger = "heartbeat";
-		};
-	};
-
-	/* AIC8800 WiFi/BT power sequence - SDIO ID: C8A1:0082/0182 */
 	sdio_pwrseq: sdio-pwrseq {
 		compatible = "mmc-pwrseq-simple";
 		pinctrl-names = "default";
-		pinctrl-0 = <&wifi_enable_h>;  /* WiFi enable GPIO only */
+		pinctrl-0 = <&wifi_enable_h>;
 		clocks = <&ext_clock>;
 		clock-names = "ext_clock";
 		post-power-on-delay-ms = <200>;
 		power-off-delay-us = <500000>;
-		reset-gpios = <&gpio3 RK_PA7 GPIO_ACTIVE_LOW>;  /* GPIO3_PA7 - Try ACTIVE_LOW for mmc-pwrseq */
+		reset-gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_LOW>;
 	};
 
-	/* ADC Keys */
 	adc-keys {
 		compatible = "adc-keys";
 		io-channels = <&saradc 1>;
@@ -251,7 +220,6 @@ wireless_bluetooth: wireless-bluetooth {
 		};
 	};
 
-	/* HDMI Sound */
 	hdmi_sound: hdmi-sound {
 		compatible = "simple-audio-card";
 		simple-audio-card,format = "i2s";
@@ -268,17 +236,15 @@ wireless_bluetooth: wireless-bluetooth {
 		};
 	};
 
-	/* IR Receiver - PWM3-based (GPIO4_PB6) from Android */
-	ir-receiver {
+	ir_receiver: ir-receiver {
 		compatible = "gpio-ir-receiver";
 		gpios = <&gpio4 RK_PB6 GPIO_ACTIVE_LOW>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&ir_recv_pin>;
 		linux,rc-map-name = "rc-beelink-gs1";
-		status = "disabled"; /* Disabled: GPIO conflicts with PWM3, needs rockchip,remotectl-pwm */
+		status = "disabled";
 	};
 
-	/* S/PDIF Optical Audio */
 	spdif_sound: spdif-sound {
 		compatible = "simple-audio-card";
 		simple-audio-card,name = "ROCKCHIP,SPDIF";
@@ -294,7 +260,6 @@ wireless_bluetooth: wireless-bluetooth {
 		};
 	};
 
-	/* Internal Analog Audio Codec (for 3.5mm output if present) */
 	acodec_sound: acodec-sound {
 		compatible = "simple-audio-card";
 		simple-audio-card,name = "rk3528-acodec";
@@ -316,7 +281,6 @@ wireless_bluetooth: wireless-bluetooth {
 		#sound-dai-cells = <0>;
 	};
 
-	/* Rockchip Suspend Configuration */
 	rockchip_suspend: rockchip-suspend {
 		compatible = "rockchip,pm-rk3528";
 		status = "okay";
@@ -327,26 +291,22 @@ wireless_bluetooth: wireless-bluetooth {
 		rockchip,pwm-regulator-config = <3>;
 	};
 
-	/* System Monitor for Thermal Protection */
 	rockchip_system_monitor: rockchip-system-monitor {
 		compatible = "rockchip,system-monitor";
 		rockchip,thermal-zone = "soc-thermal";
 		rockchip,polling-delay = <200>;
 		rockchip,temp-hysteresis = <5000>;
-		rockchip,offline-cpu-temp = <105000>;  /* 105°C - offline CPU 2-3 when hot */
+		rockchip,offline-cpu-temp = <105000>;
 		rockchip,temp-offline-cpus = "2-3";
 	};
 };
 
-/* Ethernet - YT8531 PHY confirmed via Android (RMII mode, MDIO addr 2) */
 &gmac0 {
 	phy-mode = "rmii";
 	clock_in_out = "output";
-
 	snps,reset-gpio = <&gpio3 RK_PB7 GPIO_ACTIVE_LOW>;
 	snps,reset-active-low;
 	snps,reset-delays-us = <0 10000 50000>;
-
 	phy-supply = <&vcc_phy>;
 	phy-handle = <&rmii_phy>;
 	status = "okay";
@@ -355,46 +315,21 @@ wireless_bluetooth: wireless-bluetooth {
 &mdio0 {
 	#address-cells = <1>;
 	#size-cells = <0>;
-
 	rmii_phy: ethernet-phy@2 {
 		compatible = "ethernet-phy-id4f51.e91b", "ethernet-phy-ieee802.3-c22";
 		reg = <0x2>;
 	};
 };
 
-/* PWM nodes for voltage scaling */
-&pwm0 {
-	status = "okay";
-};
+&pwm0 { status = "okay"; };
+&pwm1 { status = "okay"; };
+&pwm2 { status = "okay"; };
 
-&pwm1 {
-	status = "okay";
-};
+&cpu0 { cpu-supply = <&vdd_cpu>; };
+&dmc { center-supply = <&vdd_logic>; status = "okay"; };
+&gpu { mali-supply = <&vdd_gpu>; status = "okay"; };
+&gpu_bus { bus-supply = <&vdd_logic>; status = "okay"; };
 
-&pwm2 {
-	status = "okay";
-};
-
-&cpu0 {
-	cpu-supply = <&vdd_cpu>;
-};
-
-&dmc {
-	center-supply = <&vdd_logic>;
-	status = "okay";
-};
-
-&gpu {
-	mali-supply = <&vdd_gpu>;
-	status = "okay";
-};
-
-&gpu_bus {
-	bus-supply = <&vdd_logic>;
-	status = "okay";
-};
-
-/* eMMC */
 &sdhci {
 	bus-width = <8>;
 	cap-mmc-highspeed;
@@ -406,7 +341,6 @@ wireless_bluetooth: wireless-bluetooth {
 	status = "okay";
 };
 
-/* SD Card - conservative configuration without UHS modes */
 &sdmmc {
 	bus-width = <4>;
 	cap-sd-highspeed;
@@ -421,27 +355,11 @@ wireless_bluetooth: wireless-bluetooth {
 	status = "okay";
 };
 
-/* USB 2.0 Host */
-&u2phy_host {
-	status = "okay";
-};
-
-&usb_host0_ehci {
-	status = "okay";
-};
-
-&usb_host0_ohci {
-	status = "okay";
-};
-
-/* USB 3.0 Port (USB 2.0 speed only - RK3528 has no USB 3.0 PHY) */
-&usb2phy {
-	status = "okay";
-};
-
-&u2phy_otg {
-	status = "okay";
-};
+&u2phy_host { status = "okay"; };
+&usb_host0_ehci { status = "okay"; };
+&usb_host0_ohci { status = "okay"; };
+&usb2phy { status = "okay"; };
+&u2phy_otg { status = "okay"; };
 
 &usbdrd_dwc3 {
 	dr_mode = "host";
@@ -457,15 +375,12 @@ wireless_bluetooth: wireless-bluetooth {
 	status = "okay";
 };
 
-&usbdrd30 {
-	status = "okay";
-};
+&usbdrd30 { status = "okay"; };
 
-/* HDMI */
 &hdmi {
 	status = "okay";
 	cec-enable;
-	/* DDC I2C timing from Android (asymmetric for EDID compatibility) */
+	rockchip,grf = <&grf>;
 	ddc-i2c-scl-high-time-ns = <9625>;
 	ddc-i2c-scl-low-time-ns = <10000>;
 	avdd-0v9-supply = <&vdd_0v9_s3>;
@@ -477,146 +392,66 @@ wireless_bluetooth: wireless-bluetooth {
 
 &hdmiphy {
 	status = "okay";
-	phy-supply = <&vcc5v0_sys>;
+	clocks = <&cru PCLK_HDMIPHY>, <&xin24m>;
+	clock-names = "sysclk", "refclk";
 };
-
 
 &hdmi_in_vp0 {
 	status = "okay";
 	connect = <&vp0_out_hdmi>;
 };
 
-/* Display Subsystem */
 &display_subsystem {
 	status = "okay";
 };
 
 &vop {
-	assigned-clocks = <&cru DCLK_VOP_SRC0>, <&cru DCLK_VOP_SRC1>;
-	assigned-clock-parents = <&cru PLL_GPLL>, <&cru PLL_GPLL>;
-	vdd-supply = <&vdd_logic>;
 	status = "okay";
 };
 
-&vop_mmu {
-	status = "okay";
-};
+&vop_mmu { status = "okay"; };
+&gpu { status = "okay"; };
+&iep { status = "okay"; };
+&iep_mmu { status = "okay"; };
+&jpegd { status = "okay"; };
+&jpegd_mmu { status = "okay"; };
+&mpp_srv { status = "okay"; };
+&rga2 { status = "okay"; };
+&rga2_mmu { status = "okay"; };
+&rkvdec { status = "okay"; };
+&rkvdec_mmu { status = "okay"; };
+&rkvenc { status = "okay"; };
+&rkvenc_mmu { status = "okay"; };
+&rkvtunnel { status = "okay"; };
+&vdpp { status = "okay"; };
+&vdpu { status = "okay"; };
+&vdpu_mmu { status = "okay"; };
+&tsadc { status = "okay"; };
 
-
-/* GPU */
-&gpu {
-	status = "okay";
-};
-
-/* Hardware Video Processing Units */
-&iep {
-	status = "okay";
-};
-
-&iep_mmu {
-	status = "okay";
-};
-
-&jpegd {
-	status = "okay";
-};
-
-&jpegd_mmu {
-	status = "okay";
-};
-
-&mpp_srv {
-	status = "okay";
-};
-
-&rga2 {
-	status = "okay";
-};
-
-&rga2_mmu {
-	status = "okay";
-};
-
-&rkvdec {
-	status = "okay";
-};
-
-&rkvdec_mmu {
-	status = "okay";
-};
-
-&rkvenc {
-	status = "okay";
-};
-
-&rkvenc_mmu {
-	status = "okay";
-};
-
-&rkvtunnel {
-	status = "okay";
-};
-
-&vdpp {
-	status = "okay";
-};
-
-&vdpu {
-	status = "okay";
-};
-
-&vdpu_mmu {
-	status = "okay";
-};
-
-/* Thermal monitoring */
-&tsadc {
-	status = "okay";
-};
-
-/* UART2 for Bluetooth (AIC8800) */
-/* UART2 for Bluetooth - use MUX1 to avoid GPIO conflicts with wireless-bluetooth node */
 &uart2 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart2m1_xfer &uart2m1_ctsn>;
-	uart-has-rtscts;
+	dma-names = "!tx", "!rx";
+	current-speed = <1500000>;
 	status = "okay";
 };
 
-/* SARADC */
 &saradc {
 	vref-supply = <&vcc_1v8>;
 	status = "okay";
 };
 
-/* PWM3 - Used for IR receiver in Android, disabled for now */
-&pwm3 {
-	status = "disabled";
-	pinctrl-names = "default";
-	pinctrl-0 = <&pwm3_pins>;
-};
-
-&pwm7 {
-	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&pwm7_pins>;
-};
-
-/* SDIO for WiFi (AIC8800) */
-/* SDIO for WiFi - AIC8800 at ffc30000 */
 &sdio0 {
 	bus-width = <4>;
 	cap-sd-highspeed;
 	cap-sdio-irq;
 	disable-wp;
 	keep-power-in-suspend;
-	max-frequency = <25000000>;  /* 25MHz for initial test - reduce clock speed */
+	max-frequency = <100000000>;
 	mmc-pwrseq = <&sdio_pwrseq>;
 	no-sd;
 	no-mmc;
 	non-removable;
-	sd-uhs-sdr12;
-	sd-uhs-sdr25;
 	vmmc-supply = <&vcc_3v3>;
 	vqmmc-supply = <&vcc_1v8>;
 	pinctrl-names = "default";
@@ -624,26 +459,10 @@ wireless_bluetooth: wireless-bluetooth {
 	status = "okay";
 };
 
-/* S/PDIF for Optical Audio */
-/* SAI2 Audio Interface for Analog Codec */
-&sai2 {
-	status = "okay";
-	#sound-dai-cells = <0>;
-};
+&sai2 { status = "okay"; #sound-dai-cells = <0>; };
+&acodec { status = "okay"; #sound-dai-cells = <0>; };
+&spdif_8ch { status = "okay"; pinctrl-0 = <&spdifm0_pins>; #sound-dai-cells = <0>; };
 
-/* Analog Audio Codec */
-&acodec {
-	status = "okay";
-	#sound-dai-cells = <0>;
-};
-
-&spdif_8ch {
-	status = "okay";
-	pinctrl-0 = <&spdifm0_pins>;
-	#sound-dai-cells = <0>;
-};
-
-/* Pinctrl */
 &pinctrl {
 	usb {
 		vcc5v0_otg_en: vcc5v0-otg-en {
@@ -651,24 +470,15 @@ wireless_bluetooth: wireless-bluetooth {
 		};
 	};
 
-	bluetooth {
-		uart2m1_gpios: uart2m1-gpios {
-			rockchip,pins = <1 RK_PB2 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-	};
-
-	wireless-wlan {
-		wifi_host_wake: wifi-host-wake {
-			rockchip,pins = <1 RK_PA6 RK_FUNC_GPIO &pcfg_pull_down>;
-		};
-	};
-
 	hdmi {
 		hdmi_pins: hdmi-pins {
 			rockchip,pins =
-				<0 RK_PA3 1 &pcfg_pull_none>,  /* CEC */
-				<0 RK_PA4 1 &pcfg_pull_up>,    /* DDC SDA */
-				<0 RK_PA5 1 &pcfg_pull_up>;    /* DDC SCL */
+				<0 RK_PA3 1 &pcfg_pull_none>,
+				<0 RK_PA4 1 &pcfg_pull_up>,
+				<0 RK_PA5 1 &pcfg_pull_up>;
+		};
+		hdmi_enable_pin: hdmi-enable-pin {
+			rockchip,pins = <0 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
 	};
 
@@ -684,13 +494,10 @@ wireless_bluetooth: wireless-bluetooth {
 		};
 	};
 
-	pwm {
-		pwm3_pins: pwm3-pins {
-			rockchip,pins = <4 RK_PB6 1 &pcfg_pull_none>;
-		};
-
-		pwm7_pins: pwm7-pins {
-			rockchip,pins = <3 RK_PC4 3 &pcfg_pull_none>;
+	clk_32k: clk-32k {
+		status = "disabled";
+		clk_32k_out: clk-32k-out {
+			rockchip,pins = <0 RK_PA6 1 &pcfg_pull_none>;
 		};
 	};
 
@@ -700,41 +507,42 @@ wireless_bluetooth: wireless-bluetooth {
 		};
 	};
 
-	leds {
-		red_led_pin: red-led-pin {
-			rockchip,pins = <4 RK_PB3 RK_FUNC_GPIO &pcfg_pull_none>;
+	bluetooth {
+		bt_reset: bt-reset { rockchip,pins = <1 RK_PC1 RK_FUNC_GPIO &pcfg_pull_none>; };
+		bt_wake: bt-wake { rockchip,pins = <1 RK_PB4 RK_FUNC_GPIO &pcfg_pull_none>; };
+		bt_wake_host: bt-wake-host { rockchip,pins = <1 RK_PC2 RK_FUNC_GPIO &pcfg_pull_down>; };
+		uart2m1_gpios: uart2m1-gpios {
+			rockchip,pins = <1 RK_PB0 RK_FUNC_GPIO &pcfg_pull_none>,
+					<1 RK_PB1 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+
+	uart2 {
+		uart2m1_xfer: uart2m1-xfer {
+			rockchip,pins = <1 RK_PB0 1 &pcfg_pull_none>,
+					<1 RK_PB1 1 &pcfg_pull_none>;
+		};
+		uart2m1_ctsn: uart2m1-ctsn {
+			rockchip,pins = <1 RK_PB2 1 &pcfg_pull_none>;
+		};
+		uart2m1_rtsn: uart2m1-rtsn {
+			rockchip,pins = <1 RK_PB3 1 &pcfg_pull_none>;
 		};
 	};
 
 	ir {
 		ir_recv_pin: ir-recv-pin {
-			rockchip,pins = <3 RK_PB1 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-	};
-
-	bluetooth {
-		/* Bluetooth GPIO configuration */
-		uart2m0_gpios: uart2m0-gpios {
-			rockchip,pins = <3 RK_PA2 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-		bt_reset: bt-reset {
-			rockchip,pins = <3 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-		bt_wake_host: bt-wake-host {
-			rockchip,pins = <3 RK_PD1 RK_FUNC_GPIO &pcfg_pull_down>;
+			rockchip,pins = <4 RK_PB6 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
 	};
 };
 
-/* I2S Audio Interface for HDMI */
-&sai3 {
-	status = "okay";
-	#sound-dai-cells = <0>;
-};
+&sai3 { status = "okay"; #sound-dai-cells = <0>; };
 
-/* Override reserved-memory for display framebuffer - 12MB at 0xf9f00000 (from Android) */
 &drm_logo {
 	reg = <0x0 0xf9f00000 0x0 0xc00000>;
+};
+
+&drm_cubic_lut {
+	reg = <0x0 0xfab00000 0x0 0x400000>;
 };
