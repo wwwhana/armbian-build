@@ -37,6 +37,12 @@
 		bootargs = ""; /* Clear any inherited hardcoded bootargs */
 	};
 
+	ext_clock: ext-clock {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <32768>;
+	};
+
 	vcc5v0_sys: vcc5v0-sys {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc5v0_sys";
@@ -176,6 +182,21 @@
 		status = "okay";
 	};
 
+/* Bluetooth - AIC8800 (use UART2 MUX1 to avoid GPIO conflicts) */
+wireless_bluetooth: wireless-bluetooth {
+	compatible = "bluetooth-platdata";
+	uart_rts_gpios = <&gpio1 RK_PB2 GPIO_ACTIVE_HIGH>;  /* GPIO1_PB2 for UART2M1 RTS */
+	pinctrl-names = "default", "rts_gpio";
+	pinctrl-0 = <&uart2m1_rtsn>;
+	pinctrl-1 = <&uart2m1_gpios>;
+	clocks = <&ext_clock>;
+	clock-names = "ext_clock";
+	BT,reset_gpio = <&gpio3 RK_PC1 GPIO_ACTIVE_LOW>;      /* GPIO3_PC1 */
+	BT,wake_gpio = <&gpio3 RK_PB4 GPIO_ACTIVE_HIGH>;      /* GPIO3_PB4 */
+	BT,wake_host_irq = <&gpio3 RK_PC2 GPIO_ACTIVE_HIGH>;  /* GPIO3_PC2 */
+	status = "okay";
+};
+
 	/* PWM Power LED - confirmed from Android */
 	pwmleds {
 		compatible = "pwm-leds";
@@ -203,13 +224,16 @@
 		};
 	};
 
-	/* SDIO WiFi power sequence (AIC8800) - physically confirmed */
+	/* AIC8800 WiFi/BT power sequence - SDIO ID: C8A1:0082/0182 */
 	sdio_pwrseq: sdio-pwrseq {
 		compatible = "mmc-pwrseq-simple";
 		pinctrl-names = "default";
-		pinctrl-0 = <&wifi_enable_h>;
-		reset-gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_LOW>; /* GPIO1_A7 from Android DTB */
+		pinctrl-0 = <&wifi_enable_h>;  /* WiFi enable GPIO only */
+		clocks = <&ext_clock>;
+		clock-names = "ext_clock";
 		post-power-on-delay-ms = <200>;
+		power-off-delay-us = <500000>;
+		reset-gpios = <&gpio3 RK_PA7 GPIO_ACTIVE_LOW>;  /* GPIO3_PA7 - Try ACTIVE_LOW for mmc-pwrseq */
 	};
 
 	/* ADC Keys */
@@ -270,9 +294,47 @@
 		};
 	};
 
+	/* Internal Analog Audio Codec (for 3.5mm output if present) */
+	acodec_sound: acodec-sound {
+		compatible = "simple-audio-card";
+		simple-audio-card,name = "rk3528-acodec";
+		simple-audio-card,format = "i2s";
+		simple-audio-card,mclk-fs = <256>;
+		status = "okay";
+
+		simple-audio-card,cpu {
+			sound-dai = <&sai2>;
+		};
+
+		simple-audio-card,codec {
+			sound-dai = <&acodec>;
+		};
+	};
+
 	spdif_out: spdif-out {
 		compatible = "linux,spdif-dit";
 		#sound-dai-cells = <0>;
+	};
+
+	/* Rockchip Suspend Configuration */
+	rockchip_suspend: rockchip-suspend {
+		compatible = "rockchip,pm-rk3528";
+		status = "okay";
+		rockchip,sleep-debug-en = <1>;
+		rockchip,sleep-mode-config = <1>;
+		rockchip,wakeup-config = <0x11>;
+		rockchip,virtual-poweroff = <1>;
+		rockchip,pwm-regulator-config = <3>;
+	};
+
+	/* System Monitor for Thermal Protection */
+	rockchip_system_monitor: rockchip-system-monitor {
+		compatible = "rockchip,system-monitor";
+		rockchip,thermal-zone = "soc-thermal";
+		rockchip,polling-delay = <200>;
+		rockchip,temp-hysteresis = <5000>;
+		rockchip,offline-cpu-temp = <105000>;  /* 105°C - offline CPU 2-3 when hot */
+		rockchip,temp-offline-cpus = "2-3";
 	};
 };
 
@@ -402,18 +464,26 @@
 /* HDMI */
 &hdmi {
 	status = "okay";
+	cec-enable;
+	/* DDC I2C timing from Android (asymmetric for EDID compatibility) */
+	ddc-i2c-scl-high-time-ns = <9625>;
+	ddc-i2c-scl-low-time-ns = <10000>;
 	avdd-0v9-supply = <&vdd_0v9_s3>;
 	avdd-1v8-supply = <&vcc_1v8>;
-	/* Force safe resolution to avoid clock issues with non-standard modes */
-	rockchip,defaultmode = <16>; /* 1280x720@60Hz */
+	hpd-gpios = <&gpio0 RK_PA2 GPIO_ACTIVE_HIGH>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&hdmi_pins>;
 };
 
 &hdmiphy {
 	status = "okay";
+	phy-supply = <&vcc5v0_sys>;
 };
+
 
 &hdmi_in_vp0 {
 	status = "okay";
+	connect = <&vp0_out_hdmi>;
 };
 
 /* Display Subsystem */
@@ -422,6 +492,9 @@
 };
 
 &vop {
+	assigned-clocks = <&cru DCLK_VOP_SRC0>, <&cru DCLK_VOP_SRC1>;
+	assigned-clock-parents = <&cru PLL_GPLL>, <&cru PLL_GPLL>;
+	vdd-supply = <&vdd_logic>;
 	status = "okay";
 };
 
@@ -429,10 +502,6 @@
 	status = "okay";
 };
 
-&route_hdmi {
-	status = "okay";
-	connect = <&vp0_out_hdmi>;
-};
 
 /* GPU */
 &gpu {
@@ -506,9 +575,10 @@
 };
 
 /* UART2 for Bluetooth (AIC8800) */
+/* UART2 for Bluetooth - use MUX1 to avoid GPIO conflicts with wireless-bluetooth node */
 &uart2 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&uart2m0_xfer &uart2m0_ctsn &uart2m0_rtsn>;
+	pinctrl-0 = <&uart2m1_xfer &uart2m1_ctsn>;
 	uart-has-rtscts;
 	status = "okay";
 };
@@ -533,21 +603,40 @@
 };
 
 /* SDIO for WiFi (AIC8800) */
-&sdio1 {
+/* SDIO for WiFi - AIC8800 at ffc30000 */
+&sdio0 {
 	bus-width = <4>;
 	cap-sd-highspeed;
 	cap-sdio-irq;
+	disable-wp;
 	keep-power-in-suspend;
+	max-frequency = <25000000>;  /* 25MHz for initial test - reduce clock speed */
 	mmc-pwrseq = <&sdio_pwrseq>;
+	no-sd;
+	no-mmc;
 	non-removable;
+	sd-uhs-sdr12;
+	sd-uhs-sdr25;
 	vmmc-supply = <&vcc_3v3>;
 	vqmmc-supply = <&vcc_1v8>;
 	pinctrl-names = "default";
-	pinctrl-0 = <&sdio1_bus4 &sdio1_cmd &sdio1_clk>;
+	pinctrl-0 = <&sdio0_bus4 &sdio0_cmd &sdio0_clk>;
 	status = "okay";
 };
 
 /* S/PDIF for Optical Audio */
+/* SAI2 Audio Interface for Analog Codec */
+&sai2 {
+	status = "okay";
+	#sound-dai-cells = <0>;
+};
+
+/* Analog Audio Codec */
+&acodec {
+	status = "okay";
+	#sound-dai-cells = <0>;
+};
+
 &spdif_8ch {
 	status = "okay";
 	pinctrl-0 = <&spdifm0_pins>;
@@ -559,6 +648,27 @@
 	usb {
 		vcc5v0_otg_en: vcc5v0-otg-en {
 			rockchip,pins = <4 RK_PB4 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+
+	bluetooth {
+		uart2m1_gpios: uart2m1-gpios {
+			rockchip,pins = <1 RK_PB2 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+
+	wireless-wlan {
+		wifi_host_wake: wifi-host-wake {
+			rockchip,pins = <1 RK_PA6 RK_FUNC_GPIO &pcfg_pull_down>;
+		};
+	};
+
+	hdmi {
+		hdmi_pins: hdmi-pins {
+			rockchip,pins =
+				<0 RK_PA3 1 &pcfg_pull_none>,  /* CEC */
+				<0 RK_PA4 1 &pcfg_pull_up>,    /* DDC SDA */
+				<0 RK_PA5 1 &pcfg_pull_up>;    /* DDC SCL */
 		};
 	};
 
@@ -598,7 +708,22 @@
 
 	ir {
 		ir_recv_pin: ir-recv-pin {
-			rockchip,pins = <4 RK_PB6 RK_FUNC_GPIO &pcfg_pull_none>;
+			rockchip,pins = <3 RK_PB1 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+
+	bluetooth {
+		/* Bluetooth GPIO configuration */
+		uart2m0_gpios: uart2m0-gpios {
+			rockchip,pins = <3 RK_PA2 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+
+		bt_reset: bt-reset {
+			rockchip,pins = <3 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+
+		bt_wake_host: bt-wake-host {
+			rockchip,pins = <3 RK_PD1 RK_FUNC_GPIO &pcfg_pull_down>;
 		};
 	};
 };
@@ -607,4 +732,9 @@
 &sai3 {
 	status = "okay";
 	#sound-dai-cells = <0>;
+};
+
+/* Override reserved-memory for display framebuffer - 12MB at 0xf9f00000 (from Android) */
+&drm_logo {
+	reg = <0x0 0xf9f00000 0x0 0xc00000>;
 };
