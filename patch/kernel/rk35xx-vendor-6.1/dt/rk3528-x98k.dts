@@ -32,6 +32,7 @@
 		mmc0 = &sdmmc;    /* SD card - like working f7cb62724 */
 		mmc1 = &sdhci;    /* eMMC */
 		sdio0 = &sdio0;   /* WiFi */
+ 		serial2 = &uart2;
 	};
 
 	chosen: chosen {
@@ -186,10 +187,6 @@
 /* Bluetooth - AIC8800 (use UART2 MUX1 to avoid GPIO conflicts) */
 wireless_bluetooth: wireless-bluetooth {
 	compatible = "bluetooth-platdata";
-	uart_rts_gpios = <&gpio1 RK_PB2 GPIO_ACTIVE_HIGH>;  /* GPIO1_PB2 for UART2M1 RTS */
-	pinctrl-names = "default", "rts_gpio";
-	pinctrl-0 = <&uart2m1_rtsn>;
-	pinctrl-1 = <&uart2m1_gpios>;
 	clocks = <&ext_clock>;
 	clock-names = "ext_clock";
 	BT,reset_gpio = <&gpio1 RK_PC1 GPIO_ACTIVE_LOW>;      /* GPIO3_PC1 */
@@ -576,7 +573,7 @@ wireless_bluetooth: wireless-bluetooth {
 /* UART2 for Bluetooth - use MUX1 to avoid GPIO conflicts with wireless-bluetooth node */
 &uart2 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&uart2m1_xfer &uart2m1_ctsn>;
+	pinctrl-0 = <&uart2m1_xfer &uart2m1_ctsn &uart2m1_rtsn>;
 	uart-has-rtscts;
 	status = "okay";
 };
@@ -706,11 +703,6 @@ wireless_bluetooth: wireless-bluetooth {
 		};
 	};
 
-	bluetooth {
-		uart2m1_gpios: uart2m1-gpios {
-			rockchip,pins = <1 RK_PB2 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-	};
 };
 
 /* I2S Audio Interface for HDMI */
