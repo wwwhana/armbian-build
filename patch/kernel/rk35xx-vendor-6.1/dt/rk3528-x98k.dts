@@ -189,6 +189,8 @@ wireless_bluetooth: wireless-bluetooth {
 	compatible = "bluetooth-platdata";
 	clocks = <&ext_clock>;
 	clock-names = "ext_clock";
+	pinctrl-names = "default";
+	pinctrl-0 = <&bt_rts_gpio>;
 	BT,reset_gpio = <&gpio1 RK_PC1 GPIO_ACTIVE_LOW>;      /* GPIO1_C1 */
 	BT,wake_gpio = <&gpio1 RK_PB4 GPIO_ACTIVE_HIGH>;      /* GPIO1_B4 */
 	BT,wake_host_irq = <&gpio1 RK_PC2 GPIO_ACTIVE_HIGH>;  /* GPIO1_C2 */
@@ -648,6 +650,12 @@ wireless_bluetooth: wireless-bluetooth {
 	wireless-wlan {
 		wifi_host_wake: wifi-host-wake-irq {
 			rockchip,pins = <1 RK_PA6 RK_FUNC_GPIO &pcfg_pull_down>;
+		};
+	};
+
+	wireless-bluetooth {
+		bt_rts_gpio: bt-rts-gpio {
+			rockchip,pins = <1 RK_PB2 RK_FUNC_GPIO &pcfg_output_low_pull_none>;
 		};
 	};
 
