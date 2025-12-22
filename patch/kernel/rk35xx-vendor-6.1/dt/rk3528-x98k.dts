@@ -189,9 +189,10 @@ wireless_bluetooth: wireless-bluetooth {
 	compatible = "bluetooth-platdata";
 	clocks = <&ext_clock>;
 	clock-names = "ext_clock";
-	BT,reset_gpio = <&gpio1 RK_PC1 GPIO_ACTIVE_LOW>;      /* GPIO3_PC1 */
-	BT,wake_gpio = <&gpio1 RK_PB4 GPIO_ACTIVE_HIGH>;      /* GPIO3_PB4 */
-	BT,wake_host_irq = <&gpio1 RK_PC2 GPIO_ACTIVE_HIGH>;  /* GPIO3_PC2 */
+	BT,reset_gpio = <&gpio1 RK_PC1 GPIO_ACTIVE_LOW>;      /* GPIO1_C1 */
+	BT,wake_gpio = <&gpio1 RK_PB4 GPIO_ACTIVE_HIGH>;      /* GPIO1_B4 */
+	BT,wake_host_irq = <&gpio1 RK_PC2 GPIO_ACTIVE_HIGH>;  /* GPIO1_C2 */
+	BT,rts_gpio = <&gpio1 RK_PB2 GPIO_ACTIVE_LOW>;        /* GPIO1_B2 */
 	status = "okay";
 };
 
@@ -411,6 +412,7 @@ wireless_bluetooth: wireless-bluetooth {
 	disable-wp;
 	no-sdio;
 	no-mmc;
+	broken-cd;
 	max-frequency = <50000000>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&sdmmc_clk &sdmmc_cmd &sdmmc_bus4>;
@@ -573,8 +575,7 @@ wireless_bluetooth: wireless-bluetooth {
 /* UART2 for Bluetooth - use MUX1 to avoid GPIO conflicts with wireless-bluetooth node */
 &uart2 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&uart2m1_xfer &uart2m1_ctsn &uart2m1_rtsn>;
-	uart-has-rtscts;
+	pinctrl-0 = <&uart2m1_xfer &uart2m1_ctsn>;
 	status = "okay";
 };
 
