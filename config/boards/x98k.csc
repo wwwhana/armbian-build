@@ -25,7 +25,7 @@ AIC8800_TYPE="sdio"
 ENABLE_EXTENSIONS="radxa-aic8800 bluetooth-hciattach"
 EXTENSIONS="${ENABLE_EXTENSIONS}"
 BLUETOOTH_HCIATTACH_RKFILL_NUM=0
-BLUETOOTH_HCIATTACH_PARAMS="-s 115200 /dev/ttyS2 any 1500000 flow nosleep"
+BLUETOOTH_HCIATTACH_PARAMS="-s 115200 /dev/ttyS2 any 1500000 noflow nosleep"
 
 # Hardware acceleration and device permissions
 function post_family_tweaks__x98k_hardware_config() {
