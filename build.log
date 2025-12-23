@@ -1,0 +1,707 @@
+[0m[1;30m[💲|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'BUILD_MINIMAL': '(unset)' --> 'no' early [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'BUILD_DESKTOP': '(unset)' --> 'no' early [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'BRANCH': '(unset)' --> 'vendor' early [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'BOARD': '(unset)' --> 'x98k' early [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'RELEASE': '(unset)' --> 'noble' early [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'KERNEL_CONFIGURE': '(unset)' --> 'no' early [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mUsing prebuilt Armbian image as base for 'ubuntu-noble' [[1;32m DOCKER_ARMBIAN_BASE_IMAGE: ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-noble-latest [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mDocker info [[1;39m Docker 29.1.3 Kernel:6.6.87.2-microsoft-standard-WSL2 RAM:23.47GiB CPUs:16 OS:'Docker Desktop' hostname 'docker-desktop' under 'Linux' - buildx:yes - loop-hacks:yes static-loops:no [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mCreating [[1;32m .dockerignore [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mDocker launcher [[1;32m enabling all extensions looking for Docker dependencies [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mExtension search [[1;39m Searching in directory: "/home/lexia/armbian-build/extensions" [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mExtension search result [[1;39m Found 15 extensions in "/home/lexia/armbian-build/extensions" [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mExtension search [[1;39m Searching in directory: "/home/lexia/armbian-build/userpatches/extensions" [0m][0m
+[0m[1;30m[💲|[0m🚸[0m] [0mExtension search [[1;35m Directory does not exist: "/home/lexia/armbian-build/userpatches/extensions" [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mExtension manager [[1;32m processed 20 Extension Methods calls and 62 Extension Method implementations [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mPython2 not available on host release 'noble' [[1;32m ancient u-boot versions might/will fail to build [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mExtension: fs-cryptroot-support: Adding packages to host dependencies [[1;32m cryptsetup openssh-client [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mPreparing rkdevflash host-side dependencies [[1;32m rkdevflash [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mCreating [[1;32m Dockerfile; FROM ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-noble-latest [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mArmbian docker image [[1;32m already exists: ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-noble-latest [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mBuilding [[1;32m Dockerfile via 'buildx build --progress=plain --load' [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0m-----------------Relaunching in Docker after 2s------------------ [[1;32m here comes the 🐳 [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'PREFER_DOCKER': '(unset)' --> 'no' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'BUILD_MINIMAL': '(unset)' --> 'no' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'BUILD_DESKTOP': '(unset)' --> 'no' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'ARMBIAN_BUILD_UUID': '(unset)' --> '49333d71-97ea-4da1-bff3-de23273c68d5' early [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mSkip     cmdline param [[1;32m 'ARMBIAN_RELAUNCHED': already set to 'yes' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'BRANCH': '(unset)' --> 'vendor' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'BOARD': '(unset)' --> 'x98k' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'SKIP_LOG_ARCHIVE': '(unset)' --> 'yes' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'SET_OWNER_TO_UID': '(unset)' --> '1002' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'DOCKER_NICE': '(unset)' --> '5' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'RELEASE': '(unset)' --> 'noble' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'KERNEL_CONFIGURE': '(unset)' --> 'no' early [0m][0m
+1 (process ID) old priority 0, new priority 5
+[0m[1;30m[🐳|[0m🌱[0m] [0mStarting single build process [[1;32m x98k [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mSourcing board configuration [[1;32m /armbian/config/boards/x98k.csc [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing board file config/boards/x98k.csc [[1;36m [1;34mBOARDFAMILY[0m=[0;34m'[1;34mrk35xx[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing board file config/boards/x98k.csc [[1;36m [1;34mBOOTCONFIG[0m=[0;34m'[1;34mgeneric_rk3528_defconfig[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after defaulting LINUXFAMILY to BOARDFAMILY [[1;36m [1;34mLINUXFAMILY[0m=[0;34m'[1;34mrk35xx[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mStarting main configuration[0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUsing REVISION from [[1;32m main VERSION file: '26.02.0-trunk' [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mEnabling extension [[1;39m armbian-config [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mSourcing family configuration [[1;32m /armbian/config/sources/families/rk35xx.conf [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mEnabling extension [[1;39m rkbin-tools [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mDetermined BOOT_SOC from BOOTCONFIG [[1;32m BOOT_SOC: 'rk3528'; BOOTCONFIG: 'generic_rk3528_defconfig' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mKERNELSOURCE[0m=[0;34m'[1;34mhttps://github.com/armbian/linux-rockchip.git[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mKERNEL_MAJOR_MINOR[0m=[0;34m'[1;34m6.1[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mKERNELBRANCH[0m=[0;34m'[1;34mbranch:rk-6.1-rkr5.1[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mKERNELPATCHDIR[0m=[0;34m'[1;34mrk35xx-vendor-6.1[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mBOOTSOURCE[0m=[0;34m'[1;34mhttps://github.com/radxa/u-boot.git[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mBOOTBRANCH[0m=[0;34m'[1;34mbranch:next-dev-v2024.10[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mBOOTPATCHDIR[0m=[0;34m'[1;34mlegacy/u-boot-radxa-rk35xx[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mBOOTDIR[0m=[0;34m'[1;34mu-boot-rockchip64[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mNETWORKING_STACK[0m=[0;34m'[1;34mnetwork-manager[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mSourcing arch configuration [[1;32m arm64.conf [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUsing NETWORKING_STACK [[1;32m NETWORKING_STACK: network-manager [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mAdding networking extensions [[1;32m net-network-manager, net-chrony [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mEnabling extension [[1;39m net-network-manager [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mEnabling extension [[1;39m net-chrony [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mEnabling extension [[1;39m radxa-aic8800 [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mEnabling extension [[1;39m bluetooth-hciattach [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mExtension manager [[1;32m processed 18 Extension Methods calls and 34 Extension Method implementations [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mExtension: bluetooth-hciattach: x98k [[1;32m adding bluetooth packages to image [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mrockchip64_common: defaulting SERIALCON [[1;32m SERIALCON already set to 'ttyFIQ0', keeping it. [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mExtension: bluetooth-hciattach: x98k [[1;32m initializing config [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mExtension: net-chrony: Adding extra package to image [[1;32m chrony [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mExtension: net-network-manager: Adding extra packages to image [[1;32m network-manager network-manager-openvpn netplan.io [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mExtension: net-network-manager: Adding extra packages for Ubuntu to image [[1;32m network-manager-config-connectivity-ubuntu [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after late_family_config hooks [[1;36m [1;34mLINUXCONFIG[0m=[0;34m'[1;34mlinux-rk35xx-vendor[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after late_family_config hooks [[1;36m [1;34mKERNEL_PATCH_ARCHIVE_BASE[0m=[0;34m'[1;34mrk35xx[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: before handling KERNEL_MAJOR_MINOR in config_post_main [[1;36m [1;34mBOOTSOURCEDIR[0m=[0;34m'[1;34mu-boot-worktree/u-boot-rockchip64/next-dev-v2024.10[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: before calling extension_finish_config [[1;36m [1;34mLINUXSOURCEDIR[0m=[0;34m'[1;34mlinux-kernel-worktree/6.1__rk35xx__arm64[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mChecking [[1;32m basic host setup [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mBuild host OS release [[1;32m noble [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mBuild host architecture [[1;32m amd64 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mDetected WSL2 - experimental support [[1;32m Windows Subsystem for Linux 2 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mConfiguration prepared for BOARD build [[1;32m x98k.csc [0m][0m
+[0m[1;30m[🐳|[0m✨[0m] [0mRepeat Build Options (early) [[1;32m ./compile.sh build BOARD=x98k BRANCH=vendor BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=noble [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mChecked directory OK for mount options [[1;32m /armbian/.tmp ('main temporary dir') [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mPreparing [[1;32m host [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mRunning in container [[1;32m Adding provisions for container building [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mPython2 not available on host release 'noble' [[1;32m ancient u-boot versions might/will fail to build [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mIgnoring toolchains [[1;32m SKIP_EXTERNAL_TOOLCHAINS: yes [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mCross arch build [[1;32m target arm64 on host amd64 [0m][0m
+[0m[1;30m[🐳|[0m💥[0m] [0mFailed to update binfmts [[1;31m update-binfmts --enable qemu-arm [0m][0m
+[0m[1;30m[🐳|[0m💥[0m] [0mFailed to update binfmts [[1;31m update-binfmts --enable qemu-aarch64 [0m][0m
+[0m[1;30m[🐳|[0m💥[0m] [0mFailed to update binfmts [[1;31m update-binfmts --enable qemu-riscv64 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mchecking [[1;32m arch-test for 'arm64' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mAggregating packages [[1;32m rootfs [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mPython3 version [[1;32m 3.12.3 - 'Python 3.12.3' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mpip3 version [[1;32m 25.3 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUsing cached pip packages for Python tools [[1;32m b31ddb7ad74c183ca8015618f705a3a2f3c929618f0ce6cf9e5cd0e4447f73ce [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0martifact [[1;32m uboot :: uboot() [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mProducing new & caching [[1;32m GIT_INFO_UBOOT [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mFetching SHA1 of 'branch' 'refs/heads/next-dev-v2024.10' [[1;32m https://github.com/radxa/u-boot.git [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mSHA1 of branch refs/heads/next-dev-v2024.10 [[1;32m 'b87278929822b1afcfabdb1e541a780d35445343' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mReversioning package [[1;32m re-version 'uboot-x98k-vendor(deb)::2017.09-Sb872-P5fff-Hbdb5-V1b0f-Bbf55-R448a' to '26.02.0-trunk' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0martifact [[1;32m kernel :: kernel() [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mSetting kernel git cache TTL to [[1;32m 120 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mProducing new & caching [[1;32m GIT_INFO_KERNEL [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mFetching SHA1 of 'branch' 'refs/heads/rk-6.1-rkr5.1' [[1;32m https://github.com/armbian/linux-rockchip.git [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mSHA1 of branch refs/heads/rk-6.1-rkr5.1 [[1;32m '8f4852b6e8f6a5edb4cf6158f095a34793e38be6' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUser patches directory for kernel [[1;32m /armbian/userpatches/kernel/rk35xx-vendor-6.1 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUsing kernel config file [[1;32m config/kernel/linux-rk35xx-vendor.config [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mConsidering available RAM for BTF build [[1;32m 16559 MiB [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mEnabling eBPF and BTF info [[1;32m for fully BTF & CO-RE enabled kernel [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mGetting ORAS manifest [[1;32m ORAS manifest from ghcr.io/armbian/os/kernel-rk35xx-vendor:6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a [0m][0m
+Error response from registry: failed to fetch the content of "ghcr.io/armbian/os/kernel-rk35xx-vendor:6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a": ghcr.io/armbian/os/kernel-rk35xx-vendor:6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a: not found
+[0m[1;30m[🐳|[0m🌱[0m] [0mArtifact is not available in remote cache [[1;32m ghcr.io/armbian/os/kernel-rk35xx-vendor:6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel build starting [[1;32m linux-kernel-worktree/6.1__rk35xx__arm64 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUsing full Kernel bare tree for 6.1 [[1;32m existing worktree points to full [0m][0m
+[0m[1;30m[🐳|[0m💖[0m] [0mKernel bare tree already exists [[0;32m /armbian/cache/git-bare/kernel [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mGetting sources from Git [[1;32m kernel:6.1 rk-6.1-rkr5.1 [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mFetching updates from remote repository [[1;39m kernel:6.1 rk-6.1-rkr5.1 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mgit: Fetch from remote completed, rev-parsing... [[1;32m 'kernel:6.1' 'rk-6.1-rkr5.1' 'FETCH_HEAD' [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mUsing Kernel git revision [[1;39m 8f4852b6e8f6a5edb4cf6158f095a34793e38be6 at 'Tue Dec 23 02:23:26 UTC 2025' [0m][0m
+[0m[1;30m[🐳|[0m💖[0m] [0mUsing cached drivers patch file for rk35xx-vendor [[0;32m sha1_8f4852b6e8f6a5edb4cf6158f095a34793e38be6_rk35xx_vendor_7234f3fe_2a33c685-01ba4719 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mCalling Python patching script for kernel: [[1;32m https://github.com/armbian/linux-rockchip.git - branch:rk-6.1-rkr5.1 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUsing kernel patch dir: [[1;32m rk35xx-vendor-6.1 [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mCross compilation [[1;39m target arm64 on host amd64 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mCompiler version [[1;32m aarch64-linux-gnu-gcc 13.3.0 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mConfiguring kernel [[1;32m linux-rk35xx-vendor [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUsing kernel config file [[1;32m config/kernel/linux-rk35xx-vendor.config [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mConsidering available RAM for BTF build [[1;32m 16567 MiB [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mEnabling eBPF and BTF info [[1;32m for fully BTF & CO-RE enabled kernel [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel configuration [[1;32m linux-rk35xx-vendor [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mCompiling vendor kernel [[1;32m 6.1.115 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mBuilding kernel [[1;32m rk35xx linux-rk35xx-vendor all Image [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mInstalling kernel [[1;32m rk35xx linux-rk35xx-vendor install modules_install headers_install dtbs_install [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel built in [[1;32m 369 seconds - 6.1.115-rk35xx [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mPackaging kernel [[1;32m rk35xx linux-rk35xx-vendor [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel .deb package version [[1;32m 6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mPackaging linux-image [[1;32m rk35xx linux-rk35xx-vendor [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mlinux-image deb packaging kernel_image_name [[1;32m vmlinuz [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel-built image filetype [[1;32m vmlinuz-6.1.115-vendor-rk35xx: Linux kernel ARM64 boot executable Image, little-endian, 4K pages [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel image filetype after pre_package_kernel_image [[1;32m vmlinuz-6.1.115-vendor-rk35xx: Linux kernel ARM64 boot executable Image, little-endian, 4K pages [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mshellcheck found no problems in package scripts [[1;32m shellchecked 4 scripts in 'linux-image-vendor-rk35xx' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mBuilding package, this might take a while.. [[1;32m linux-image-vendor-rk35xx_6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a_arm64.deb [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mPackaging linux-dtb [[1;32m rk35xx linux-rk35xx-vendor [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mshellcheck found no problems in package scripts [[1;32m shellchecked 2 scripts in 'linux-dtb-vendor-rk35xx' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mBuilding package, this might take a while.. [[1;32m linux-dtb-vendor-rk35xx_6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a_arm64.deb [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mPackaging linux-headers [[1;32m rk35xx linux-rk35xx-vendor [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mshellcheck found no problems in package scripts [[1;32m shellchecked 3 scripts in 'linux-headers-vendor-rk35xx' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mBuilding package, this might take a while.. [[1;32m linux-headers-vendor-rk35xx_6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a_arm64.deb [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mPackaging linux-libc-dev [[1;32m rk35xx linux-rk35xx-vendor [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mshellcheck found no problems in package scripts [[1;32m no scripts found for 'linux-libc-dev-vendor-rk35xx' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mBuilding package, this might take a while.. [[1;32m linux-libc-dev-vendor-rk35xx_6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a_arm64.deb [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel packaged in [[1;32m 11 seconds - 6.1.115-rk35xx [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel build finished [[1;32m 6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mCreated deb-tar artifact [[1;32m deb-tar: /armbian/output/packages-hashed/kernel-rk35xx-vendor_6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a_arm64.tar [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mReversioning package [[1;32m re-version 'kernel-rk35xx-vendor(deb-tar)::6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a' to '26.02.0-trunk' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0martifact [[1;32m firmware :: firmware() [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mProducing new & caching [[1;32m GIT_INFO_ARMBIAN_FIRMWARE [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mFetching SHA1 of 'branch' 'refs/heads/master' [[1;32m https://github.com/armbian/firmware [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mSHA1 of branch refs/heads/master [[1;32m '5d4dd2fc8dd4e28ac4c85696b8ab86775babc7c7' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mReversioning package [[1;32m re-version 'armbian-firmware(deb)::1-SA5d4d-B6c7f-R448a' to '26.02.0-trunk' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0martifact [[1;32m armbian-base-files :: armbian-base-files() [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mFound upstream base-files package filename [[1;32m base-files_13ubuntu10_arm64.deb [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mFound base-files upstream package version [[1;32m 13ubuntu10 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mReversioning package [[1;32m re-version 'armbian-base-files-noble-arm64(deb)::1-noble-1armbian1-Bde6a-U13ubuntu10-R55fa' to '26.02.0-trunk-13ubuntu10-noble' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0martifact [[1;32m fake_ubuntu_advantage_tools :: fake_ubuntu_advantage_tools() [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mReversioning package [[1;32m re-version 'fake-ubuntu-advantage-tools(deb)::1-B34ac-R448a' to '26.02.0-trunk' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0martifact [[1;32m armbian-zsh :: armbian-zsh() [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mProducing new & caching [[1;32m GIT_INFO_ARMBIAN_ZSH [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mFetching SHA1 of 'commit' 'bfeeda1491b5366aa5798a86cf6f3621536b171c' [[1;32m https://github.com/ohmyzsh/ohmyzsh [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mSHA1 of commit bfeeda1491b5366aa5798a86cf6f3621536b171c [[1;32m 'bfeeda1491b5366aa5798a86cf6f3621536b171c' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mReversioning package [[1;32m re-version 'armbian-zsh(deb)::1-SAbfee-B6e0d-R448a' to '26.02.0-trunk' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0martifact [[1;32m armbian-plymouth-theme :: armbian-plymouth-theme() [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mReversioning package [[1;32m re-version 'armbian-plymouth-theme(deb)::1-Ba6a4-R448a' to '26.02.0-trunk' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0martifact [[1;32m armbian-bsp-cli :: armbian-bsp-cli() [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mGetting ORAS manifest [[1;32m ORAS manifest from ghcr.io/armbian/os/armbian-bsp-cli-x98k-vendor:1-PC0cac-Vfe49-H673d-Bb0b9-Rf36a [0m][0m
+Error response from registry: denied: requested access to the resource is denied
+[0m[1;30m[🐳|[0m🌱[0m] [0mArtifact is not available in remote cache [[1;32m ghcr.io/armbian/os/armbian-bsp-cli-x98k-vendor:1-PC0cac-Vfe49-H673d-Bb0b9-Rf36a [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mCreating bsp-cli transitional package on board 'x98k' branch 'vendor' [[1;32m armbian-bsp-cli-x98k :: 1-PC0cac-Vfe49-H673d-Bb0b9-Rf36a [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mshellcheck found no problems in package scripts [[1;32m no scripts found for 'armbian-bsp-cli-x98k' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mBuilding package, this might take a while.. [[1;32m armbian-bsp-cli-x98k_1-PC0cac-Vfe49-H673d-Bb0b9-Rf36a_arm64.deb [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mCreating bsp-cli on board 'x98k' branch 'vendor' [[1;32m armbian-bsp-cli-x98k-vendor :: 1-PC0cac-Vfe49-H673d-Bb0b9-Rf36a [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mCopying common bsp files [[1;32m packages/bsp/common [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mDeploying boot script [[1;32m /armbian/config/bootscripts/boot-rk35xx.cmd -> /armbian/.tmp/work-49333d71-97ea-4da1-bff3-de23273c68d5/deb-bsp-cli-xjFHN/usr/share/armbian/boot.cmd [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mExtension: bluetooth-hciattach: x98k [[1;32m adding bluetooth hciattach service to BSP [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mshellcheck found no problems in package scripts [[1;32m shellchecked 3 scripts in 'armbian-bsp-cli-x98k-vendor' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mBuilding package, this might take a while.. [[1;32m armbian-bsp-cli-x98k-vendor_1-PC0cac-Vfe49-H673d-Bb0b9-Rf36a_arm64.deb [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mCreated deb-tar artifact [[1;32m deb-tar: /armbian/output/packages-hashed/armbian-bsp-cli-x98k-vendor_1-PC0cac-Vfe49-H673d-Bb0b9-Rf36a_arm64.tar [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mReversioning package [[1;32m re-version 'armbian-bsp-cli-x98k-vendor(deb-tar)::1-PC0cac-Vfe49-H673d-Bb0b9-Rf36a' to '26.02.0-trunk' [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mBuilding image [[1;39m x98k [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mChecking for rootfs cache [[1;32m vendor x98k noble no [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0martifact [[1;32m rootfs :: rootfs() [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mrootfs version [[1;32m packages_hash: 'de3dd0bda694-H7f4843-Ba7bc45' cache_type: 'cli' rootfs_cache_id: 'de3dd0bda694-H7f4843-Ba7bc45' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mReversioning package [[1;32m re-version 'rootfs-arm64-noble-cli(tar.zst)::202512-de3dd0bda694-H7f4843-Ba7bc45' to '26.02.0-trunk' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUsing tmpfs for rootfs build [[1;32m RAM available: 10011MiB > 2300MiB estimated [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mExtracting 202512-de3dd0bda694-H7f4843-Ba7bc45 [[1;32m 0 days old [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mAdding Armbian repository and authentication key [[1;32m image-early :: /etc/apt/sources.list.d/armbian.sources [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mDeploying qemu-user-static binary to chroot [[1;32m qemu-aarch64-static during image-early [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mRemoving qemu-user-static binary from chroot [[1;32m qemu-aarch64-static during image-early [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mDisabling Armbian repo [[1;32m arm64-noble :: skip:no when:image-early [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mDeploying qemu-user-static binary to chroot [[1;32m qemu-aarch64-static during image [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mApplying distribution specific tweaks for [[1;32m noble [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mInstalling: /armbian/output/debs/fake-ubuntu-advantage-tools_26.02.0-trunk_all__1-B34ac-R448a.deb [[1;39m fake-ubuntu-advantage-tools_26.02.0-trunk_all__1-B34ac-R448a.deb [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mInstalling: /armbian/output/debs/extra/noble-utils/base-files_26.02.0-trunk-13ubuntu10-noble_arm64__1-noble-1armbian1-Bde6a-U13ubuntu10-R55fa.deb [[1;39m base-files_26.02.0-trunk-13ubuntu10-noble_arm64__1-noble-1armbian1-Bde6a-U13ubuntu10-R55fa.deb [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUsing systemd-resolved [[1;32m for DNS management [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mSetting root password[0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mDeploying boot script [[1;32m /armbian/config/bootscripts/boot-rk35xx.cmd [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mTemporarily disabling [[1;39m initramfs-tools hook for kernel [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mUpdating [[1;39m apt package lists [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mInstalling AGGREGATED_PACKAGES_IMAGE packages [[1;39m rfkill bluetooth bluez bluez-tools chrony network-manager network-manager-openvpn netplan.io network-manager-config-connectivity-ubuntu ethtool [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mInstalling: /armbian/output/debs/linux-u-boot-x98k-vendor_26.02.0-trunk_arm64__2017.09-Sb872-P5fff-Hbdb5-V1b0f-Bbf55-R448a.deb [[1;39m linux-u-boot-x98k-vendor_26.02.0-trunk_arm64__2017.09-Sb872-P5fff-Hbdb5-V1b0f-Bbf55-R448a.deb [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mExtension: net-network-manager: Enabling Network-Manager[0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mConfiguring [[1;32m NetworkManager and Netplan [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mInstalling: /armbian/output/debs/linux-image-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb [[1;39m linux-image-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mInstalling: /armbian/output/debs/linux-dtb-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb [[1;39m linux-dtb-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mInstalling: /armbian/output/debs/linux-headers-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb [[1;39m linux-headers-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb [0m][0m
+jq: parse error: Invalid numeric literal at line 1, column 10
+[0m[1;30m[🐳|[0m💥[0m] [0mError  5 occurred in SUBSHELL [[1;31m SUBSHELL at /armbian/extensions/radxa-aic8800.sh:20 [0m][0m
+[0m[1;30m[🐳|[0m💥[0m] [0m    👇👇👇 Showing logfile below 👇👇👇 [[1;31m /armbian/.tmp/logs-49333d71-97ea-4da1-bff3-de23273c68d5/070.000.install_distribution_agnostic.log [0m][0m
+[0me[1;30m[🐳|[0m👉]    --> (434) [0;36mCOMMAND[0m: dpkg-reconfigure -f noninteractive tzdata
+[0me[1;30m[🐳|[0m👉]    Current default time zone: 'Etc/UTC'
+[0me[1;30m[🐳|[0m👉]    Local time is now:      Tue Dec 23 03:33:41 UTC 2025.
+[0me[1;30m[🐳|[0m👉]    Universal Time is now:  Tue Dec 23 03:33:41 UTC 2025.
+[0me[1;30m[🐳|[0m👉]    --> (435) [1;32mINFO[0m: Setting root password
+[0me[1;30m[🐳|[0m👉]    --> (435) [0;36mCOMMAND[0m: ( echo '1234' ; echo '1234' ; ) | passwd root
+[0me[1;30m[🐳|[0m👉]    New password: Retype new password: passwd: password updated successfully
+[0me[1;30m[🐳|[0m👉]    --> (436) [1;32mINFO[0m: Deploying boot script [ [1;32m/armbian/config/bootscripts/boot-rk35xx.cmd[0m ]
+[0me[1;30m[🐳|[0m👉]    --> (436) [0;36mCOMMAND[0m: cp -pv /armbian/config/bootscripts/boot-rk35xx.cmd /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/boot/boot.cmd
+[0me[1;30m[🐳|[0m👉]    '/armbian/config/bootscripts/boot-rk35xx.cmd' -> '/armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/boot/boot.cmd'
+[0me[1;30m[🐳|[0m👉]    --> (436) [0;36mCOMMAND[0m: cp -pv /armbian/config/bootenv/rockchip64.txt /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/boot/armbianEnv.txt
+[0me[1;30m[🐳|[0m👉]    '/armbian/config/bootenv/rockchip64.txt' -> '/armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/boot/armbianEnv.txt'
+[0me[1;30m[🐳|[0m👉]    --> (436) [0;36mCOMMAND[0m: echo overlay_prefix=rk35xx >> /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/boot/armbianEnv.txt
+[0me[1;30m[🐳|[0m👉]    --> (436) [0;36mCOMMAND[0m: echo fdtfile=rockchip/rk3528-x98k.dtb >> /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/boot/armbianEnv.txt
+[0me[1;30m[🐳|[0m👉]    --> (436) [1;39mINFO[0m: Temporarily disabling [ [1;39minitramfs-tools hook for kernel[0m ]
+[0me[1;30m[🐳|[0m👉]    --> (436) [0;36mCOMMAND[0m: chmod -v -x /etc/kernel/postinst.d/initramfs-tools
+[0me[1;30m[🐳|[0m👉]    mode of '/etc/kernel/postinst.d/initramfs-tools' changed from 0755 (rwxr-xr-x) to 0644 (rw-r--r--)
+[0me[1;30m[🐳|[0m👉]    --> (436) [1;39mINFO[0m: Updating [ [1;39mapt package lists[0m ]
+[0me[1;30m[🐳|[0m👉]    --> (436) [0;36mCOMMAND[0m: mkdir -pv /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (436) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (436) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/lists/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (436) [0;36mCOMMAND[0m: DEBIAN_FRONTEND=noninteractive apt-get -y -q -o Dpkg::Use-Pty=0 -o APT::Get::List-Cleanup=0 update
+[0me[1;30m[🐳|[0m👉]    Hit:1 http://github.armbian.com/configng stable InRelease
+[0me[1;30m[🐳|[0m👉]    Hit:2 http://ports.ubuntu.com noble InRelease
+[0me[1;30m[🐳|[0m👉]    Get:3 http://ports.ubuntu.com noble-security InRelease [126 kB]
+[0me[1;30m[🐳|[0m👉]    Get:4 http://ports.ubuntu.com noble-updates InRelease [126 kB]
+[0me[1;30m[🐳|[0m👉]    Get:5 http://ports.ubuntu.com noble-backports InRelease [126 kB]
+[0me[1;30m[🐳|[0m👉]    Fetched 378 kB in 5s (79.0 kB/s)
+[0me[1;30m[🐳|[0m👉]    Reading package lists...
+[0me[1;30m[🐳|[0m👉]    --> (450) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (450) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (450) [1;39mINFO[0m: Installing AGGREGATED_PACKAGES_IMAGE packages [ [1;39mrfkill bluetooth bluez bluez-tools chrony network-manager network-manager-openvpn netplan.io network-manager-config-connectivity-ubuntu ethtool[0m ]
+[0me[1;30m[🐳|[0m👉]    --> (450) [0;36mCOMMAND[0m: mkdir -pv /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (450) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (450) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/lists/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (450) [0;36mCOMMAND[0m: DEBIAN_FRONTEND=noninteractive apt-get -y -qq -o Dpkg::Use-Pty=0 -o APT::Get::List-Cleanup=0 --no-install-recommends --dry-run install rfkill bluetooth bluez bluez-tools chrony network-manager network-manager-openvpn netplan.io network-manager-config-connectivity-ubuntu ethtool 2>&1 | { grep --line-buffered -v -e '^Conf ' -e '^Inst ' || true; }
+[0me[1;30m[🐳|[0m👉]    --> (454) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (454) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (454) [0;36mCOMMAND[0m: mkdir -pv /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (454) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (454) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/lists/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (454) [0;36mCOMMAND[0m: DEBIAN_FRONTEND=noninteractive apt-get -y -qq -o Dpkg::Use-Pty=0 -o APT::Get::List-Cleanup=0 --no-install-recommends --download-only install rfkill bluetooth bluez bluez-tools chrony network-manager network-manager-openvpn netplan.io network-manager-config-connectivity-ubuntu ethtool
+[0me[1;30m[🐳|[0m👉]    --> (456) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (456) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (456) [0;36mCOMMAND[0m: mkdir -pv /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (456) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (456) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/lists/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (456) [0;36mCOMMAND[0m: DEBIAN_FRONTEND=noninteractive apt-get -y -qq -o Dpkg::Use-Pty=0 -o APT::Get::List-Cleanup=0 --no-install-recommends install rfkill bluetooth bluez bluez-tools chrony network-manager network-manager-openvpn netplan.io network-manager-config-connectivity-ubuntu ethtool
+[0me[1;30m[🐳|[0m👉]    Preconfiguring packages ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package bluez.
+[0me[1;30m[🐳|[0m👉]    (Reading database ... 29132 files and directories currently installed.)
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../00-bluez_5.72-0ubuntu5.5_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking bluez (5.72-0ubuntu5.5) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package tzdata-legacy.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../01-tzdata-legacy_2025b-0ubuntu0.24.04.1_all.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking tzdata-legacy (2025b-0ubuntu0.24.04.1) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package chrony.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../02-chrony_4.5-1ubuntu4.2_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking chrony (4.5-1ubuntu4.2) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package libnetplan1:arm64.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../03-libnetplan1_1.1.2-8ubuntu1~24.04.1_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking libnetplan1:arm64 (1.1.2-8ubuntu1~24.04.1) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package libnewt0.52:arm64.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../04-libnewt0.52_0.52.24-2ubuntu2_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking libnewt0.52:arm64 (0.52.24-2ubuntu2) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package netplan-generator.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../05-netplan-generator_1.1.2-8ubuntu1~24.04.1_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Adding 'diversion of /lib/systemd/system-generators/netplan to /lib/systemd/system-generators/netplan.usr-is-merged by netplan-generator'
+[0me[1;30m[🐳|[0m👉]    Unpacking netplan-generator (1.1.2-8ubuntu1~24.04.1) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package ethtool.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../06-ethtool_1%3a6.7-1build1_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking ethtool (1:6.7-1build1) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package python3-netplan.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../07-python3-netplan_1.1.2-8ubuntu1~24.04.1_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking python3-netplan (1.1.2-8ubuntu1~24.04.1) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package python3-yaml.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../08-python3-yaml_6.0.1-2build2_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking python3-yaml (6.0.1-2build2) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package netplan.io.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../09-netplan.io_1.1.2-8ubuntu1~24.04.1_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking netplan.io (1.1.2-8ubuntu1~24.04.1) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package bluetooth.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../10-bluetooth_5.72-0ubuntu5.5_all.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking bluetooth (5.72-0ubuntu5.5) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package bluez-tools.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../11-bluez-tools_2.0~20170911.0.7cb788c-4build2_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking bluez-tools (2.0~20170911.0.7cb788c-4build2) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package libbluetooth3:arm64.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../12-libbluetooth3_5.72-0ubuntu5.5_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking libbluetooth3:arm64 (5.72-0ubuntu5.5) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package libmm-glib0:arm64.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../13-libmm-glib0_1.23.4-0ubuntu2_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking libmm-glib0:arm64 (1.23.4-0ubuntu2) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package libndp0:arm64.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../14-libndp0_1.8-1fakesync1ubuntu0.24.04.1_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking libndp0:arm64 (1.8-1fakesync1ubuntu0.24.04.1) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package libnm0:arm64.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../15-libnm0_1.46.0-1ubuntu2.4_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking libnm0:arm64 (1.46.0-1ubuntu2.4) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package libpkcs11-helper1t64:arm64.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../16-libpkcs11-helper1t64_1.29.0-2.1build2_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking libpkcs11-helper1t64:arm64 (1.29.0-2.1build2) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package libteamdctl0:arm64.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../17-libteamdctl0_1.31-1build3_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking libteamdctl0:arm64 (1.31-1build3) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package network-manager.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../18-network-manager_1.46.0-1ubuntu2.4_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    ls: cannot access '/etc/NetworkManager/system-connections': No such file or directory
+[0me[1;30m[🐳|[0m👉]    Unpacking network-manager (1.46.0-1ubuntu2.4) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package network-manager-config-connectivity-ubuntu.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../19-network-manager-config-connectivity-ubuntu_1.46.0-1ubuntu2.4_all.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking network-manager-config-connectivity-ubuntu (1.46.0-1ubuntu2.4) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package openvpn.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../20-openvpn_2.6.14-0ubuntu0.24.04.3_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking openvpn (2.6.14-0ubuntu0.24.04.3) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package network-manager-openvpn.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../21-network-manager-openvpn_1.10.2-4build2_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking network-manager-openvpn (1.10.2-4build2) ...
+[0me[1;30m[🐳|[0m👉]    Setting up libnewt0.52:arm64 (0.52.24-2ubuntu2) ...
+[0me[1;30m[🐳|[0m👉]    update-alternatives: using /etc/newt/palette.ubuntu to provide /etc/newt/palette (newt-palette) in auto mode
+[0me[1;30m[🐳|[0m👉]    Setting up bluez-tools (2.0~20170911.0.7cb788c-4build2) ...
+[0me[1;30m[🐳|[0m👉]    Setting up python3-yaml (6.0.1-2build2) ...
+[0me[1;30m[🐳|[0m👉]    Setting up libnetplan1:arm64 (1.1.2-8ubuntu1~24.04.1) ...
+[0me[1;30m[🐳|[0m👉]    Setting up tzdata-legacy (2025b-0ubuntu0.24.04.1) ...
+[0me[1;30m[🐳|[0m👉]    Setting up bluez (5.72-0ubuntu5.5) ...
+[0me[1;30m[🐳|[0m👉]    Running in chroot, ignoring request.
+[0me[1;30m[🐳|[0m👉]    invoke-rc.d: policy-rc.d denied execution of force-reload.
+[0me[1;30m[🐳|[0m👉]    Running in chroot, ignoring request.
+[0me[1;30m[🐳|[0m👉]    invoke-rc.d: policy-rc.d denied execution of start.
+[0me[1;30m[🐳|[0m👉]    Created symlink /etc/systemd/system/dbus-org.bluez.service → /usr/lib/systemd/system/bluetooth.service.
+[0me[1;30m[🐳|[0m👉]    Created symlink /etc/systemd/system/bluetooth.target.wants/bluetooth.service → /usr/lib/systemd/system/bluetooth.service.
+[0me[1;30m[🐳|[0m👉]    Setting up libteamdctl0:arm64 (1.31-1build3) ...
+[0me[1;30m[🐳|[0m👉]    Setting up libnm0:arm64 (1.46.0-1ubuntu2.4) ...
+[0me[1;30m[🐳|[0m👉]    Setting up libmm-glib0:arm64 (1.23.4-0ubuntu2) ...
+[0me[1;30m[🐳|[0m👉]    Setting up libbluetooth3:arm64 (5.72-0ubuntu5.5) ...
+[0me[1;30m[🐳|[0m👉]    Setting up python3-netplan (1.1.2-8ubuntu1~24.04.1) ...
+[0me[1;30m[🐳|[0m👉]    Setting up libpkcs11-helper1t64:arm64 (1.29.0-2.1build2) ...
+[0me[1;30m[🐳|[0m👉]    Setting up libndp0:arm64 (1.8-1fakesync1ubuntu0.24.04.1) ...
+[0me[1;30m[🐳|[0m👉]    Setting up netplan-generator (1.1.2-8ubuntu1~24.04.1) ...
+[0me[1;30m[🐳|[0m👉]    Removing 'diversion of /lib/systemd/system-generators/netplan to /lib/systemd/system-generators/netplan.usr-is-merged by netplan-generator'
+[0me[1;30m[🐳|[0m👉]    Setting up bluetooth (5.72-0ubuntu5.5) ...
+[0me[1;30m[🐳|[0m👉]    Setting up ethtool (1:6.7-1build1) ...
+[0me[1;30m[🐳|[0m👉]    Setting up openvpn (2.6.14-0ubuntu0.24.04.3) ...
+[0me[1;30m[🐳|[0m👉]    Created symlink /etc/systemd/system/multi-user.target.wants/openvpn.service → /usr/lib/systemd/system/openvpn.service.
+[0me[1;30m[🐳|[0m👉]    Setting up chrony (4.5-1ubuntu4.2) ...
+[0me[1;30m[🐳|[0m👉]    Creating config file /etc/chrony/chrony.conf with new version
+[0me[1;30m[🐳|[0m👉]    Creating config file /etc/chrony/chrony.keys with new version
+[0me[1;30m[🐳|[0m👉]    dpkg-statoverride: warning: --update given but /var/log/chrony does not exist
+[0me[1;30m[🐳|[0m👉]    Running in chroot, ignoring request.
+[0me[1;30m[🐳|[0m👉]    invoke-rc.d: policy-rc.d denied execution of start.
+[0me[1;30m[🐳|[0m👉]    Created symlink /etc/systemd/system/chronyd.service → /usr/lib/systemd/system/chrony.service.
+[0me[1;30m[🐳|[0m👉]    Created symlink /etc/systemd/system/multi-user.target.wants/chrony.service → /usr/lib/systemd/system/chrony.service.
+[0me[1;30m[🐳|[0m👉]    Setting up netplan.io (1.1.2-8ubuntu1~24.04.1) ...
+[0me[1;30m[🐳|[0m👉]    Setting up network-manager (1.46.0-1ubuntu2.4) ...
+[0me[1;30m[🐳|[0m👉]    Running in chroot, ignoring request.
+[0me[1;30m[🐳|[0m👉]    invoke-rc.d: policy-rc.d denied execution of force-reload.
+[0me[1;30m[🐳|[0m👉]    Created symlink /etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service → /usr/lib/systemd/system/NetworkManager-dispatcher.service.
+[0me[1;30m[🐳|[0m👉]    Created symlink /etc/systemd/system/network-online.target.wants/NetworkManager-wait-online.service → /usr/lib/systemd/system/NetworkManager-wait-online.service.
+[0me[1;30m[🐳|[0m👉]    Created symlink /etc/systemd/system/multi-user.target.wants/NetworkManager.service → /usr/lib/systemd/system/NetworkManager.service.
+[0me[1;30m[🐳|[0m👉]    Error: Could not create NMClient object: Could not connect: No such file or directory
+[0me[1;30m[🐳|[0m👉]    WARNING: NetworkManager could not reload connections ...
+[0me[1;30m[🐳|[0m👉]    Setting up network-manager-openvpn (1.10.2-4build2) ...
+[0me[1;30m[🐳|[0m👉]    Setting up network-manager-config-connectivity-ubuntu (1.46.0-1ubuntu2.4) ...
+[0me[1;30m[🐳|[0m👉]    Processing triggers for dbus (1.14.10-4ubuntu4.1) ...
+[0me[1;30m[🐳|[0m👉]    Processing triggers for libc-bin (2.39-0ubuntu8.6) ...
+[0me[1;30m[🐳|[0m👉]    Processing triggers for man-db (2.12.0-4build2) ...
+[0me[1;30m[🐳|[0m👉]    --> (492) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (492) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (492) [1;39mDEBINSTALL[0m: Installing: /armbian/output/debs/linux-u-boot-x98k-vendor_26.02.0-trunk_arm64__2017.09-Sb872-P5fff-Hbdb5-V1b0f-Bbf55-R448a.deb [ [1;39mlinux-u-boot-x98k-vendor_26.02.0-trunk_arm64__2017.09-Sb872-P5fff-Hbdb5-V1b0f-Bbf55-R448a.deb[0m ]
+[0me[1;30m[🐳|[0m👉]    --> (492) [0;36mCOMMAND[0m: cp -pv /armbian/output/debs/linux-u-boot-x98k-vendor_26.02.0-trunk_arm64__2017.09-Sb872-P5fff-Hbdb5-V1b0f-Bbf55-R448a.deb /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/root/linux-u-boot-x98k-vendor_26.02.0-trunk_arm64__2017.09-Sb872-P5fff-Hbdb5-V1b0f-Bbf55-R448a.deb
+[0me[1;30m[🐳|[0m👉]    '/armbian/output/debs/linux-u-boot-x98k-vendor_26.02.0-trunk_arm64__2017.09-Sb872-P5fff-Hbdb5-V1b0f-Bbf55-R448a.deb' -> '/armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/root/linux-u-boot-x98k-vendor_26.02.0-trunk_arm64__2017.09-Sb872-P5fff-Hbdb5-V1b0f-Bbf55-R448a.deb'
+[0me[1;30m[🐳|[0m👉]    --> (492) [0;36mCOMMAND[0m: mkdir -pv /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (492) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (492) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/lists/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (492) [0;36mCOMMAND[0m: DEBIAN_FRONTEND=noninteractive ARMBIAN_IMAGE_BUILD_BOOTFS_TYPE=ext4 apt-get -y -qq -o Dpkg::Use-Pty=0 -o APT::Get::List-Cleanup=0 -o APT::Clean-Installed=0 --no-install-recommends  install /root/linux-u-boot-x98k-vendor_26.02.0-trunk_arm64__2017.09-Sb872-P5fff-Hbdb5-V1b0f-Bbf55-R448a.deb
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package linux-u-boot-x98k-vendor.
+[0me[1;30m[🐳|[0m👉]    (Reading database ... 30457 files and directories currently installed.)
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../linux-u-boot-x98k-vendor_26.02.0-trunk_arm64__2017.09-Sb872-P5fff-Hbdb5-V1b0f-Bbf55-R448a.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking linux-u-boot-x98k-vendor (26.02.0-trunk) ...
+[0me[1;30m[🐳|[0m👉]    Setting up linux-u-boot-x98k-vendor (26.02.0-trunk) ...
+[0me[1;30m[🐳|[0m👉]    Armbian 'uboot-x98k-vendor' for '2017.09-Sb872-P5fff-Hbdb5-V1b0f-Bbf55-R448a': 'postinst' starting.
+[0me[1;30m[🐳|[0m👉]    Armbian 'uboot-x98k-vendor' for '2017.09-Sb872-P5fff-Hbdb5-V1b0f-Bbf55-R448a': 'postinst' finishing.
+[0me[1;30m[🐳|[0m👉]    --> (496) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (496) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (496) [1;32mINFO[0m: Extension: net-network-manager: Enabling Network-Manager
+[0me[1;30m[🐳|[0m👉]    --> (496) [0;36mCOMMAND[0m: systemctl enable systemd-resolved.service
+[0me[1;30m[🐳|[0m👉]    --> (496) [0;36mCOMMAND[0m: systemctl disable NetworkManager-wait-online.service
+[0me[1;30m[🐳|[0m👉]    Removed "/etc/systemd/system/network-online.target.wants/NetworkManager-wait-online.service".
+[0me[1;30m[🐳|[0m👉]    --> (496) [1;32mINFO[0m: Configuring [ [1;32mNetworkManager and Netplan[0m ]
+[0me[1;30m[🐳|[0m👉]    --> (496) [0;36mCOMMAND[0m: cp -v /armbian/extensions/network/config-nm/netplan/00-default-use-network-manager.yaml /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/etc/netplan/
+[0me[1;30m[🐳|[0m👉]    '/armbian/extensions/network/config-nm/netplan/00-default-use-network-manager.yaml' -> '/armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/etc/netplan/00-default-use-network-manager.yaml'
+[0me[1;30m[🐳|[0m👉]    --> (496) [0;36mCOMMAND[0m: cp -v /armbian/extensions/network/config-nm/NetworkManager/00-armbian-readme.conf /armbian/extensions/network/config-nm/NetworkManager/zz-10-override-wifi-random-mac-disable.conf /armbian/extensions/network/config-nm/NetworkManager/zz-20-override-wifi-powersave-disable.conf /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/etc/NetworkManager/conf.d/
+[0me[1;30m[🐳|[0m👉]    '/armbian/extensions/network/config-nm/NetworkManager/00-armbian-readme.conf' -> '/armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/etc/NetworkManager/conf.d/00-armbian-readme.conf'
+[0me[1;30m[🐳|[0m👉]    '/armbian/extensions/network/config-nm/NetworkManager/zz-10-override-wifi-random-mac-disable.conf' -> '/armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/etc/NetworkManager/conf.d/zz-10-override-wifi-random-mac-disable.conf'
+[0me[1;30m[🐳|[0m👉]    '/armbian/extensions/network/config-nm/NetworkManager/zz-20-override-wifi-powersave-disable.conf' -> '/armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/etc/NetworkManager/conf.d/zz-20-override-wifi-powersave-disable.conf'
+[0me[1;30m[🐳|[0m👉]    mode of '/armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/etc/netplan/00-default-use-network-manager.yaml' changed from 0644 (rw-r--r--) to 0600 (rw-------)
+[0me[1;30m[🐳|[0m👉]    --> (496) [1;39mDEBINSTALL[0m: Installing: /armbian/output/debs/linux-image-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb [ [1;39mlinux-image-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb[0m ]
+[0me[1;30m[🐳|[0m👉]    --> (496) [0;36mCOMMAND[0m: cp -pv /armbian/output/debs/linux-image-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/root/linux-image-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb
+[0me[1;30m[🐳|[0m👉]    '/armbian/output/debs/linux-image-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb' -> '/armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/root/linux-image-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb'
+[0me[1;30m[🐳|[0m👉]    --> (497) [0;36mCOMMAND[0m: mkdir -pv /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (497) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (497) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/lists/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (497) [0;36mCOMMAND[0m: DEBIAN_FRONTEND=noninteractive ARMBIAN_IMAGE_BUILD_BOOTFS_TYPE=ext4 apt-get -y -qq -o Dpkg::Use-Pty=0 -o APT::Get::List-Cleanup=0 -o APT::Clean-Installed=0 --no-install-recommends  install /root/linux-image-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package linux-image-vendor-rk35xx.
+[0me[1;30m[🐳|[0m👉]    (Reading database ... 30471 files and directories currently installed.)
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../linux-image-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb ...
+[0me[1;30m[🐳|[0m👉]    Armbian 'linux-image-vendor-rk35xx' for '6.1.115-vendor-rk35xx': 'preinst' starting.
+[0me[1;30m[🐳|[0m👉]    Armbian 'linux-image-vendor-rk35xx' for '6.1.115-vendor-rk35xx': 'preinst' finishing.
+[0me[1;30m[🐳|[0m👉]    Unpacking linux-image-vendor-rk35xx (26.02.0-trunk) ...
+[0me[1;30m[🐳|[0m👉]    Setting up linux-image-vendor-rk35xx (26.02.0-trunk) ...
+[0me[1;30m[🐳|[0m👉]    Armbian 'linux-image-vendor-rk35xx' for '6.1.115-vendor-rk35xx': 'postinst' starting.
+[0me[1;30m[🐳|[0m👉]     * dkms: autoinstall for kernel 6.1.115-vendor-rk35xx was skipped since the kernel headers for this kernel do not seem to be installed
+[0me[1;30m[🐳|[0m👉]    Armbian: update last-installed kernel symlink to 'Image'...
+[0me[1;30m[🐳|[0m👉]    '/boot/Image' -> 'vmlinuz-6.1.115-vendor-rk35xx'
+[0me[1;30m[🐳|[0m👉]    Armbian: Debian compat: linux-update-symlinks install 6.1.115-vendor-rk35xx boot/vmlinuz-6.1.115-vendor-rk35xx
+[0me[1;30m[🐳|[0m👉]    I: /boot/vmlinuz.old is now a symlink to vmlinuz-6.1.115-vendor-rk35xx
+[0me[1;30m[🐳|[0m👉]    I: /boot/initrd.img.old is now a symlink to initrd.img-6.1.115-vendor-rk35xx
+[0me[1;30m[🐳|[0m👉]    I: /boot/vmlinuz is now a symlink to vmlinuz-6.1.115-vendor-rk35xx
+[0me[1;30m[🐳|[0m👉]    I: /boot/initrd.img is now a symlink to initrd.img-6.1.115-vendor-rk35xx
+[0me[1;30m[🐳|[0m👉]    Armbian 'linux-image-vendor-rk35xx' for '6.1.115-vendor-rk35xx': 'postinst' finishing.
+[0me[1;30m[🐳|[0m👉]    --> (508) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (508) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (508) [1;39mDEBINSTALL[0m: Installing: /armbian/output/debs/linux-dtb-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb [ [1;39mlinux-dtb-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb[0m ]
+[0me[1;30m[🐳|[0m👉]    --> (508) [0;36mCOMMAND[0m: cp -pv /armbian/output/debs/linux-dtb-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/root/linux-dtb-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb
+[0me[1;30m[🐳|[0m👉]    '/armbian/output/debs/linux-dtb-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb' -> '/armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/root/linux-dtb-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb'
+[0me[1;30m[🐳|[0m👉]    --> (508) [0;36mCOMMAND[0m: mkdir -pv /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (508) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (508) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/lists/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (508) [0;36mCOMMAND[0m: DEBIAN_FRONTEND=noninteractive ARMBIAN_IMAGE_BUILD_BOOTFS_TYPE=ext4 apt-get -y -qq -o Dpkg::Use-Pty=0 -o APT::Get::List-Cleanup=0 -o APT::Clean-Installed=0 --no-install-recommends  install /root/linux-dtb-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package linux-dtb-vendor-rk35xx.
+[0me[1;30m[🐳|[0m👉]    (Reading database ... 33939 files and directories currently installed.)
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../linux-dtb-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb ...
+[0me[1;30m[🐳|[0m👉]    Armbian 'linux-dtb-vendor-rk35xx' for '6.1.115-vendor-rk35xx': 'preinst' starting.
+[0me[1;30m[🐳|[0m👉]    Armbian 'linux-dtb-vendor-rk35xx' for '6.1.115-vendor-rk35xx': 'preinst' finishing.
+[0me[1;30m[🐳|[0m👉]    Unpacking linux-dtb-vendor-rk35xx (26.02.0-trunk) ...
+[0me[1;30m[🐳|[0m👉]    Setting up linux-dtb-vendor-rk35xx (26.02.0-trunk) ...
+[0me[1;30m[🐳|[0m👉]    Armbian 'linux-dtb-vendor-rk35xx' for '6.1.115-vendor-rk35xx': 'postinst' starting.
+[0me[1;30m[🐳|[0m👉]    Armbian: DTB: symlinking /boot/dtb to /boot/dtb-6.1.115-vendor-rk35xx...
+[0me[1;30m[🐳|[0m👉]    'dtb' -> 'dtb-6.1.115-vendor-rk35xx'
+[0me[1;30m[🐳|[0m👉]    Armbian 'linux-dtb-vendor-rk35xx' for '6.1.115-vendor-rk35xx': 'postinst' finishing.
+[0me[1;30m[🐳|[0m👉]    --> (518) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (518) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (518) [0;36mCOMMAND[0m: mkdir -pv /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (518) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (518) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/lists/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (518) [0;36mCOMMAND[0m: DEBIAN_FRONTEND=noninteractive apt-get -y -qq -o Dpkg::Use-Pty=0 -o APT::Get::List-Cleanup=0 --no-install-recommends install pahole
+[0me[1;30m[🐳|[0m👉]    --> (520) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (520) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (520) [1;39mDEBINSTALL[0m: Installing: /armbian/output/debs/linux-headers-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb [ [1;39mlinux-headers-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb[0m ]
+[0me[1;30m[🐳|[0m👉]    --> (520) [0;36mCOMMAND[0m: cp -pv /armbian/output/debs/linux-headers-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/root/linux-headers-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb
+[0me[1;30m[🐳|[0m👉]    '/armbian/output/debs/linux-headers-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb' -> '/armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/root/linux-headers-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb'
+[0me[1;30m[🐳|[0m👉]    --> (520) [0;36mCOMMAND[0m: mkdir -pv /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (520) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (520) [0;36mCOMMAND[0m: mount --bind /armbian/cache/aptcache/lists/noble-arm64 /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (520) [0;36mCOMMAND[0m: DEBIAN_FRONTEND=noninteractive ARMBIAN_IMAGE_BUILD_BOOTFS_TYPE=ext4 apt-get -y -qq -o Dpkg::Use-Pty=0 -o APT::Get::List-Cleanup=0 -o APT::Clean-Installed=0 --no-install-recommends  install /root/linux-headers-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package zlib1g-dev:arm64.
+[0me[1;30m[🐳|[0m👉]    (Reading database ... 34689 files and directories currently installed.)
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../zlib1g-dev_1%3a1.3.dfsg-3.1ubuntu2.1_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking zlib1g-dev:arm64 (1:1.3.dfsg-3.1ubuntu2.1) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package libzstd-dev:arm64.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../libzstd-dev_1.5.5+dfsg2-2build1.1_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking libzstd-dev:arm64 (1.5.5+dfsg2-2build1.1) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package libelf-dev:arm64.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../libelf-dev_0.190-1.1ubuntu0.1_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking libelf-dev:arm64 (0.190-1.1ubuntu0.1) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package libssl-dev:arm64.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../libssl-dev_3.0.13-0ubuntu3.6_arm64.deb ...
+[0me[1;30m[🐳|[0m👉]    Unpacking libssl-dev:arm64 (3.0.13-0ubuntu3.6) ...
+[0me[1;30m[🐳|[0m👉]    Selecting previously unselected package linux-headers-vendor-rk35xx.
+[0me[1;30m[🐳|[0m👉]    Preparing to unpack .../linux-headers-vendor-rk35xx_26.02.0-trunk_arm64__6.1.115-S8f48-D7234-P7649-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a.deb ...
+[0me[1;30m[🐳|[0m👉]    Armbian 'linux-headers-vendor-rk35xx' for '6.1.115-vendor-rk35xx': 'preinst' starting.
+[0me[1;30m[🐳|[0m👉]    Armbian 'linux-headers-vendor-rk35xx' for '6.1.115-vendor-rk35xx': 'preinst' finishing.
+[0me[1;30m[🐳|[0m👉]    Unpacking linux-headers-vendor-rk35xx (26.02.0-trunk) ...
+[0me[1;30m[🐳|[0m👉]    Setting up libzstd-dev:arm64 (1.5.5+dfsg2-2build1.1) ...
+[0me[1;30m[🐳|[0m👉]    Setting up libssl-dev:arm64 (3.0.13-0ubuntu3.6) ...
+[0me[1;30m[🐳|[0m👉]    Setting up zlib1g-dev:arm64 (1:1.3.dfsg-3.1ubuntu2.1) ...
+[0me[1;30m[🐳|[0m👉]    Setting up libelf-dev:arm64 (0.190-1.1ubuntu0.1) ...
+[0me[1;30m[🐳|[0m👉]    Setting up linux-headers-vendor-rk35xx (26.02.0-trunk) ...
+[0me[1;30m[🐳|[0m👉]    Armbian 'linux-headers-vendor-rk35xx' for '6.1.115-vendor-rk35xx': 'postinst' starting.
+[0me[1;30m[🐳|[0m👉]    Configuring kernel-headers (6.1.115-vendor-rk35xx) - please wait ...
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/basic/fixdep
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/kconfig/conf.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/kconfig/confdata.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/kconfig/expr.o
+[0me[1;30m[🐳|[0m👉]      LEX     scripts/kconfig/lexer.lex.c
+[0me[1;30m[🐳|[0m👉]      YACC    scripts/kconfig/parser.tab.[ch]
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/kconfig/lexer.lex.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/kconfig/menu.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/kconfig/parser.tab.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/kconfig/preprocess.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/kconfig/symbol.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/kconfig/util.o
+[0me[1;30m[🐳|[0m👉]      HOSTLD  scripts/kconfig/conf
+[0me[1;30m[🐳|[0m👉]    #
+[0me[1;30m[🐳|[0m👉]    # configuration written to .config
+[0me[1;30m[🐳|[0m👉]    #
+[0me[1;30m[🐳|[0m👉]    Compiling kernel-headers scripts (6.1.115-vendor-rk35xx) using 16 CPUs - please wait ...
+[0me[1;30m[🐳|[0m👉]      SYNC    include/config/auto.conf.cmd
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/dtc.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/flattree.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/data.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/fstree.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/treesource.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/checks.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/srcpos.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/livetree.o
+[0me[1;30m[🐳|[0m👉]      LEX     scripts/dtc/dtc-lexer.lex.c
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/libfdt/fdt.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/util.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/libfdt/fdt_ro.o
+[0me[1;30m[🐳|[0m👉]      YACC    scripts/dtc/dtc-parser.tab.[ch]
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/libfdt/fdt_sw.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/libfdt/fdt_wip.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/libfdt/fdt_rw.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/libfdt/fdt_strerror.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/libfdt/fdt_empty_tree.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/libfdt/fdt_addresses.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/libfdt/fdt_overlay.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/fdtoverlay.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/dtc-lexer.lex.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/dtc/dtc-parser.tab.o
+[0me[1;30m[🐳|[0m👉]      HOSTLD  scripts/dtc/fdtoverlay
+[0me[1;30m[🐳|[0m👉]      HOSTLD  scripts/dtc/dtc
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/kallsyms
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/resource_tool
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/sorttable
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/asn1_compiler
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/genksyms/genksyms.o
+[0me[1;30m[🐳|[0m👉]      YACC    scripts/genksyms/parse.tab.[ch]
+[0me[1;30m[🐳|[0m👉]      LEX     scripts/genksyms/lex.lex.c
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/selinux/mdp/mdp
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/selinux/genheaders/genheaders
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/genksyms/parse.tab.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/genksyms/lex.lex.o
+[0me[1;30m[🐳|[0m👉]      HOSTLD  scripts/genksyms/genksyms
+[0me[1;30m[🐳|[0m👉]    Compiling kernel-headers scripts/mod (6.1.115-vendor-rk35xx) using 16 CPUs - please wait ...
+[0me[1;30m[🐳|[0m👉]      CC      scripts/mod/empty.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/mod/mk_elfconfig
+[0me[1;30m[🐳|[0m👉]      CC      scripts/mod/devicetable-offsets.s
+[0me[1;30m[🐳|[0m👉]      UPD     scripts/mod/devicetable-offsets.h
+[0me[1;30m[🐳|[0m👉]      MKELF   scripts/mod/elfconfig.h
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/mod/modpost.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/mod/file2alias.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  scripts/mod/sumversion.o
+[0me[1;30m[🐳|[0m👉]      HOSTLD  scripts/mod/modpost
+[0me[1;30m[🐳|[0m👉]      MODPOST scripts/mod/Module.symvers
+[0me[1;30m[🐳|[0m👉]    Compiling resolve_btfids tools for assigning stable BTF type IDs to kernel symbols
+[0me[1;30m[🐳|[0m👉]      DESCEND bpf/resolve_btfids
+[0me[1;30m[🐳|[0m👉]      MKDIR     /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/
+[0me[1;30m[🐳|[0m👉]      MKDIR     /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids//libsubcmd
+[0me[1;30m[🐳|[0m👉]      HOSTCC  /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/fixdep.o
+[0me[1;30m[🐳|[0m👉]      GEN     /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/bpf_helper_defs.h
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf//include/bpf/bpf.h
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf//include/bpf/libbpf.h
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf//include/bpf/btf.h
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf//include/bpf/libbpf_common.h
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf//include/bpf/libbpf_legacy.h
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf//include/bpf/bpf_helpers.h
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf//include/bpf/bpf_tracing.h
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf//include/bpf/bpf_core_read.h
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf//include/bpf/bpf_endian.h
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf//include/bpf/skel_internal.h
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf//include/bpf/usdt.bpf.h
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf//include/bpf/libbpf_version.h
+[0me[1;30m[🐳|[0m👉]      HOSTLD  /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/fixdep-in.o
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:62: SyntaxWarning: invalid escape sequence '\w'
+[0me[1;30m[🐳|[0m👉]      arg_re = re.compile('((\w+ )*?(\w+|...))( (\**)(\w+))?$')
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:64: SyntaxWarning: invalid escape sequence '\*'
+[0me[1;30m[🐳|[0m👉]      proto_re = re.compile('(.+) (\**)(\w+)\(((([^,]+)(, )?){1,5})\)$')
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:116: SyntaxWarning: invalid escape sequence '\*'
+[0me[1;30m[🐳|[0m👉]      p = re.compile(' \* ?(BPF\w+)$')
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:120: SyntaxWarning: invalid escape sequence '\*'
+[0me[1;30m[🐳|[0m👉]      end_re = re.compile(' \* ?NOTES$')
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:135: SyntaxWarning: invalid escape sequence '\*'
+[0me[1;30m[🐳|[0m👉]      p = re.compile(' \* ?((.+) \**\w+\((((const )?(struct )?(\w+|\.\.\.)( \**\w+)?)(, )?){1,5}\))$')
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:143: SyntaxWarning: invalid escape sequence '\*'
+[0me[1;30m[🐳|[0m👉]      p = re.compile(' \* ?(?:\t| {5,8})Description$')
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:156: SyntaxWarning: invalid escape sequence '\*'
+[0me[1;30m[🐳|[0m👉]      p = re.compile(' \* ?(?:\t| {5,8})(?:\t| {8})(.*)')
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:169: SyntaxWarning: invalid escape sequence '\*'
+[0me[1;30m[🐳|[0m👉]      p = re.compile(' \* ?(?:\t| {5,8})Return$')
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:182: SyntaxWarning: invalid escape sequence '\*'
+[0me[1;30m[🐳|[0m👉]      p = re.compile(' \* ?(?:\t| {5,8})(?:\t| {8})(.*)')
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:221: SyntaxWarning: invalid escape sequence '\s'
+[0me[1;30m[🐳|[0m👉]      bpf_p = re.compile('\s*(BPF\w+)+')
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:226: SyntaxWarning: invalid escape sequence '\s'
+[0me[1;30m[🐳|[0m👉]      assign_p = re.compile('\s*(BPF\w+)\s*=\s*(BPF\w+)')
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:241: SyntaxWarning: invalid escape sequence '\w'
+[0me[1;30m[🐳|[0m👉]      self.enum_syscalls = re.findall('(BPF\w+)+', bpf_cmd_str)
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:264: SyntaxWarning: invalid escape sequence '\s'
+[0me[1;30m[🐳|[0m👉]      p = re.compile('\s*FN\((\w+)\)|\\\\')
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:277: SyntaxWarning: invalid escape sequence '\('
+[0me[1;30m[🐳|[0m👉]      self.define_unique_helpers = re.findall('FN\(\w+\)', fn_defines_str)
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:410: SyntaxWarning: invalid escape sequence '\*'
+[0me[1;30m[🐳|[0m👉]      '/{}/,/\*\//:include/uapi/linux/bpf.h'.format(delimiter)]
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:481: SyntaxWarning: invalid escape sequence '\ '
+[0me[1;30m[🐳|[0m👉]      footer = '''
+[0me[1;30m[🐳|[0m👉]    /usr/src/linux-headers-6.1.115-vendor-rk35xx/scripts/bpf_doc.py:583: SyntaxWarning: invalid escape sequence '\ '
+[0me[1;30m[🐳|[0m👉]      one_arg += ' {}**\ '.format(a['star'].replace('*', '\\*'))
+[0me[1;30m[🐳|[0m👉]      LINK    /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/fixdep
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf//include/bpf/bpf_helper_defs.h
+[0me[1;30m[🐳|[0m👉]      MKDIR   /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/
+[0me[1;30m[🐳|[0m👉]      MKDIR   /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/
+[0me[1;30m[🐳|[0m👉]      MKDIR   /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/
+[0me[1;30m[🐳|[0m👉]      MKDIR   /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/
+[0me[1;30m[🐳|[0m👉]      MKDIR   /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/
+[0me[1;30m[🐳|[0m👉]      MKDIR   /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/
+[0me[1;30m[🐳|[0m👉]      MKDIR   /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/
+[0me[1;30m[🐳|[0m👉]      MKDIR   /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/
+[0me[1;30m[🐳|[0m👉]      MKDIR   /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/
+[0me[1;30m[🐳|[0m👉]      MKDIR   /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/
+[0me[1;30m[🐳|[0m👉]      MKDIR   /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/
+[0me[1;30m[🐳|[0m👉]      MKDIR   /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/
+[0me[1;30m[🐳|[0m👉]      MKDIR   /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/
+[0me[1;30m[🐳|[0m👉]      MKDIR   /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/
+[0me[1;30m[🐳|[0m👉]      MKDIR   /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/libbpf.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/nlattr.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/bpf.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/btf.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/str_error.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/libbpf_errno.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/bpf_prog_linfo.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/netlink.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/ringbuf.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/gen_loader.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/hashmap.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/linker.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/libbpf_probes.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/strset.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/btf_dump.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libsubcmd/exec-cmd.o
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libsubcmd//include/subcmd/exec-cmd.h
+[0me[1;30m[🐳|[0m👉]      MKDIR   /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/relo_core.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libsubcmd/help.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/usdt.o
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libsubcmd//include/subcmd/help.h
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libsubcmd//include/subcmd/pager.h
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libsubcmd/pager.o
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libsubcmd//include/subcmd/parse-options.h
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libsubcmd/parse-options.o
+[0me[1;30m[🐳|[0m👉]      INSTALL /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libsubcmd//include/subcmd/run-command.h
+[0me[1;30m[🐳|[0m👉]      INSTALL libsubcmd_headers
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libsubcmd/run-command.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libsubcmd/sigchain.o
+[0me[1;30m[🐳|[0m👉]      CC      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libsubcmd/subcmd-config.o
+[0me[1;30m[🐳|[0m👉]      LD      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libsubcmd/libsubcmd-in.o
+[0me[1;30m[🐳|[0m👉]      AR      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libsubcmd/libsubcmd.a
+[0me[1;30m[🐳|[0m👉]      LD      /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/staticobjs/libbpf-in.o
+[0me[1;30m[🐳|[0m👉]      LINK    /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/libbpf/libbpf.a
+[0me[1;30m[🐳|[0m👉]      HOSTCC  /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/main.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/zalloc.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/rbtree.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/string.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/ctype.o
+[0me[1;30m[🐳|[0m👉]      HOSTCC  /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/str_error_r.o
+[0me[1;30m[🐳|[0m👉]      HOSTLD  /usr/src/linux-headers-6.1.115-vendor-rk35xx/tools/bpf/resolve_btfids/resolve_btfids-in.o
+[0me[1;30m[🐳|[0m👉]      LINK     resolve_btfids
+[0me[1;30m[🐳|[0m👉]    Done compiling kernel-headers (6.1.115-vendor-rk35xx).
+[0me[1;30m[🐳|[0m👉]    Done compiling kernel-headers tools (6.1.115-vendor-rk35xx).
+[0me[1;30m[🐳|[0m👉]    Armbian 'linux-headers-vendor-rk35xx' for '6.1.115-vendor-rk35xx': 'postinst' finishing.
+[0me[1;30m[🐳|[0m👉]    Processing triggers for man-db (2.12.0-4build2) ...
+[0me[1;30m[🐳|[0m👉]    --> (716) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/cache/apt
+[0me[1;30m[🐳|[0m👉]    --> (716) [0;36mCOMMAND[0m: umount /armbian/.tmp/rootfs-49333d71-97ea-4da1-bff3-de23273c68d5/var/lib/apt/lists
+[0me[1;30m[🐳|[0m👉]    --> (726) [1;31mERROR[0m: Error  5 occurred in SUBSHELL [ [1;31mSUBSHELL at /armbian/extensions/radxa-aic8800.sh:20[0m ]
+[0m[1;30m[🐳|[0m💥[0m] [0m    👆👆👆 Showing logfile above 👆👆👆 [[1;31m /armbian/.tmp/logs-49333d71-97ea-4da1-bff3-de23273c68d5/070.000.install_distribution_agnostic.log [0m][0m
+[0m[1;30m[🐳|[0m💥[0m] [0mError 5 occurred in main shell [[1;31m at /armbian/extensions/radxa-aic8800.sh:20
+[0;31m   post_install_kernel_debs__install_aic8800_dkms_package() --> extensions/radxa-aic8800.sh:20
+[0;31m       post_install_kernel_debs() --> <extension_magic>:300
+[0;31m          call_extension_method() --> lib/functions/general/extensions.sh:57
+[0;31m   install_distribution_agnostic() --> lib/functions/rootfs/distro-agnostic.sh:392
+[0;31m                do_with_logging() --> lib/functions/logging/section-logging.sh:85
+[0;31m         build_rootfs_and_image() --> lib/functions/main/rootfs-image.sh:31
+[0;31m   full_build_packages_rootfs_and_image() --> lib/functions/main/default-build.sh:36
+[0;31m          do_with_default_build() --> lib/functions/main/default-build.sh:42
+[0;31m         cli_standard_build_run() --> lib/functions/cli/cli-build.sh:25
+[0;31m        armbian_cli_run_command() --> lib/functions/cli/utils-cli.sh:136
+[0;31m                 cli_entrypoint() --> lib/functions/cli/entrypoint.sh:208
+[0;31m                           main() --> compile.sh:50
+ [0m][0m
+[0m[1;30m[🐳|[0m💥[0m] [0mCleaning up [[1;31m please wait for cleanups to finish [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mUnmounting recursively [[1;39m SDCARD - be patient [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mUnmounting recursively [[1;39m MOUNT - be patient [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mANSI log file built; inspect it by running: [[1;39m less -RS output/logs/log-build-49333d71-97ea-4da1-bff3-de23273c68d5.log.ans [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mShare log manually: [[1;32m use one of the commands below (or add SHARE_LOG=yes next time!) [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mShare log manually: [[1;39m curl --data-binary @output/logs/log-build-49333d71-97ea-4da1-bff3-de23273c68d5.log.ans https://paste.armbian.com/log [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mShare log manually: [[1;39m curl --data-binary @output/logs/log-build-49333d71-97ea-4da1-bff3-de23273c68d5.log.ans https://paste.armbian.de/log [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mShare log manually: [[1;39m curl --data-binary @output/logs/log-build-49333d71-97ea-4da1-bff3-de23273c68d5.log.ans https://paste.next.armbian.com/log [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mShare log manually: [[1;39m curl --data-binary @output/logs/log-build-49333d71-97ea-4da1-bff3-de23273c68d5.log.ans https://paste.armbian.eu/log [0m][0m
+[0m[1;30m[💲|[0m💥[0m] [0m-------------Docker run failed after 731s-------------------------- [[1;31m 🐳 failed [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mCleaning up [[1;32m please wait for cleanups to finish [0m][0m

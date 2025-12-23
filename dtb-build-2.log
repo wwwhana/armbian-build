@@ -1,0 +1,161 @@
+[0m[1;30m[💲|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'BUILD_MINIMAL': '(unset)' --> 'no' early [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'BUILD_DESKTOP': '(unset)' --> 'no' early [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'BRANCH': '(unset)' --> 'vendor' early [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'BOARD': '(unset)' --> 'x98k' early [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'RELEASE': '(unset)' --> 'noble' early [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'KERNEL_CONFIGURE': '(unset)' --> 'no' early [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0martifact [[1;32m kernel :: kernel() [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mUsing prebuilt Armbian image as base for 'ubuntu-noble' [[1;32m DOCKER_ARMBIAN_BASE_IMAGE: ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-noble-latest [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mDocker info [[1;39m Docker 29.1.3 Kernel:6.6.87.2-microsoft-standard-WSL2 RAM:23.47GiB CPUs:16 OS:'Docker Desktop' hostname 'docker-desktop' under 'Linux' - buildx:yes - loop-hacks:yes static-loops:no [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mCreating [[1;32m .dockerignore [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mDocker launcher [[1;32m enabling all extensions looking for Docker dependencies [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mExtension search [[1;39m Searching in directory: "/home/lexia/armbian-build/extensions" [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mExtension search result [[1;39m Found 15 extensions in "/home/lexia/armbian-build/extensions" [0m][0m
+[0m[1;30m[💲|[0m🌿[0m] [0mExtension search [[1;39m Searching in directory: "/home/lexia/armbian-build/userpatches/extensions" [0m][0m
+[0m[1;30m[💲|[0m🚸[0m] [0mExtension search [[1;35m Directory does not exist: "/home/lexia/armbian-build/userpatches/extensions" [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mExtension manager [[1;32m processed 20 Extension Methods calls and 62 Extension Method implementations [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mPython2 not available on host release 'noble' [[1;32m ancient u-boot versions might/will fail to build [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mExtension: fs-cryptroot-support: Adding packages to host dependencies [[1;32m cryptsetup openssh-client [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mPreparing rkdevflash host-side dependencies [[1;32m rkdevflash [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mCreating [[1;32m Dockerfile; FROM ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-noble-latest [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mArmbian docker image [[1;32m already exists: ghcr.io/armbian/docker-armbian-build:armbian-ubuntu-noble-latest [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mBuilding [[1;32m Dockerfile via 'buildx build --progress=plain --load' [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0m-----------------Relaunching in Docker after 3s------------------ [[1;32m here comes the 🐳 [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'PREFER_DOCKER': '(unset)' --> 'no' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'BUILD_MINIMAL': '(unset)' --> 'no' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'BUILD_DESKTOP': '(unset)' --> 'no' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'ARMBIAN_BUILD_UUID': '(unset)' --> 'e3b803a8-288b-4150-b1e0-3e95166c001d' early [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mSkip     cmdline param [[1;32m 'ARMBIAN_RELAUNCHED': already set to 'yes' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'BRANCH': '(unset)' --> 'vendor' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'BOARD': '(unset)' --> 'x98k' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'SKIP_LOG_ARCHIVE': '(unset)' --> 'yes' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'SET_OWNER_TO_UID': '(unset)' --> '1002' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'DOCKER_NICE': '(unset)' --> '5' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'RELEASE': '(unset)' --> 'noble' early [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mApplying cmdline param [[1;39m 'KERNEL_CONFIGURE': '(unset)' --> 'no' early [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0martifact [[1;32m kernel :: kernel() [0m][0m
+1 (process ID) old priority 0, new priority 5
+[0m[1;30m[🐳|[0m🌱[0m] [0mStarting single build process [[1;32m x98k [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mChecking [[1;32m basic host setup [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mBuild host OS release [[1;32m noble [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mBuild host architecture [[1;32m amd64 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mDetected WSL2 - experimental support [[1;32m Windows Subsystem for Linux 2 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mSourcing board configuration [[1;32m /armbian/config/boards/x98k.csc [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing board file config/boards/x98k.csc [[1;36m [1;34mBOARDFAMILY[0m=[0;34m'[1;34mrk35xx[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing board file config/boards/x98k.csc [[1;36m [1;34mBOOTCONFIG[0m=[0;34m'[1;34mgeneric_rk3528_defconfig[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after defaulting LINUXFAMILY to BOARDFAMILY [[1;36m [1;34mLINUXFAMILY[0m=[0;34m'[1;34mrk35xx[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mStarting main configuration[0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUsing REVISION from [[1;32m main VERSION file: '26.02.0-trunk' [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mEnabling extension [[1;39m armbian-config [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mSourcing family configuration [[1;32m /armbian/config/sources/families/rk35xx.conf [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mEnabling extension [[1;39m rkbin-tools [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mDetermined BOOT_SOC from BOOTCONFIG [[1;32m BOOT_SOC: 'rk3528'; BOOTCONFIG: 'generic_rk3528_defconfig' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mKERNELSOURCE[0m=[0;34m'[1;34mhttps://github.com/armbian/linux-rockchip.git[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mKERNEL_MAJOR_MINOR[0m=[0;34m'[1;34m6.1[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mKERNELBRANCH[0m=[0;34m'[1;34mbranch:rk-6.1-rkr5.1[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mKERNELPATCHDIR[0m=[0;34m'[1;34mrk35xx-vendor-6.1[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mBOOTSOURCE[0m=[0;34m'[1;34mhttps://github.com/radxa/u-boot.git[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mBOOTBRANCH[0m=[0;34m'[1;34mbranch:next-dev-v2024.10[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mBOOTPATCHDIR[0m=[0;34m'[1;34mlegacy/u-boot-radxa-rk35xx[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mBOOTDIR[0m=[0;34m'[1;34mu-boot-rockchip64[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after sourcing family config [[1;36m [1;34mNETWORKING_STACK[0m=[0;34m'[1;34mnetwork-manager[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mSourcing arch configuration [[1;32m arm64.conf [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUsing NETWORKING_STACK [[1;32m NETWORKING_STACK: network-manager [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mAdding networking extensions [[1;32m net-network-manager, net-chrony [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mEnabling extension [[1;39m net-network-manager [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mEnabling extension [[1;39m net-chrony [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mEnabling extension [[1;39m radxa-aic8800 [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mEnabling extension [[1;39m bluetooth-hciattach [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mExtension manager [[1;32m processed 18 Extension Methods calls and 34 Extension Method implementations [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mExtension: bluetooth-hciattach: x98k [[1;32m adding bluetooth packages to image [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mrockchip64_common: defaulting SERIALCON [[1;32m SERIALCON already set to 'ttyFIQ0', keeping it. [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mExtension: bluetooth-hciattach: x98k [[1;32m initializing config [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mExtension: net-chrony: Adding extra package to image [[1;32m chrony [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mExtension: net-network-manager: Adding extra packages to image [[1;32m network-manager network-manager-openvpn netplan.io [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mExtension: net-network-manager: Adding extra packages for Ubuntu to image [[1;32m network-manager-config-connectivity-ubuntu [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after late_family_config hooks [[1;36m [1;34mLINUXCONFIG[0m=[0;34m'[1;34mlinux-rk35xx-vendor[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: after late_family_config hooks [[1;36m [1;34mKERNEL_PATCH_ARCHIVE_BASE[0m=[0;34m'[1;34mrk35xx[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: before handling KERNEL_MAJOR_MINOR in config_post_main [[1;36m [1;34mBOOTSOURCEDIR[0m=[0;34m'[1;34mu-boot-worktree/u-boot-rockchip64/next-dev-v2024.10[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m✅[0m] [0mchange-tracking: before calling extension_finish_config [[1;36m [1;34mLINUXSOURCEDIR[0m=[0;34m'[1;34mlinux-kernel-worktree/6.1__rk35xx__arm64[0;34m' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mMinimal configuration prepared for build [[1;32m prep_conf_main_minimal_ni [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mRunning artifact build in interactive mode [[1;32m log file will be incomplete [0m][0m
+[0m[1;30m[🐳|[0m✨[0m] [0mRepeat Build Options (early) [[1;32m ./compile.sh kernel-dtb BOARD=x98k BRANCH=vendor BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=noble [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mChecked directory OK for mount options [[1;32m /armbian/.tmp ('main temporary dir') [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mPreparing [[1;32m host [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mRunning in container [[1;32m Adding provisions for container building [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mPython2 not available on host release 'noble' [[1;32m ancient u-boot versions might/will fail to build [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mIgnoring toolchains [[1;32m SKIP_EXTERNAL_TOOLCHAINS: yes [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mSetting kernel git cache TTL to [[1;32m 120 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mProducing new & caching [[1;32m GIT_INFO_KERNEL [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mFetching SHA1 of 'branch' 'refs/heads/rk-6.1-rkr5.1' [[1;32m https://github.com/armbian/linux-rockchip.git [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mSHA1 of branch refs/heads/rk-6.1-rkr5.1 [[1;32m '8f4852b6e8f6a5edb4cf6158f095a34793e38be6' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUser patches directory for kernel [[1;32m /armbian/userpatches/kernel/rk35xx-vendor-6.1 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUsing kernel config file [[1;32m config/kernel/linux-rk35xx-vendor.config [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mConsidering available RAM for BTF build [[1;32m 16693 MiB [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mEnabling eBPF and BTF info [[1;32m for fully BTF & CO-RE enabled kernel [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel build starting [[1;32m linux-kernel-worktree/6.1__rk35xx__arm64 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUsing full Kernel bare tree for 6.1 [[1;32m existing worktree points to full [0m][0m
+[0m[1;30m[🐳|[0m💖[0m] [0mKernel bare tree already exists [[0;32m /armbian/cache/git-bare/kernel [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mGetting sources from Git [[1;32m kernel:6.1 rk-6.1-rkr5.1 [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mFetching updates from remote repository [[1;39m kernel:6.1 rk-6.1-rkr5.1 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mgit: Fetch from remote completed, rev-parsing... [[1;32m 'kernel:6.1' 'rk-6.1-rkr5.1' 'FETCH_HEAD' [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mUsing Kernel git revision [[1;39m 8f4852b6e8f6a5edb4cf6158f095a34793e38be6 at 'Tue Dec 23 02:23:26 UTC 2025' [0m][0m
+[0m[1;30m[🐳|[0m💖[0m] [0mUsing cached drivers patch file for rk35xx-vendor [[0;32m sha1_8f4852b6e8f6a5edb4cf6158f095a34793e38be6_rk35xx_vendor_7234f3fe_2a33c685-01ba4719 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mPython3 version [[1;32m 3.12.3 - 'Python 3.12.3' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mpip3 version [[1;32m 25.3 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUsing cached pip packages for Python tools [[1;32m b31ddb7ad74c183ca8015618f705a3a2f3c929618f0ce6cf9e5cd0e4447f73ce [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mCalling Python patching script for kernel: [[1;32m https://github.com/armbian/linux-rockchip.git - branch:rk-6.1-rkr5.1 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUsing kernel patch dir: [[1;32m rk35xx-vendor-6.1 [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mCross compilation [[1;39m target arm64 on host amd64 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mCompiler version [[1;32m aarch64-linux-gnu-gcc 13.3.0 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mConfiguring kernel [[1;32m linux-rk35xx-vendor [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mUsing kernel config file [[1;32m config/kernel/linux-rk35xx-vendor.config [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mConsidering available RAM for BTF build [[1;32m 16593 MiB [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mEnabling eBPF and BTF info [[1;32m for fully BTF & CO-RE enabled kernel [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel configuration [[1;32m linux-rk35xx-vendor [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mCompiling vendor kernel [[1;32m 6.1.115 [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel DTB-only for development [[1;32m KERNEL_DTB_ONLY: yes [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mBuilding kernel [[1;32m rk35xx linux-rk35xx-vendor dtbs [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mInstalling kernel [[1;32m rk35xx linux-rk35xx-vendor dtbs_install [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel built in [[1;32m 10 seconds - 6.1.115-rk35xx [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel DTB-only .deb, for development/convenience [[1;32m kernel dtb build done [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mConsidering further .dts convenience processing [[1;32m for board 'x98k' branch 'vendor' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel DTB-only for development [[1;32m Copying preprocessed versions of rockchip/rk3528-x98k.dtb [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel DTB-only for development [[1;32m Copying binary rockchip/rk3528-x98k.dtb [0m][0m
+'/armbian/cache/sources/linux-kernel-worktree/6.1__rk35xx__arm64/arch/arm64/boot/dts/rockchip/rk3528-x98k.dtb' -> '/armbian/output/rockchip-rk3528-x98k.dtb--6.1-vendor.dtb'
+'/armbian/cache/sources/linux-kernel-worktree/6.1__rk35xx__arm64/arch/arm64/boot/dts/rockchip/.rk3528-x98k.dtb.dts.tmp' -> '/armbian/output/rockchip-rk3528-x98k.dtb--6.1-vendor.preprocessed.dts'
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel DTB-only for development [[1;32m Normalizing (dtc dts-to-dts) preprocessed FDT [0m][0m
+arch/arm64/boot/dts/rockchip/rk3528.dtsi:61.18-66.5: Warning (simple_bus_reg): /clocks/xin24m: missing or empty reg/ranges property
+arch/arm64/boot/dts/rockchip/rk3528.dtsi:68.28-73.5: Warning (simple_bus_reg): /clocks/mclkin-sai0: missing or empty reg/ranges property
+arch/arm64/boot/dts/rockchip/rk3528.dtsi:75.28-80.5: Warning (simple_bus_reg): /clocks/mclkin-sai1: missing or empty reg/ranges property
+arch/arm64/boot/dts/rockchip/rk3528.dtsi:2290.36-2293.5: Warning (unique_unit_address): /otp@ffce0000/cpu-mbist-vmin@9: duplicate unit-address (also used in node /otp@ffce0000/gpu-mbist-vmin@9)
+arch/arm64/boot/dts/rockchip/rk3528.dtsi:2290.36-2293.5: Warning (unique_unit_address): /otp@ffce0000/cpu-mbist-vmin@9: duplicate unit-address (also used in node /otp@ffce0000/logic-mbist-vmin@9)
+arch/arm64/boot/dts/rockchip/rk3528.dtsi:2294.36-2297.5: Warning (unique_unit_address): /otp@ffce0000/gpu-mbist-vmin@9: duplicate unit-address (also used in node /otp@ffce0000/logic-mbist-vmin@9)
+arch/arm64/boot/dts/rockchip/rk3528-linux.dtsi:37.24-40.5: Warning (unique_unit_address): /reserved-memory/drm-logo@0: duplicate unit-address (also used in node /reserved-memory/drm-cubic-lut@0)
+  also defined at arch/arm64/boot/dts/rockchip/rk3528-x98k.dts:736.11-738.3
+arch/arm64/boot/dts/rockchip/rk3528.dtsi:1320.11-1329.6: Warning (graph_child_address): /vop@ff840000/ports/port@0: graph node has single child node 'endpoint@0', #address-cells/#size-cells are not necessary
+arch/arm64/boot/dts/rockchip/rk3528.dtsi:1331.11-1340.6: Warning (graph_child_address): /vop@ff840000/ports/port@1: graph node has single child node 'endpoint@0', #address-cells/#size-cells are not necessary
+arch/arm64/boot/dts/rockchip/rk3528.dtsi:1495.9-1510.5: Warning (graph_child_address): /tve@ff880000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary
+arch/arm64/boot/dts/rockchip/rk3528.dtsi:1499.11-1509.6: Warning (graph_child_address): /tve@ff880000/ports/port@0: graph node has single child node 'endpoint@0', #address-cells/#size-cells are not necessary
+arch/arm64/boot/dts/rockchip/rk3528.dtsi:1547.9-1562.5: Warning (graph_child_address): /hdmi@ff8d0000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary
+arch/arm64/boot/dts/rockchip/rk3528.dtsi:1551.11-1561.6: Warning (graph_child_address): /hdmi@ff8d0000/ports/port@0: graph node has single child node 'endpoint@0', #address-cells/#size-cells are not necessary
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel DTB-only for development [[1;32m Preprocessed FDT dest: /armbian/output/rockchip-rk3528-x98k.dtb--6.1-vendor.preprocessed.dts [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel DTB-only for development [[1;32m Preprocessed FDT normalized: /armbian/output/rockchip-rk3528-x98k.dtb--6.1-vendor.preprocessed.normalized.dts [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel DTB-only for development [[1;32m Preprocessed FDT normalized, no phandles: /armbian/output/rockchip-rk3528-x98k.dtb--6.1-vendor.preprocessed.normalized.nophandles.dts [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mPackaging kernel [[1;32m rk35xx linux-rk35xx-vendor [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel .deb package version [[1;32m 6.1.115-S8f48-D7234-P62c8-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mPackaging linux-dtb [[1;32m rk35xx linux-rk35xx-vendor [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mshellcheck found no problems in package scripts [[1;32m shellchecked 2 scripts in 'linux-dtb-vendor-rk35xx' [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mBuilding package, this might take a while.. [[1;32m linux-dtb-vendor-rk35xx_6.1.115-S8f48-D7234-P62c8-C7e46H87cb-HK01ba-Vc222-Be8e3-R448a_arm64.deb [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mKernel packaged in [[1;32m 1 seconds - 6.1.115-rk35xx [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mRuntime [[1;32m 0:31 min [0m][0m
+[0m[1;30m[🐳|[0m✨[0m] [0mRepeat Build Options [[1;32m ./compile.sh kernel-dtb BOARD=x98k BRANCH=vendor BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=noble [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mCleaning up [[1;32m please wait for cleanups to finish [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mANSI log file built; inspect it by running: [[1;39m less -RS output/logs/log-kernel-dtb-e3b803a8-288b-4150-b1e0-3e95166c001d.log.ans [0m][0m
+[0m[1;30m[🐳|[0m🌱[0m] [0mShare log manually: [[1;32m use one of the commands below (or add SHARE_LOG=yes next time!) [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mShare log manually: [[1;39m curl --data-binary @output/logs/log-kernel-dtb-e3b803a8-288b-4150-b1e0-3e95166c001d.log.ans https://paste.armbian.com/log [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mShare log manually: [[1;39m curl --data-binary @output/logs/log-kernel-dtb-e3b803a8-288b-4150-b1e0-3e95166c001d.log.ans https://paste.armbian.de/log [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mShare log manually: [[1;39m curl --data-binary @output/logs/log-kernel-dtb-e3b803a8-288b-4150-b1e0-3e95166c001d.log.ans https://paste.next.armbian.com/log [0m][0m
+[0m[1;30m[🐳|[0m🌿[0m] [0mShare log manually: [[1;39m curl --data-binary @output/logs/log-kernel-dtb-e3b803a8-288b-4150-b1e0-3e95166c001d.log.ans https://paste.armbian.eu/log [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0m-------------Docker run finished after 37s------------------------ [[1;32m 🐳 successful [0m][0m
+[0m[1;30m[💲|[0m🌱[0m] [0mCleaning up [[1;32m please wait for cleanups to finish [0m][0m

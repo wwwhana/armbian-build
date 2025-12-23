@@ -38,6 +38,28 @@ function post_family_tweaks_bsp__bluetooth_hciattach_add_systemd_service() {
 
 	cat <<- BT_HCIATTACH_SCRIPT > "${destination}${script_path}"
 		#!/bin/bash
+		
+		# GPIO Setup for X98K (AIC8800)
+		if [[ "${BOARD}" == "X98K" ]]; then
+			# RTS (GPIO1_B2 = 42) -> Output Low (Active/Ready)
+			if [ ! -d /sys/class/gpio/gpio42 ]; then echo 42 > /sys/class/gpio/export; fi
+			echo out > /sys/class/gpio/gpio42/direction
+			echo 0 > /sys/class/gpio/gpio42/value
+
+			# WAKE (GPIO1_B4 = 44) -> Output High (Wake chip)
+			if [ ! -d /sys/class/gpio/gpio44 ]; then echo 44 > /sys/class/gpio/export; fi
+			echo out > /sys/class/gpio/gpio44/direction
+			echo 1 > /sys/class/gpio/gpio44/value
+
+			# RESET (GPIO1_C1 = 49) -> Pulse Low (Reset) then High (Run)
+			if [ ! -d /sys/class/gpio/gpio49 ]; then echo 49 > /sys/class/gpio/export; fi
+			echo out > /sys/class/gpio/gpio49/direction
+			echo 0 > /sys/class/gpio/gpio49/value
+			sleep 0.2
+			echo 1 > /sys/class/gpio/gpio49/value
+			sleep 0.5
+		fi
+
 		rfkill unblock ${BLUETOOTH_HCIATTACH_RKFILL_NUM}
 		hciattach -n ${BLUETOOTH_HCIATTACH_PARAMS}
 	BT_HCIATTACH_SCRIPT
