@@ -1,17 +1,33 @@
+From: Armbian <info@armbian.com>
+Subject: ARM64: dts: allwinner: Add H20 Pro 5G board support
+
+Add device tree support for H20 Pro 5G board based on Allwinner H616.
+Uses AXP313a PMIC with proper configuration to avoid circular dependency.
+
+Key features:
+- AXP313a PMIC (mainline compatible)
+- RMII Ethernet (emac1)
+- SD card slot (mmc0)
+- SDIO WiFi slot (mmc1)
+- eMMC storage (mmc2)
+- HDMI output
+- USB host mode
+
+Signed-off-by: Armbian <info@armbian.com>
+
 --- /dev/null
 +++ b/arch/arm64/boot/dts/allwinner/sun50i-h616-h20-pro-5g.dts
-@@ -0,0 +1,202 @@
+@@ -0,0 +1,183 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (C) 2024 Armbian
++ * H20 Pro 5G Board - Based on Allwinner H616
 + */
 +
 +/dts-v1/;
 +
 +#include "sun50i-h616.dtsi"
 +#include "sun50i-h616-cpu-opp.dtsi"
-+#include "axp313a.dtsi"
-+
 +#include <dt-bindings/gpio/gpio.h>
 +#include <dt-bindings/interrupt-controller/arm-gic.h>
 +
@@ -28,18 +44,7 @@
 +		stdout-path = "serial0:115200n8";
 +	};
 +
-+	connector {
-+		compatible = "hdmi-connector";
-+		type = "a";
-+
-+		port {
-+			hdmi_con_in: endpoint {
-+				remote-endpoint = <&hdmi_out_con>;
-+			};
-+		};
-+	};
-+
-+	reg_vcc5v: vcc5v {
++	reg_vcc5v: regulator-vcc5v {
 +		compatible = "regulator-fixed";
 +		regulator-name = "vcc-5v";
 +		regulator-min-microvolt = <5000000>;
@@ -47,35 +52,19 @@
 +		regulator-always-on;
 +	};
 +
-+	reg_usb1_vbus: usb1-vbus {
-+		compatible = "regulator-fixed";
-+		regulator-name = "usb1-vbus";
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		vin-supply = <&reg_vcc5v>;
-+		gpio = <&pio 6 8 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		regulator-always-on;
-+	};
++	hdmi-connector {
++		compatible = "hdmi-connector";
++		type = "a";
 +
-+	reg_vcc3v3_r: vcc3v3-r {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vcc-3v3-r";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		regulator-always-on;
++		port {
++			hdmi_con_in: endpoint {
++				remote-endpoint = <&hdmi_out_ep>;
++			};
++		};
 +	};
-+};
-+
-+&cpu0 {
-+	cpu-supply = <&reg_dcdc2>;
 +};
 +
 +&ehci0 {
-+	status = "okay";
-+};
-+
-+&ehci1 {
 +	status = "okay";
 +};
 +
@@ -83,32 +72,26 @@
 +	status = "okay";
 +};
 +
-+&ehci3 {
-+	status = "okay";
-+};
-+
-+&emac0 {
-+	status = "disabled";
-+};
-+
 +&emac1 {
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&rmii_pins>;
 +	phy-mode = "rmii";
 +	phy-handle = <&rmii_phy>;
-+	phy-supply = <&reg_dldo1>;
-+	allwinner,rx-delay-ps = <3100>;
-+	allwinner,tx-delay-ps = <700>;
 +	status = "okay";
 +};
 +
-+&i2c0 {
-+	status = "disabled";
++&hdmi {
++	broken-hpd;
++	status = "okay";
++};
++
++&hdmi_out {
++	hdmi_out_ep: endpoint {
++		remote-endpoint = <&hdmi_con_in>;
++	};
 +};
 +
 +&mdio1 {
-+	compatible = "snps,dwmac-mdio";
-+
 +	rmii_phy: ethernet-phy@1 {
 +		compatible = "ethernet-phy-ieee802.3-c22";
 +		reg = <1>;
@@ -118,19 +101,28 @@
 +&mmc0 {
 +	vmmc-supply = <&reg_dldo1>;
 +	vqmmc-supply = <&reg_dldo1>;
-+	broken-cd;
 +	bus-width = <4>;
++	broken-cd;
++	status = "okay";
++};
++
++&mmc1 {
++	vmmc-supply = <&reg_dldo1>;
++	bus-width = <4>;
++	non-removable;
++	cap-sdio-irq;
++	keep-power-in-suspend;
 +	status = "okay";
 +};
 +
 +&mmc2 {
-+	vmmc-supply = <&reg_dldo1>;
-+	vqmmc-supply = <&reg_aldo1>;
 +	bus-width = <8>;
 +	non-removable;
-+	cap-mmc-hw-reset;
++	cap-mmc-highspeed;
 +	mmc-ddr-1_8v;
 +	mmc-hs200-1_8v;
++	vmmc-supply = <&reg_dldo1>;
++	vqmmc-supply = <&reg_aldo1>;
 +	status = "okay";
 +};
 +
@@ -138,51 +130,60 @@
 +	status = "okay";
 +};
 +
-+&ohci1 {
-+	status = "okay";
-+};
-+
 +&ohci2 {
 +	status = "okay";
 +};
 +
-+&ohci3 {
++&r_i2c {
 +	status = "okay";
-+};
 +
-+&de {
-+	status = "okay";
-+};
++	axp313: pmic@36 {
++		compatible = "x-powers,axp313a";
++		reg = <0x36>;
++		#interrupt-cells = <1>;
++		interrupt-controller;
 +
-+&hdmi {
-+	hvcc-supply = <&reg_aldo1>;
-+	status = "okay";
-+};
++		vin1-supply = <&reg_vcc5v>;
++		vin2-supply = <&reg_vcc5v>;
++		vin3-supply = <&reg_vcc5v>;
 +
-+&hdmi_out {
-+	hdmi_out_con: endpoint {
-+		remote-endpoint = <&hdmi_con_in>;
++		regulators {
++			reg_aldo1: aldo1 {
++				regulator-always-on;
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-name = "vcc-1v8-pll";
++			};
++
++			reg_dldo1: dldo1 {
++				regulator-always-on;
++				regulator-min-microvolt = <3300000>;
++				regulator-max-microvolt = <3300000>;
++				regulator-name = "vcc-3v3-io";
++			};
++
++			dcdc1 {
++				regulator-always-on;
++				regulator-min-microvolt = <810000>;
++				regulator-max-microvolt = <990000>;
++				regulator-name = "vdd-gpu-sys";
++			};
++
++			dcdc2 {
++				regulator-always-on;
++				regulator-min-microvolt = <810000>;
++				regulator-max-microvolt = <1100000>;
++				regulator-name = "vdd-cpu";
++			};
++
++			dcdc3 {
++				regulator-always-on;
++				regulator-min-microvolt = <1100000>;
++				regulator-max-microvolt = <1500000>;
++				regulator-name = "vdd-dram";
++			};
++		};
 +	};
-+};
-+
-+&hdmi_phy {
-+	status = "okay";
-+};
-+
-+&r_rsb {
-+	status = "disabled";
-+};
-+
-+&pio {
-+	vcc-pc-supply = <&reg_aldo1>;
-+	vcc-pf-supply = <&reg_dldo1>;
-+	vcc-pg-supply = <&reg_dldo1>;
-+	vcc-ph-supply = <&reg_dldo1>;
-+	vcc-pi-supply = <&reg_dldo1>;
-+};
-+
-+&r_pio {
-+	vcc-pl-supply = <&reg_vcc3v3_r>;
 +};
 +
 +&uart0 {
@@ -197,9 +198,6 @@
 +};
 +
 +&usbphy {
-+	usb0_vbus-supply = <&reg_vcc5v>;
-+	usb1_vbus-supply = <&reg_usb1_vbus>;
-+	usb2_vbus-supply = <&reg_vcc5v>;
-+	usb3_vbus-supply = <&reg_vcc5v>;
++	usb1_vbus-supply = <&reg_vcc5v>;
 +	status = "okay";
 +};

@@ -1,0 +1,18 @@
+From: Armbian <info@armbian.com>
+Subject: Add H20 Pro 5G DTB to Makefile
+
+Add sun50i-h616-h20-pro-5g.dtb to the build system Makefile
+so it gets compiled and included in the DTB package.
+
+Signed-off-by: Armbian <info@armbian.com>
+
+--- a/arch/arm64/boot/dts/allwinner/Makefile
++++ b/arch/arm64/boot/dts/allwinner/Makefile
+@@ -56,6 +56,7 @@ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h616-bigtreetech-cb1-emmc.dtb
+ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h616-bigtreetech-cb1-manta.dtb
+ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h616-bigtreetech-cb1-sd.dtb
+ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h616-bigtreetech-pi.dtb
++dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h616-h20-pro-5g.dtb
+ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h616-orangepi-zero2.dtb
+ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h616-x96-mate.dtb
+ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h618-bananapi-m4-berry.dtb
