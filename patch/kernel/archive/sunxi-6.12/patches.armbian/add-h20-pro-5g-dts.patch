@@ -6,8 +6,8 @@ Subject: arm64: dts: allwinner: Add H20 Pro 5G support
 Add complete device tree for H20 Pro 5G board with Allwinner H616 SoC.
 
 ---
- arch/arm64/boot/dts/allwinner/sun50i-h616-h20-pro-5g.dts | 332 ++++++++++++++++++++++++++++
- 1 files changed, 332 insertions(+)
+ arch/arm64/boot/dts/allwinner/sun50i-h616-h20-pro-5g.dts | 373 ++++++++++++++++++++++++++++
+ 1 files changed, 373 insertions(+)
  create mode 100644 arch/arm64/boot/dts/allwinner/sun50i-h616-h20-pro-5g.dts
 
 diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h616-h20-pro-5g.dts b/arch/arm64/boot/dts/allwinner/sun50i-h616-h20-pro-5g.dts
@@ -15,7 +15,7 @@ new file mode 100644
 index 000000000000..111111111111
 --- /dev/null
 +++ b/arch/arm64/boot/dts/allwinner/sun50i-h616-h20-pro-5g.dts
-@@ -0,0 +1,332 @@
+@@ -0,0 +1,373 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (C) 2024 Armbian
@@ -34,6 +34,7 @@ index 000000000000..111111111111
 +/ {
 +	model = "H20 Pro 5G";
 +	compatible = "hechuang,h20-pro-5g", "allwinner,sun50i-h616";
++
 +
 +	aliases {
 +		ethernet0 = &emac1;
@@ -103,6 +104,7 @@ index 000000000000..111111111111
 +	hdmi-connector {
 +		compatible = "hdmi-connector";
 +		type = "a";
++		ddc-en-gpios = <&pio 7 2 GPIO_ACTIVE_HIGH>; /* PH2 - DDC enable */
 +
 +		port {
 +			hdmi_con_in: endpoint {
@@ -132,6 +134,10 @@ index 000000000000..111111111111
 +	status = "okay";
 +};
 +
++&ehci3 {
++	status = "okay";
++};
++
 +&emac1 {
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&rmii_pins>;
@@ -140,12 +146,17 @@ index 000000000000..111111111111
 +	phy-supply = <&reg_dldo1>;
 +	allwinner,rx-delay-ps = <3100>;
 +	allwinner,tx-delay-ps = <700>;
-+	tx-delay = <7>;
-+	rx-delay = <31>;
 +	reset-gpios = <&pio 3 14 GPIO_ACTIVE_LOW>; /* PD14 - ETH PHY RESET */
 +	reset-delay-us = <15000>;
 +	reset-post-delay-us = <100000>;
 +	status = "okay";
++
++	mdio1: mdio {
++		rmii_phy: ethernet-phy@1 {
++			compatible = "ethernet-phy-id0044.1400", "ethernet-phy-ieee802.3-c22";
++			reg = <1>;
++		};
++	};
 +};
 +
 +&gpu {
@@ -153,15 +164,49 @@ index 000000000000..111111111111
 +	status = "okay";
 +};
 +
++&tcon_top {
++	status = "okay";
++};
++
++&tcon_tv {
++	/* Use fallback compatible for driver compatibility with sun4i-drm */
++	compatible = "allwinner,sun8i-r40-tcon-tv";
++	status = "okay";
++
++	ports {
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		tcon_tv_in: port@0 {
++			reg = <0>;
++
++			tcon_tv_in_tcon_top_mixer0: endpoint {
++				remote-endpoint = <&tcon_top_mixer0_out_tcon_tv>;
++			};
++		};
++
++		tcon_tv_out: port@1 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <1>;
++
++			tcon_tv_out_tcon_top: endpoint@1 {
++				reg = <1>;
++				remote-endpoint = <&tcon_top_hdmi_in_tcon_tv>;
++			};
++		};
++	};
++};
++
 +&hdmi {
 +	vcc-hdmi-supply = <&reg_vcc_hdmi>;
 +	vdd-hdmi-supply = <&reg_vdd_hdmi>;
-+	hvcc-supply = <&reg_bldo1>;
++	hvcc-supply = <&reg_aldo1>;
 +	status = "okay";
 +};
 +
 +&hdmi_phy {
-+	hvcc-supply = <&reg_bldo1>;
++	hvcc-supply = <&reg_aldo1>;
 +	status = "okay";
 +};
 +
@@ -173,17 +218,6 @@ index 000000000000..111111111111
 +
 +&ir {
 +	status = "okay";
-+};
-+
-+&mdio1 {
-+	compatible = "snps,dwmac-mdio";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	rmii_phy: ethernet-phy@1 {
-+		compatible = "ethernet-phy-ieee802.3-c22";
-+		reg = <1>;
-+	};
 +};
 +
 +&mmc0 {
@@ -205,7 +239,11 @@ index 000000000000..111111111111
 +	mmc-pwrseq = <&wifi_pwrseq>;
 +	bus-width = <4>;
 +	non-removable;
++	mmc-ddr-3_3v;
 +	status = "okay";
++	max-frequency = <150000000>;
++	cap-sd-highspeed;
++	cap-mmc-highspeed;
 +	cap-sdio-irq;
 +	keep-power-in-suspend;
 +
@@ -243,6 +281,10 @@ index 000000000000..111111111111
 +};
 +
 +&ohci2 {
++	status = "okay";
++};
++
++&ohci3 {
 +	status = "okay";
 +};
 +
@@ -304,15 +346,6 @@ index 000000000000..111111111111
 +				regulator-always-on;
 +			};
 +
-+			reg_bldo1: bldo1 {
-+				regulator-name = "vcc1v8";
-+				regulator-min-microvolt = <1800000>;
-+				regulator-max-microvolt = <1800000>;
-+				regulator-step-delay-us = <25>;
-+				regulator-final-delay-us = <50>;
-+				regulator-always-on;
-+			};
-+
 +			reg_dldo1: dldo1 {
 +				regulator-name = "vcc-3v3-io";
 +				regulator-min-microvolt = <3300000>;
@@ -336,6 +369,12 @@ index 000000000000..111111111111
 +	pinctrl-0 = <&uart1_pins>, <&uart1_rts_cts_pins>;
 +	uart-has-rtscts;
 +	status = "okay";
++
++	bluetooth {
++		compatible = "aic,aic8800-bt";
++		shutdown-gpios = <&pio 6 19 GPIO_ACTIVE_LOW>; /* PG19 - bt_rst */
++		max-speed = <1500000>;
++	};
 +};
 +
 +&usbotg {
@@ -346,5 +385,7 @@ index 000000000000..111111111111
 +&usbphy {
 +	usb0_vbus-supply = <&reg_vcc5v>;
 +	usb1_vbus-supply = <&reg_vcc5v>;
++	usb2_vbus-supply = <&reg_vcc5v>;
++	usb3_vbus-supply = <&reg_vcc5v>;
 +	status = "okay";
 +};

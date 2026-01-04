@@ -14,9 +14,21 @@ ubuntu-*-cloudimg-console.log
 ### output directories
 /.tmp/
 /output/
-/cache/
-/*userpatches*/
-/userpatches
+#/cache/
+/cache/aptcache
+/cache/ccache
+/cache/docker
+/cache/git-bare
+/cache/git-bundles
+/cache/initrd
+/cache/memoize
+/cache/patch
+/cache/pip
+/cache/rootfs
+/cache/toolchain
+/cache/tools
+#/*userpatches*/
+#/userpatches
 
 ### General annoyances ###
 .DS_Store

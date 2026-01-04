@@ -433,7 +433,7 @@ new file mode 100644
 index 000000000000..249cee0607e3
 --- /dev/null
 +++ b/drivers/net/ethernet/allwinner/sunxi-gmac.c
-@@ -0,0 +1,2225 @@
+@@ -0,0 +1,2217 @@
 +/*
 + * linux/drivers/net/ethernet/allwinner/sunxi_gmac.c
 + *
@@ -1099,7 +1099,6 @@ index 000000000000..249cee0607e3
 +
 +    {
 +        int addr;
-+        struct phy_device *fallback_phydev = NULL;
 +        for (addr = 0; addr < PHY_MAX_ADDR; addr++) {
 +            struct phy_device *phydev_tmp = mdiobus_get_phy(new_bus, addr);
 +
@@ -1113,19 +1112,12 @@ index 000000000000..249cee0607e3
 +                phydev_tmp->phy_id == 0x00 || phydev_tmp->phy_id == AC300_ID)
 +                continue;
 +
-+            if (!fallback_phydev) {
-+                fallback_phydev = phydev_tmp;
-+                g_phy_addr = addr;
-+            }
-+
 +            if (phydev_tmp->phy_id == EPHY_ID || phydev_tmp->phy_id == IP101G_ID) {
 +                phydev = phydev_tmp;
 +                g_phy_addr = addr;
 +                break;
 +            }
 +        }
-+        if (!phydev && fallback_phydev)
-+            phydev = fallback_phydev;
 +    }
 +
 +    if (!phydev) {
@@ -2323,9 +2315,9 @@ index 000000000000..249cee0607e3
 +    int i;
 +
 +// #ifdef CONFIG_SUNXI_EXT_PHY
-+//    priv->phy_ext = EXT_PHY;
++    priv->phy_ext = EXT_PHY;
 +// #else
-+    priv->phy_ext = INT_PHY;  // H616 uses internal PHY
++//     priv->phy_ext = INT_PHY;
 +// #endif
 +
 +    /* config memery resource */
@@ -4518,7 +4510,5 @@ index d0f66a5e1b2a..71349cac1a67 100644
  
  #include <linux/errno.h>
 -- 
-
--- 
-Armbian
+2.43.0
 
