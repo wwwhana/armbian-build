@@ -2,14 +2,14 @@
 #
 # SPDX-License-Identifier: GPL-2.0
 #
-# Copyright (c) 2013-2023 Igor Pecovnik, igor@armbian.com
+# Copyright (c) 2013-2026 Igor Pecovnik, igor@armbian.com
 #
 # This file is a part of the Armbian Build Framework
 # https://github.com/armbian/build/
 
 function run_tool_oras() {
 	# Default version
-	ORAS_VERSION=${ORAS_VERSION:-1.3.0} # https://github.com/oras-project/oras/releases
+	ORAS_VERSION=${ORAS_VERSION:-1.3.4} # https://github.com/oras-project/oras/releases
 	#ORAS_VERSION=${ORAS_VERSION:-"1.0.0-rc.1"} # https://github.com/oras-project/oras/releases
 
 	declare non_cache_dir="/armbian-tools/oras" # To deploy/reuse cached ORAS in a Docker image.
@@ -55,7 +55,7 @@ function run_tool_oras() {
 		*loongarch64*)
 			ORAS_ARCH="loong64"
 			ORAS_VERSION="1.3.0-beta.3-loong64" # Only v1.3.0-beta.3-loong64+ has loong64 support
-			ORAS_REPO="amazingfate" # This is my fork repo, we can delete it if oras releases official loong64 binary in the future
+			ORAS_REPO="amazingfate"             # This is my fork repo, we can delete it if oras releases official loong64 binary in the future
 			;;
 		*)
 			exit_with_error "unknown arch: $MACHINE"
@@ -87,10 +87,21 @@ function run_tool_oras() {
 
 	# Run oras, possibly with retries...
 	declare ORAS_HOME="${HOME:-"${TMPDIR}"}" # oras _requires_ a HOME to work atleast in 1.2+
+	declare -a oras_proxy_env=(
+		"http_proxy=${http_proxy:-${HTTP_PROXY:-}}"
+		"https_proxy=${https_proxy:-${HTTPS_PROXY:-}}"
+		"HTTP_PROXY=${HTTP_PROXY:-${http_proxy:-}}"
+		"HTTPS_PROXY=${HTTPS_PROXY:-${https_proxy:-}}"
+		"ftp_proxy=${ftp_proxy:-${FTP_PROXY:-}}"
+		"FTP_PROXY=${FTP_PROXY:-${ftp_proxy:-}}"
+		"no_proxy=${no_proxy:-${NO_PROXY:-}}"
+		"NO_PROXY=${NO_PROXY:-${no_proxy:-}}"
+		"APT_PROXY_ADDR=${APT_PROXY_ADDR:-}"
+	)
 	display_alert "Running ORAS ${ACTUAL_VERSION}" "HOME='${ORAS_HOME}'; retries='${retries:-1}'; cmdline: $*" "debug"
 	if [[ "${retries:-1}" -gt 1 ]]; then
 		display_alert "Calling ORAS with retries ${retries}" "$*" "debug"
-		sleep_seconds="30" do_with_retries "${retries}" env -i "HOME=${ORAS_HOME}" "HTTPS_PROXY=${HTTPS_PROXY}" "${ORAS_BIN}" "$@"
+		sleep_seconds="30" do_with_retries "${retries}" env -i "HOME=${ORAS_HOME}" "${oras_proxy_env[@]}" "${ORAS_BIN}" "$@"
 	else
 		# If any parameters passed, call ORAS, otherwise exit. We call it this way (sans-parameters) early to prepare ORAS tooling.
 		if [[ $# -eq 0 ]]; then
@@ -99,7 +110,7 @@ function run_tool_oras() {
 		fi
 
 		display_alert "Calling ORAS" "$*" "debug"
-		env -i "HOME=${ORAS_HOME}" "${ORAS_BIN}" "$@"
+		env -i "HOME=${ORAS_HOME}" "${oras_proxy_env[@]}" "${ORAS_BIN}" "$@"
 	fi
 }
 
@@ -119,6 +130,25 @@ function try_download_oras_tooling() {
 	run_host_command_logged chmod +x "${ORAS_BIN}"
 }
 
+# Derive "https://github.com/<owner>/<repo>" from OCI coordinates shaped like
+# "ghcr.io/<owner>/<repo>/<package>[:<tag>]". Echoes nothing for anything else.
+#
+# Only ghcr.io: the org.opencontainers.image.source link is a GitHub Container
+# Registry feature, and other registries ignore it.
+#
+# At least three path segments are required. A flat "ghcr.io/<owner>/<package>"
+# would otherwise resolve to a repository that does not exist, so it is skipped
+# rather than pointed somewhere wrong.
+function oci_derive_source_url() {
+	declare coords="${1}"
+	[[ "${coords}" != "ghcr.io/"* ]] && return 0
+	coords="${coords%:*}" # drop the :tag, if any
+	declare -a seg
+	IFS='/' read -r -a seg <<< "${coords#ghcr.io/}"
+	[[ ${#seg[@]} -lt 3 ]] && return 0
+	echo "https://github.com/${seg[0]}/${seg[1]}"
+}
+
 function oras_push_artifact_file() {
 	declare image_full_oci="${1}" # Something like "ghcr.io/rpardini/armbian-git-shallow/kernel-git:latest"
 	declare upload_file="${2}"    # Absolute path to the file to upload including the path and name
@@ -130,6 +160,23 @@ function oras_push_artifact_file() {
 	oras_add_param_plain_http
 	oras_add_param_insecure
 	extra_params+=("--annotation" "org.opencontainers.image.description=${description}")
+
+	# Connect the package to its GitHub repository. GHCR links a package to a repo
+	# automatically ONLY when it is pushed with GITHUB_TOKEN; Armbian's CI pushes
+	# with a PAT (the builtin token cannot write org packages), so nothing links
+	# these and each package inherits no repository access permissions at all.
+	# This annotation does the linking explicitly.
+	#
+	# It does NOT make packages public: GitHub publishes every new package as
+	# private and offers no API to change that -- visibility is a web-UI action.
+	# This only fixes the permissions half.
+	#
+	# OCI_SOURCE_URL overrides the derived value; set it to the empty string to
+	# skip the annotation entirely.
+	declare oci_source_url="${OCI_SOURCE_URL-$(oci_derive_source_url "${image_full_oci}")}"
+	if [[ -n "${oci_source_url}" ]]; then
+		extra_params+=("--annotation" "org.opencontainers.image.source=${oci_source_url}")
+	fi
 
 	# make sure file exists
 	if [[ ! -f "${upload_file}" ]]; then
@@ -160,7 +207,20 @@ function oras_get_artifact_manifest() {
 
 	oras_has_manifest="no"
 	# Gotta capture the output & if it failed...
-	oras_manifest_json="$(run_tool_oras manifest fetch "${extra_params[@]}" "${image_full_oci}")" && oras_has_manifest="yes" || oras_has_manifest="no"
+	# Capture stderr: a 404 (cache miss) is normal for fresh artifacts —
+	# suppress oras's "Error response from registry: failed to fetch"
+	# dump. The caller (artifacts-obtain.sh) already reports the miss
+	# with a clean display_alert. Any OTHER error (auth, network) is
+	# still printed so real problems aren't hidden.
+	local oras_stderr_file
+	oras_stderr_file=$(mktemp)
+	oras_manifest_json="$(run_tool_oras manifest fetch "${extra_params[@]}" "${image_full_oci}" 2> "${oras_stderr_file}")" && oras_has_manifest="yes" || oras_has_manifest="no"
+	local oras_stderr
+	oras_stderr=$(< "${oras_stderr_file}")
+	rm -f "${oras_stderr_file}"
+	if [[ "${oras_has_manifest}" == "no" && -n "${oras_stderr}" && "${oras_stderr}" != *"not found"* ]]; then
+		display_alert "ORAS manifest fetch error" "${oras_stderr}" "wrn"
+	fi
 	display_alert "oras_has_manifest after: ${oras_has_manifest}" "ORAS manifest yes/no" "debug"
 	display_alert "oras_manifest_json after: ${oras_manifest_json}" "ORAS manifest json" "debug"
 

@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-2.0
 #
-# Copyright (c) 2013-2023 Igor Pecovnik, igor@armbian.com
+# Copyright (c) 2013-2026 Igor Pecovnik, igor@armbian.com
 #
 # This file is a part of the Armbian Build Framework
 # https://github.com/armbian/build/
@@ -27,10 +27,5 @@ function kernel_prepare_git() {
 function kernel_cleanup_bundle_artifacts() {
 	[[ -z "${git_bundles_dir}" ]] && exit_with_error "git_bundles_dir is not set"
 
-	if [[ -d "${git_bundles_dir}" ]]; then
-		display_alert "Cleaning up Kernel git bundle artifacts" "no longer needed" "info"
-		run_host_command_logged rm -rf "${git_bundles_dir}"
-	fi
-
-	return 0
+	git_oras_tree_cleanup_bundles "Kernel" "${git_bundles_dir}"
 }

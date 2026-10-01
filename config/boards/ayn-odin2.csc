@@ -1,40 +1,68 @@
-# Ayn Odin2 Configuration
+# Qualcomm SM8550 octa core 8GB/12GB/16GB RAM SoC eMMC USB-C WiFi/BT
 declare -g BOARD_NAME="Ayn Odin2"
-declare -g BOARD_MAINTAINER="FantasyGmm"
+declare -g BOARD_VENDOR="ayntec"
+declare -g BOARD_MAINTAINER="FantasyGmm Squishy123 kasimling"
+declare -g INTRODUCED="2023"
 declare -g BOARDFAMILY="sm8550"
 declare -g KERNEL_TARGET="current,edge"
-declare -g KERNEL_TEST_TARGET="edge"
+declare -g KERNEL_TEST_TARGET="current"
 declare -g EXTRAWIFI="no"
 declare -g BOOTCONFIG="none"
-declare -g BOOTFS_TYPE="fat"
-declare -g BOOTSIZE="256"
-declare -g IMAGE_PARTITION_TABLE="gpt"
-declare -g BOOTIMG_CMDLINE_EXTRA="clk_ignore_unused pd_ignore_unused rw quiet rootwait"
 
 # Use the full firmware, complete linux-firmware plus Armbian's
 declare -g BOARD_FIRMWARE_INSTALL="-full"
 declare -g DESKTOP_AUTOLOGIN="yes"
 
-function ayn-odin2_is_userspace_supported() {
-	[[ "${RELEASE}" == "jammy" ]] && return 0
-	[[ "${RELEASE}" == "trixie" ]] && return 0
-	[[ "${RELEASE}" == "noble" ]] && return 0
-	return 1
-}
+# Check to make sure variants are supported
+declare -g VALID_BOARDS=("ayn-odin2" "ayn-odin2portal" "ayn-odin2mini" "ayn-thor")
+
+declare -g WITH_GRUB="${WITH_GRUB:-no}"
+
+if [[ ! " ${VALID_BOARDS[*]} " =~ " ${BOARD} " ]]; then
+	exit_with_error "Error: Invalid board '$BOARD'. Valid options are: ${VALID_BOARDS[*]}" >&2
+fi
+
+# set grub
+if [[ "${WITH_GRUB}" == "yes" ]]; then
+	display_alert "GRUB DETECTED"
+	declare -g UEFI_GRUB_TERMINAL="gfxterm" # Use graphics in grub, for the Armbian wallpaper.
+	declare -g GRUB_CMDLINE_LINUX_DEFAULT="clk_ignore_unused pd_ignore_unused arm64.nopauth efi=noruntime fbcon=rotate:1 console=ttyMSM0,115200n8"
+	declare -g BOOT_FDT_FILE="qcom/qcs8550-${BOARD}.dtb"
+	declare -g SERIALCON="${SERIALCON:-tty1}"
+
+	enable_extension "grub"
+	enable_extension "grub-with-dtb" # important, puts the whole DTB handling in place.
+else
+	declare -g BOOTFS_TYPE="fat"
+	declare -g BOOTSIZE="512"
+	declare -g IMAGE_PARTITION_TABLE="gpt"
+	declare -g BOOTIMG_CMDLINE_EXTRA="clk_ignore_unused pd_ignore_unused rw quiet rootwait"
+	declare -g BOOT_FDT_FILE="qcom/qcs8550-${BOARD}.dtb"
+
+	function pre_umount_final_image__update_ABL_settings() {
+		if [ -z "$BOOTFS_TYPE" ]; then
+			return 0
+		fi
+		display_alert "Update ABL settings for " "${BOARD}" "info"
+		uuid_line=$(head -n 1 "${SDCARD}"/etc/fstab)
+		rootfs_image_uuid=$(echo "${uuid_line}" | awk '{print $1}' | awk -F '=' '{print $2}')
+		initrd_name=$(find "${SDCARD}/boot/" -type f -name "config-*" | sed 's/.*config-//')
+		sed -i "s/UUID_PLACEHOLDER/${rootfs_image_uuid}/g" "${MOUNT}"/boot/LinuxLoader.cfg
+		sed -i "s/INITRD_PLACEHOLDER/${initrd_name}/g" "${MOUNT}"/boot/LinuxLoader.cfg
+	}
+fi
 
 function pre_customize_image__ayn-odin2_alsa_ucm_conf() {
-	if ! ayn-odin2_is_userspace_supported; then
-		return 0
-	fi
-
 	display_alert "Add alsa-ucm-conf for ${BOARD}" "${RELEASE}" "warn"
 	(
-		cd "${SDCARD}/usr/share/alsa" || exit 6
-		curl -L -o temp.zip "https://github.com/AYNTechnologies/alsa-ucm-conf/archive/refs/heads/ayn/v1.2.13.zip"
-		unzip -o temp.zip
-		unzip_dir=$(unzip -Z1 temp.zip | head -n1 | cut -d/ -f1)
-		cp -rf "${unzip_dir}/"* .
-		rm -rf "$unzip_dir" temp.zip
+		(
+			cd "${SDCARD}/usr/share/alsa" || exit 6
+			curl -L -o temp.zip "${GITHUB_SOURCE}/AYNTechnologies/alsa-ucm-conf/archive/refs/heads/ayn/v1.2.13.zip"
+			unzip -o temp.zip
+			unzip_dir=$(unzip -Z1 temp.zip | head -n1 | cut -d/ -f1)
+			cp -rf "${unzip_dir}/"* .
+			rm -rf "$unzip_dir" temp.zip
+		)
 	)
 }
 
@@ -53,27 +81,17 @@ function post_family_tweaks_bsp__ayn-odin2_firmware() {
 	install -Dm655 $SRC/packages/bsp/usb-gadget-network/dropbear $destination/etc/initramfs-tools/scripts/init-premount/
 	install -Dm655 $SRC/packages/bsp/usb-gadget-network/kill-dropbear $destination/etc/initramfs-tools/scripts/init-bottom/
 
+	install -Dm755 $SRC/packages/bsp/ayn-odin2/zz-update-abl-kernel $destination/etc/kernel/postinst.d/zz-update-abl-kernel
+
 	return 0
 }
 
 function post_family_tweaks__ayn-odin2_enable_services() {
-	if ! ayn-odin2_is_userspace_supported; then
-		if [[ "${RELEASE}" != "" ]]; then
-			display_alert "Missing userspace for ${BOARD}" "${RELEASE} does not have the userspace necessary to support the ${BOARD}" "warn"
-		fi
-		return 0
-	fi
-
-	if [[ "${RELEASE}" == "jammy" ]] || [[ "${RELEASE}" == "noble" ]]; then
-		display_alert "Adding Mesa PPA For Ubuntu ${BOARD}" "warn"
-		do_with_retries 3 chroot_sdcard add-apt-repository ppa:liujianfeng1994/qcom-mainline --yes --no-update
-	fi
-
 	# We need unudhcpd from armbian repo, so enable it
 	mv "${SDCARD}"/etc/apt/sources.list.d/armbian.sources.disabled "${SDCARD}"/etc/apt/sources.list.d/armbian.sources
 
 	do_with_retries 3 chroot_sdcard_apt_get_update
-		display_alert "Installing ${BOARD} tweaks" "warn"
+	display_alert "Installing ${BOARD} tweaks" "warn"
 	do_with_retries 3 chroot_sdcard_apt_get_install alsa-ucm-conf qbootctl qrtr-tools unudhcpd mkbootimg
 	# disable armbian repo back
 	mv "${SDCARD}"/etc/apt/sources.list.d/armbian.sources "${SDCARD}"/etc/apt/sources.list.d/armbian.sources.disabled
@@ -82,11 +100,14 @@ function post_family_tweaks__ayn-odin2_enable_services() {
 
 	# Add Gamepad udev rule
 	echo 'SUBSYSTEM=="input", ATTRS{name}=="AYN Odin2 Gamepad", MODE="0666", ENV{ID_INPUT_JOYSTICK}="1"' > "${SDCARD}"/etc/udev/rules.d/99-ignore-gamepad.rules
+	# Add Gamepad SDL mapping
+	mkdir -p "${SDCARD}"/etc/environment.d
+	echo 'SDL_GAMECONTROLLERCONFIG="03000000202000000130000001000000,AYN Odin2 Gamepad,platform:Linux,crc:05b6,a:b0,b:b1,x:b3,y:b2,back:b6,guide:b8,start:b7,leftstick:b9,rightstick:b10,leftshoulder:b4,rightshoulder:b5,dpup:b11,dpdown:b12,dpleft:b13,dpright:b14,misc1:b15,leftx:a0,lefty:a1,rightx:a3,righty:a4,lefttrigger:a2,righttrigger:a5,"' > "${SDCARD}"/etc/environment.d/99-sdl-gamepad.conf
 	# Not Any driver support suspend mode
 	chroot_sdcard systemctl mask suspend.target
 
 	chroot_sdcard systemctl enable usbgadget-rndis.service
-	cp $SRC/packages/bsp/ayn-odin2/LinuxLoader.cfg "${SDCARD}"/boot/
+	cp "${SRC}/packages/bsp/${BOARD}/LinuxLoader.cfg" "${SDCARD}"/boot/
 
 	return 0
 }
@@ -94,37 +115,24 @@ function post_family_tweaks__ayn-odin2_enable_services() {
 function post_family_tweaks_bsp__ayn-odin2_bsp_firmware_in_initrd() {
 	display_alert "Adding to bsp-cli" "${BOARD}: firmware in initrd" "warn"
 	declare file_added_to_bsp_destination # Will be filled in by add_file_from_stdin_to_bsp_destination
-	# Using odin2's firmware for now
-	add_file_from_stdin_to_bsp_destination "/etc/initramfs-tools/hooks/ayn-odin2-firmware" <<- 'FIRMWARE_HOOK'
+	add_file_from_stdin_to_bsp_destination "/etc/initramfs-tools/hooks/ayn-firmware" <<- 'FIRMWARE_HOOK'
 		#!/bin/bash
 		[[ "$1" == "prereqs" ]] && exit 0
 		. /usr/share/initramfs-tools/hook-functions
-		for f in /lib/firmware/qcom/sm8550/ayn/odin2portal/* ; do
-			add_firmware "${f#/lib/firmware/}"
+		for f in $(find /lib/firmware/qcom/sm8550 -type f -follow) ; do
+		add_firmware "${f#/lib/firmware/}"
 		done
 		add_firmware "qcom/a740_sqe.fw" # Extra one for dpu
 		add_firmware "qcom/gmu_gen70200.bin" # Extra one for gpu
 		add_firmware "qcom/vpu/vpu30_p4.mbn" # Extra one for vpu
 		# Extra one for wifi
-		for f in /lib/firmware/ath12k/WCN7850/hw2.0/* ; do
-			add_firmware "${f#/lib/firmware/}"
+		for f in $(find /lib/firmware/ath12k/WCN7850/hw2.0 -type f -follow) ; do
+		add_firmware "${f#/lib/firmware/}"
 		done
 		# Extra one for bt
-		for f in /lib/firmware/qca/* ; do
-			add_firmware "${f#/lib/firmware/}"
+		for f in $(find /lib/firmware/qca -type f -follow) ; do
+		add_firmware "${f#/lib/firmware/}"
 		done
 	FIRMWARE_HOOK
 	run_host_command_logged chmod -v +x "${file_added_to_bsp_destination}"
-}
-
-function pre_umount_final_image__update_ABL_settings() {
-	if [ -z "$BOOTFS_TYPE" ]; then
-		return 0
-	fi
-	display_alert "Update ABL settings for " "${BOARD}" "info"
-	uuid_line=$(head -n 1 "${SDCARD}"/etc/fstab)
-	rootfs_image_uuid=$(echo "${uuid_line}" | awk '{print $1}' | awk -F '=' '{print $2}')
-	initrd_name=$(find "${SDCARD}/boot/" -type f -name "config-*" | sed 's/.*config-//')
-	sed -i "s/UUID_PLACEHOLDER/${rootfs_image_uuid}/g" "${MOUNT}"/boot/LinuxLoader.cfg
-	sed -i "s/INITRD_PLACEHOLDER/${initrd_name}/g" "${MOUNT}"/boot/LinuxLoader.cfg
 }

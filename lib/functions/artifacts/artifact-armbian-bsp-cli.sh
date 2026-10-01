@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-2.0
 #
-# Copyright (c) 2013-2023 Igor Pecovnik, igor@armbian.com
+# Copyright (c) 2013-2026 Igor Pecovnik, igor@armbian.com
 #
 # This file is a part of the Armbian Build Framework
 # https://github.com/armbian/build/
@@ -74,6 +74,7 @@ function artifact_armbian-bsp-cli_prepare_version() {
 
 	declare -a dirs_to_hash=(
 		"${SRC}/packages/bsp/common" # common stuff
+		"${SRC}/packages/bsp/${BOARD}" # board-specific stuff
 		"${SRC}/config/optional/_any_board/_packages/bsp-cli"
 		"${SRC}/config/optional/architectures/${ARCH}/_packages/bsp-cli"
 		"${SRC}/config/optional/families/${LINUXFAMILY}/_packages/bsp-cli"
