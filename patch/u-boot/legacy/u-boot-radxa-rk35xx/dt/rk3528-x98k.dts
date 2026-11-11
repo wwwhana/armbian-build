@@ -1,0 +1,192 @@
+/*
+ * SPDX-License-Identifier:     GPL-2.0+
+ *
+ * Device Tree for X98K RK3528A TV Box
+ * (C) Copyright 2025
+ *
+ * Hardware confirmed:
+ * - RK3528A SoC (quad core, 4GB DDR4, 32GB eMMC)
+ * - Ethernet: Motorcomm YT8531 PHY (0x00441400)
+ * - WiFi: AIC8800 SDIO (use USB dongle recommended)
+ * - USB: 2.0 x2, 3.0 x1
+ * - HDMI, IR Remote, LEDs
+ * - UART: UART2 (ttyFIQ0) at 1500000 baud
+ */
+
+/dts-v1/;
+#include "rk3528.dtsi"
+#include "rk3528-u-boot.dtsi"
+#include <dt-bindings/input/input.h>
+
+/ {
+	model = "X98K RK3528 TV Box";
+	compatible = "rockchip,x98k", "rockchip,rk3528";
+
+	chosen {
+		stdout-path = &uart2;
+		u-boot,spl-boot-order = &sdmmc, &sdhci;
+	};
+
+	aliases {
+		ethernet0 = &gmac1;
+		mmc0 = &sdhci;  /* eMMC detected as mmc@ffbf0000: 1 by hardware */
+		mmc1 = &sdmmc;  /* SD card detected as mmc@ffc30000: 0 by hardware */
+	};
+
+	config {
+		u-boot,spl-boot-device = "mmc";
+		u-boot,spl-boot-order = "same-as-spl", &sdmmc, &sdhci;
+	};
+
+	vcc5v0_sys: vcc5v0-sys {
+		u-boot,dm-pre-reloc;
+		compatible = "regulator-fixed";
+		regulator-name = "vcc5v0_sys";
+		regulator-always-on;
+		regulator-boot-on;
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+	};
+
+	vcc_3v3_s3: vcc-3v3-s3 {
+		u-boot,dm-pre-reloc;
+		compatible = "regulator-fixed";
+		regulator-name = "vcc_3v3_s3";
+		regulator-always-on;
+		regulator-boot-on;
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		vin-supply = <&vcc5v0_sys>;
+	};
+
+	vcc_1v8: vcc-1v8 {
+		compatible = "regulator-fixed";
+		regulator-name = "vcc_1v8";
+		regulator-always-on;
+		regulator-boot-on;
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+		vin-supply = <&vcc_3v3_s3>;
+	};
+
+	/* SD Card dedicated power supply */
+	vcc_sd: vcc-sd {
+		u-boot,dm-pre-reloc;
+		compatible = "regulator-fixed";
+		regulator-name = "vcc_sd";
+		regulator-always-on;
+		regulator-boot-on;
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		enable-active-high;
+		gpio = <&gpio4 RK_PA1 GPIO_ACTIVE_HIGH>;
+		vin-supply = <&vcc_3v3_s3>;
+	};
+
+	/* SD Card I/O voltage switcher */
+	vccio_sd: vccio-sd {
+		u-boot,dm-pre-reloc;
+		compatible = "regulator-fixed";
+		regulator-name = "vccio_sd";
+		regulator-always-on;
+		regulator-boot-on;
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		enable-active-high;
+		gpio = <&gpio4 RK_PB6 GPIO_ACTIVE_HIGH>;
+		vin-supply = <&vcc_3v3_s3>;
+	};
+
+	/*
+	 * ADC keys - IR remote and buttons
+	 * Confirmed: adc-keys present on ffa90030.pwm platform
+	 */
+	adc-keys {
+		compatible = "adc-keys";
+		io-channels = <&saradc 1>;
+		io-channel-names = "buttons";
+		keyup-threshold-microvolt = <1800000>;
+		u-boot,dm-pre-reloc;
+		status = "okay";
+
+		volumeup-key {
+			u-boot,dm-pre-reloc;
+			linux,code = <KEY_VOLUMEUP>;
+			label = "volume up";
+			press-threshold-microvolt = <9>;
+		};
+	};
+};
+
+/* UART for debug console */
+&uart2 {
+	status = "okay";
+	u-boot,dm-pre-reloc;
+};
+
+/* Keep display_subsystem enabled but HDMI disabled to avoid vendor_storage_read errors */
+&display_subsystem {
+	status = "okay";
+};
+
+&hdmi {
+	status = "disabled";
+};
+
+&hdmi_in_vp0 {
+	status = "disabled";
+};
+
+&hdmiphy {
+	status = "disabled";
+};
+
+&vop {
+	status = "okay";
+};
+
+&vop_mmu {
+	status = "okay";
+};
+
+/* Disable SFC - X98K has no SPI flash confirmed */
+&sfc {
+	status = "disabled";
+};
+
+/* eMMC (sdhci) - Hardware detects as mmc@ffbf0000 */
+&sdhci {
+	u-boot,dm-pre-reloc;
+	bus-width = <8>;
+	mmc-hs200-1_8v;
+	non-removable;
+	supports-emmc;
+	mmc-hs400-1_8v;
+	mmc-hs400-enhanced-strobe;
+	cap-mmc-highspeed;
+	fixed-emmc-driver-type = <0x04>;
+	no-sd;
+	no-sdio;
+	vmmc-supply = <&vcc_3v3_s3>;
+	vqmmc-supply = <&vcc_1v8>;
+	status = "okay";
+};
+
+/* SD card (sdmmc) - Hardware detects as mmc@ffc30000 - BOOT PRIORITY */
+&sdmmc {
+	u-boot,dm-pre-reloc;
+	bus-width = <4>;
+	cap-mmc-highspeed;
+	cap-sd-highspeed;
+	disable-wp;
+	vmmc-supply = <&vcc_sd>;
+	vqmmc-supply = <&vccio_sd>;
+	status = "okay";
+};
+
+/* SARADC for ADC keys */
+&saradc {
+	vref-supply = <&vcc_1v8>;
+	status = "okay";
+	u-boot,dm-pre-reloc;
+};
