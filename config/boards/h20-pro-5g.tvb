@@ -12,3 +12,22 @@ BOOT_FDT_FILE="sun50i-h616-h20-pro-5g.dtb"
 OVERLAY_PREFIX="sun50i-h616"
 
 enable_extension "radxa-aic8800"
+
+# TOC0 signing requires root_key.pem in the U-Boot source directory.
+# Generate a private key for this build and remove it after the binaries are built.
+function pre_config_uboot_target__h20_generate_toc0_key() {
+	[[ "${BOARD}" == "h20-pro-5g" ]] || return 0
+
+	command -v openssl >/dev/null || exit_with_error "OpenSSL is required to generate the H20 TOC0 signing key"
+	if [[ -e root_key.pem ]]; then
+		rm -f root_key.pem
+	fi
+	umask 077
+	openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out root_key.pem
+	chmod 600 root_key.pem
+}
+
+function post_uboot_custom_postprocess__h20_remove_toc0_key() {
+	[[ "${BOARD}" == "h20-pro-5g" ]] || return 0
+	rm -f root_key.pem
+}
